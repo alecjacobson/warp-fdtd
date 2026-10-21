@@ -76,6 +76,7 @@ Legacy core flux and late-time fundamental-mode transmission are distinct measur
 
 | Run | Grid (nm) | Time (fs) | Legacy flux ratio | Modal T | Modal R |
 |---|---:|---:|---:|---:|---:|
+| bend_flow20 | 20 | 300.0 | 1.24564 | 0.92893 | 0.00001 |
 | hann_10nm | 10.0 | 300.0 | 1.25424 | 0.93192 | 0.00003 |
 | hann_200fs | 20 | 200.0 | 1.23974 | 0.92897 | 0.00001 |
 | hann_300fs | 20 | 300.0 | 1.24564 | 0.92893 | 0.00001 |
@@ -106,6 +107,12 @@ Overall (hann window): **PASS**.
 - fine_mesh_quality_target: PASS
 
 Duration change: 0.0044 percentage points; PML change: 0.0014; mesh change: 0.2990.
+
+## Additional diagnostics
+
+[Cycle-averaged bend Poynting flow](bend_flow20/poynting_flow.png) shows a central-plane projection from co-located, time-centered phasors; adding the passive detector left transmission unchanged.
+
+[Analytic Maxwell-mode accuracy trends](convergence/accuracy_trends.png) separate joint mesh/time refinement from time-step error at fixed mesh. These are measured GPU runs with an analytic reference; methods and limits are in README.md.
 
 ## Limits
 

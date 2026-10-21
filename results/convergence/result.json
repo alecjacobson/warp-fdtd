@@ -1,0 +1,454 @@
+{
+  "environment": {
+    "started_utc": "2026-10-21T21:37:26.381225+00:00",
+    "upstream_sha": "2cab8dbb2af9a43ec6443712f011f50ecf58790b",
+    "harness_sha256": {
+      "baseline/__init__.py": "145f00e0ee56a09a754d58ed87669d62088433670e013623a12ae880505ef7fe",
+      "baseline/common.py": "2523c074b7db324ab2c47c8d97ceb8ca4eeb3902abb3649788b90c54d7044d3b",
+      "baseline/compare.py": "61e07dc701800a13a44e5b9174c013069c1ccb6589c8337056797c574c6eb0be",
+      "baseline/convergence.py": "4d400e74367db98ce98c2f36208b278d81da8d415ce858bdf5fc29e11e245a38",
+      "baseline/export_case.py": "5c69a0fbbdbb3febdc00ede4e7ac6f4c9d3fc674900a308019760d05626756cb",
+      "baseline/physics.py": "ad4ed758d6b1dcdd46f3eed58234e6bcce85a18dbe9f47a82ae24d5f9e05e4b6",
+      "baseline/protocol_checks.py": "10126e71cce9f1dd42dae41ff5c69fbc88a4e804977bbb491f6024616be642f3",
+      "baseline/quality_checks.py": "296be4fbba666fccec6084ed20bcd1cec63d9d85b58e452ebcea2c767f3c728c",
+      "baseline/report.py": "eb3ec0b2ad3e2474ca0b37c151b28add60857246dcc66e234b3d743f58b40e1b",
+      "baseline/run.py": "90becea7b5e73b2dcb4d06773ca5b9573339c6e00681534f20a21712e6f5b979",
+      "baseline/scene.py": "e7e939a1db6b6670b0a04bccf8b52101ef31a73a86c404cd3d51cca92a1f4b17"
+    },
+    "python": "3.12.15",
+    "jax": "0.12.0",
+    "jax_enable_x64": false,
+    "requirements_sha256": "80d4daccc80308750433ea45e45a0d32217feda6f978158680cda26f789420db",
+    "cpu_model": "AMD EPYC 9B45",
+    "devices": [
+      {
+        "kind": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+        "platform": "gpu"
+      }
+    ],
+    "nvidia_smi": "GPU 0: NVIDIA RTX PRO 6000 Blackwell Server Edition (UUID: GPU-822536da-f2f9-2caf-83b8-9b1974483e63)\n  MIG 1g.24gb     Device  0: (UUID: MIG-5d3bb68b-2d20-590e-92a3-a0ff8bc701ed)",
+    "driver": "595.58.03",
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "cpu_quota": "400000 100000",
+    "host_memory_limit": "17179869184",
+    "environment": {
+      "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+      "OMP_NUM_THREADS": "4",
+      "OPENBLAS_NUM_THREADS": "1",
+      "JAX_PLATFORMS": "cuda,cpu"
+    }
+  },
+  "status": "complete",
+  "rows": [
+    {
+      "cells_per_wavelength": 8,
+      "shape": [
+        4,
+        4,
+        8
+      ],
+      "dx_nm": 193.75,
+      "dt_fs": 0.3693988809716323,
+      "courant_factor": 0.99,
+      "steps": 280,
+      "compile_seconds": 0.1127590723335743,
+      "execution_seconds": 0.00496886670589447,
+      "measured_frequency_ratio": 0.9824382473200497,
+      "continuum_relative_error": 0.017561752679950304,
+      "semidiscrete_frequency_ratio": 0.9744953584044326,
+      "temporal_relative_error": 0.008150771419396019,
+      "predicted_frequency_ratio": 0.982438227901176,
+      "relative_error_vs_discrete_prediction": 1.976599972586257e-08,
+      "fit_relative_rms": 1.6701676076305765e-07,
+      "finite_fields": true
+    },
+    {
+      "cells_per_wavelength": 8,
+      "shape": [
+        4,
+        4,
+        8
+      ],
+      "dx_nm": 193.75,
+      "dt_fs": 0.18656509139981434,
+      "courant_factor": 0.5,
+      "steps": 554,
+      "compile_seconds": 0.08161421120166779,
+      "execution_seconds": 0.005582266487181187,
+      "measured_frequency_ratio": 0.976488407948948,
+      "continuum_relative_error": 0.02351159205105202,
+      "semidiscrete_frequency_ratio": 0.9744953584044326,
+      "temporal_relative_error": 0.00204521194208529,
+      "predicted_frequency_ratio": 0.9764884280969437,
+      "relative_error_vs_discrete_prediction": 2.0633112662871156e-08,
+      "fit_relative_rms": 1.795605177781149e-07,
+      "finite_fields": true
+    },
+    {
+      "cells_per_wavelength": 8,
+      "shape": [
+        4,
+        4,
+        8
+      ],
+      "dx_nm": 193.75,
+      "dt_fs": 0.09328254569990717,
+      "courant_factor": 0.25,
+      "steps": 1109,
+      "compile_seconds": 0.08011178206652403,
+      "execution_seconds": 0.010047083720564842,
+      "measured_frequency_ratio": 0.9749915480473056,
+      "continuum_relative_error": 0.02500845195269441,
+      "semidiscrete_frequency_ratio": 0.9744953584044326,
+      "temporal_relative_error": 0.0005091759941118212,
+      "predicted_frequency_ratio": 0.9749915661531754,
+      "relative_error_vs_discrete_prediction": 1.8570283533136944e-08,
+      "fit_relative_rms": 1.5726993032382598e-07,
+      "finite_fields": true
+    },
+    {
+      "cells_per_wavelength": 16,
+      "shape": [
+        4,
+        4,
+        16
+      ],
+      "dx_nm": 96.875,
+      "dt_fs": 0.18469944048581616,
+      "courant_factor": 0.99,
+      "steps": 560,
+      "compile_seconds": 0.11884818971157074,
+      "execution_seconds": 0.005582866258919239,
+      "measured_frequency_ratio": 0.995657561335702,
+      "continuum_relative_error": 0.004342438664297954,
+      "semidiscrete_frequency_ratio": 0.9935868511442056,
+      "temporal_relative_error": 0.002084075679052777,
+      "predicted_frequency_ratio": 0.9956575478747661,
+      "relative_error_vs_discrete_prediction": 1.3519644292969701e-08,
+      "fit_relative_rms": 6.739050971863485e-08,
+      "finite_fields": true
+    },
+    {
+      "cells_per_wavelength": 16,
+      "shape": [
+        4,
+        4,
+        16
+      ],
+      "dx_nm": 96.875,
+      "dt_fs": 0.09328254569990717,
+      "courant_factor": 0.5,
+      "steps": 1109,
+      "compile_seconds": 0.08621223922818899,
+      "execution_seconds": 0.010060782544314861,
+      "measured_frequency_ratio": 0.9941128096961186,
+      "continuum_relative_error": 0.005887190303881407,
+      "semidiscrete_frequency_ratio": 0.9935868511442056,
+      "temporal_relative_error": 0.0005293533738972567,
+      "predicted_frequency_ratio": 0.9941128264684506,
+      "relative_error_vs_discrete_prediction": 1.6871658403694312e-08,
+      "fit_relative_rms": 8.482792010132883e-08,
+      "finite_fields": true
+    },
+    {
+      "cells_per_wavelength": 16,
+      "shape": [
+        4,
+        4,
+        16
+      ],
+      "dx_nm": 96.875,
+      "dt_fs": 0.046641272849953584,
+      "courant_factor": 0.25,
+      "steps": 2217,
+      "compile_seconds": 0.24282400403171778,
+      "execution_seconds": 0.01913534849882126,
+      "measured_frequency_ratio": 0.9937181864781196,
+      "continuum_relative_error": 0.006281813521880397,
+      "semidiscrete_frequency_ratio": 0.9935868511442056,
+      "temporal_relative_error": 0.00013218304344775333,
+      "predicted_frequency_ratio": 0.9937182040870146,
+      "relative_error_vs_discrete_prediction": 1.7720209743998794e-08,
+      "fit_relative_rms": 8.106650777934038e-08,
+      "finite_fields": true
+    },
+    {
+      "cells_per_wavelength": 32,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "dx_nm": 48.4375,
+      "dt_fs": 0.09234972024290808,
+      "courant_factor": 0.99,
+      "steps": 1120,
+      "compile_seconds": 0.11537127010524273,
+      "execution_seconds": 0.010158753953874111,
+      "measured_frequency_ratio": 0.9989174261018552,
+      "continuum_relative_error": 0.0010825738981448119,
+      "semidiscrete_frequency_ratio": 0.9983943930356182,
+      "temporal_relative_error": 0.0005238742023045972,
+      "predicted_frequency_ratio": 0.998917412914493,
+      "relative_error_vs_discrete_prediction": 1.3201654214256564e-08,
+      "fit_relative_rms": 8.538047124136896e-08,
+      "finite_fields": true
+    },
+    {
+      "cells_per_wavelength": 32,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "dx_nm": 48.4375,
+      "dt_fs": 0.046641272849953584,
+      "courant_factor": 0.5,
+      "steps": 2217,
+      "compile_seconds": 0.08784313779324293,
+      "execution_seconds": 0.01913509890437126,
+      "measured_frequency_ratio": 0.9985276417488362,
+      "continuum_relative_error": 0.0014723582511637634,
+      "semidiscrete_frequency_ratio": 0.9983943930356182,
+      "temporal_relative_error": 0.0001334630023439587,
+      "predicted_frequency_ratio": 0.998527662362645,
+      "relative_error_vs_discrete_prediction": 2.0644204012931766e-08,
+      "fit_relative_rms": 8.365188573168094e-08,
+      "finite_fields": true
+    },
+    {
+      "cells_per_wavelength": 32,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "dx_nm": 48.4375,
+      "dt_fs": 0.023320636424976792,
+      "courant_factor": 0.25,
+      "steps": 4434,
+      "compile_seconds": 0.08234293013811111,
+      "execution_seconds": 0.037266798317432404,
+      "measured_frequency_ratio": 0.99842768192929,
+      "continuum_relative_error": 0.0015723180707100104,
+      "semidiscrete_frequency_ratio": 0.9983943930356182,
+      "temporal_relative_error": 3.334242850705493e-05,
+      "predicted_frequency_ratio": 0.9984277013626787,
+      "relative_error_vs_discrete_prediction": 1.9463991862700425e-08,
+      "fit_relative_rms": 8.006658395694748e-08,
+      "finite_fields": true
+    },
+    {
+      "cells_per_wavelength": 64,
+      "shape": [
+        4,
+        4,
+        64
+      ],
+      "dx_nm": 24.21875,
+      "dt_fs": 0.04617486012145404,
+      "courant_factor": 0.99,
+      "steps": 2239,
+      "compile_seconds": 0.12685482390224934,
+      "execution_seconds": 0.01931018754839897,
+      "measured_frequency_ratio": 0.9997295560879634,
+      "continuum_relative_error": 0.0002704439120365665,
+      "semidiscrete_frequency_ratio": 0.9995984531496791,
+      "temporal_relative_error": 0.00013115560340382082,
+      "predicted_frequency_ratio": 0.9997295427305174,
+      "relative_error_vs_discrete_prediction": 1.3361059592043034e-08,
+      "fit_relative_rms": 6.718263358695491e-08,
+      "finite_fields": true
+    },
+    {
+      "cells_per_wavelength": 64,
+      "shape": [
+        4,
+        4,
+        64
+      ],
+      "dx_nm": 24.21875,
+      "dt_fs": 0.023320636424976792,
+      "courant_factor": 0.5,
+      "steps": 4434,
+      "compile_seconds": 0.08747818693518639,
+      "execution_seconds": 0.0407258253544569,
+      "measured_frequency_ratio": 0.9996318650147952,
+      "continuum_relative_error": 0.00036813498520482657,
+      "semidiscrete_frequency_ratio": 0.9995984531496791,
+      "temporal_relative_error": 3.342528693472957e-05,
+      "predicted_frequency_ratio": 0.999631882138574,
+      "relative_error_vs_discrete_prediction": 1.7130084684069402e-08,
+      "fit_relative_rms": 8.260254568296508e-08,
+      "finite_fields": true
+    },
+    {
+      "cells_per_wavelength": 64,
+      "shape": [
+        4,
+        4,
+        64
+      ],
+      "dx_nm": 24.21875,
+      "dt_fs": 0.011660318212488396,
+      "courant_factor": 0.25,
+      "steps": 8868,
+      "compile_seconds": 0.09952193964272738,
+      "execution_seconds": 0.07361278589814901,
+      "measured_frequency_ratio": 0.9996067906063625,
+      "continuum_relative_error": 0.00039320939363751695,
+      "semidiscrete_frequency_ratio": 0.9995984531496791,
+      "temporal_relative_error": 8.340805907947058e-06,
+      "predicted_frequency_ratio": 0.9996068098309604,
+      "relative_error_vs_discrete_prediction": 1.9232159864657206e-08,
+      "fit_relative_rms": 1.1532840130144488e-07,
+      "finite_fields": true
+    },
+    {
+      "cells_per_wavelength": 128,
+      "shape": [
+        4,
+        4,
+        128
+      ],
+      "dx_nm": 12.109375,
+      "dt_fs": 0.023087420527852676,
+      "courant_factor": 0.99,
+      "steps": 4479,
+      "compile_seconds": 0.12938603200018406,
+      "execution_seconds": 0.037656817585229874,
+      "measured_frequency_ratio": 0.9999328232700009,
+      "continuum_relative_error": 6.717672999911883e-05,
+      "semidiscrete_frequency_ratio": 0.9998996042161415,
+      "temporal_relative_error": 3.322238924696741e-05,
+      "predicted_frequency_ratio": 0.9999323975052243,
+      "relative_error_vs_discrete_prediction": 4.257935612983488e-07,
+      "fit_relative_rms": 6.897990294659765e-08,
+      "finite_fields": true
+    },
+    {
+      "cells_per_wavelength": 128,
+      "shape": [
+        4,
+        4,
+        128
+      ],
+      "dx_nm": 12.109375,
+      "dt_fs": 0.011660313397905391,
+      "courant_factor": 0.5,
+      "steps": 8868,
+      "compile_seconds": 0.10183055885136127,
+      "execution_seconds": 0.07362152636051178,
+      "measured_frequency_ratio": 0.9999083659515504,
+      "continuum_relative_error": 9.163404844958478e-05,
+      "semidiscrete_frequency_ratio": 0.9998996042161415,
+      "temporal_relative_error": 8.76261513838017e-06,
+      "predicted_frequency_ratio": 0.9999079684458081,
+      "relative_error_vs_discrete_prediction": 3.97542328833822e-07,
+      "fit_relative_rms": 6.968741564908212e-08,
+      "finite_fields": true
+    },
+    {
+      "cells_per_wavelength": 128,
+      "shape": [
+        4,
+        4,
+        128
+      ],
+      "dx_nm": 12.109375,
+      "dt_fs": 0.005830156698952696,
+      "courant_factor": 0.25,
+      "steps": 17736,
+      "compile_seconds": 0.10659205634146929,
+      "execution_seconds": 0.14619682170450687,
+      "measured_frequency_ratio": 0.9999020902094423,
+      "continuum_relative_error": 9.790979055768201e-05,
+      "semidiscrete_frequency_ratio": 0.9998996042161415,
+      "temporal_relative_error": 2.486242909105485e-06,
+      "predicted_frequency_ratio": 0.9999016952381375,
+      "relative_error_vs_discrete_prediction": 3.9501013615605984e-07,
+      "fit_relative_rms": 6.37449086572299e-08,
+      "finite_fields": true
+    },
+    {
+      "cells_per_wavelength": 32,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "dx_nm": 48.4375,
+      "dt_fs": 0.06529778198993502,
+      "courant_factor": 0.7,
+      "steps": 1584,
+      "compile_seconds": 0.08427456952631474,
+      "execution_seconds": 0.013907590880990028,
+      "measured_frequency_ratio": 0.9986556724332222,
+      "continuum_relative_error": 0.0013443275667778254,
+      "semidiscrete_frequency_ratio": 0.9983943930356182,
+      "temporal_relative_error": 0.0002616995842790182,
+      "predicted_frequency_ratio": 0.9986556913542418,
+      "relative_error_vs_discrete_prediction": 1.8946489599436234e-08,
+      "fit_relative_rms": 1.2692237079315543e-07,
+      "finite_fields": true
+    },
+    {
+      "cells_per_wavelength": 32,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "dx_nm": 48.4375,
+      "dt_fs": 0.03264889099496751,
+      "courant_factor": 0.35,
+      "steps": 3167,
+      "compile_seconds": 0.08375147916376591,
+      "execution_seconds": 0.02685813419520855,
+      "measured_frequency_ratio": 0.9984596710309392,
+      "continuum_relative_error": 0.0015403289690607558,
+      "semidiscrete_frequency_ratio": 0.9983943930356182,
+      "temporal_relative_error": 6.538297468039467e-05,
+      "predicted_frequency_ratio": 0.998459683003029,
+      "relative_error_vs_discrete_prediction": 1.1990558990149225e-08,
+      "fit_relative_rms": 2.4333877548524184e-07,
+      "finite_fields": true
+    },
+    {
+      "cells_per_wavelength": 32,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "dx_nm": 48.4375,
+      "dt_fs": 0.011660318212488396,
+      "courant_factor": 0.125,
+      "steps": 8868,
+      "compile_seconds": 0.09159555565565825,
+      "execution_seconds": 0.07360126543790102,
+      "measured_frequency_ratio": 0.9984026983033375,
+      "continuum_relative_error": 0.0015973016966625009,
+      "semidiscrete_frequency_ratio": 0.9983943930356182,
+      "temporal_relative_error": 8.318624160175148e-06,
+      "predicted_frequency_ratio": 0.9984027195548412,
+      "relative_error_vs_discrete_prediction": 2.1285502582735205e-08,
+      "fit_relative_rms": 1.067803716498982e-07,
+      "finite_fields": true
+    }
+  ],
+  "reference": "Analytic continuum vacuum periodic Maxwell mode; omega=c*k. Temporal-only reference is exact-in-time centered spatial discretization, omega_h=2*c*sin(k*dx/2)/dx.",
+  "scope": "Homogeneous periodic mode, no PML, sources, material interfaces or inverse design. Actual upstream forward() steps, not just a plotted dispersion formula. Execution time is diagnostic, not a performance benchmark.",
+  "spatial_orders": {
+    "0.99": 2.004426445489829,
+    "0.5": 2.001647706224985,
+    "0.25": 2.0010275931429424
+  },
+  "temporal_order": 2.0017566483828615,
+  "passed": true
+}

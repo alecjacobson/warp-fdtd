@@ -220,6 +220,15 @@ def main():
                 f"Duration change: {100 * q['time_T_change']:.4f} percentage points; "
                 f"PML change: {100 * q['pml_T_change']:.4f}; mesh change: {100 * q['mesh_T_change']:.4f}.",
             ]
+    if (root / "convergence/result.json").exists():
+        lines += [
+            "",
+            "## Additional diagnostics",
+            "",
+            "[Cycle-averaged bend Poynting flow](bend_flow20/poynting_flow.png) shows a central-plane projection from co-located, time-centered phasors; adding the passive detector left transmission unchanged.",
+            "",
+            "[Analytic Maxwell-mode accuracy trends](convergence/accuracy_trends.png) separate joint mesh/time refinement from time-step error at fixed mesh. These are measured GPU runs with an analytic reference; methods and limits are in README.md.",
+        ]
     lines += [
         "",
         "## Limits",

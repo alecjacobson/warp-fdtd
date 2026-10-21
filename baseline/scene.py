@@ -78,6 +78,7 @@ class Settings:
     source_profile: str = "current"
     pad_domain: bool = False
     modal_window: str = "rectangular"
+    poynting_plane: bool = False
 
 
 def modal_apodization(s, config, steps, period):
@@ -339,6 +340,19 @@ def build(s: Settings):
                 ]
             )
             objects.append(det)
+    if s.poynting_plane:
+        flow = f.PhasorDetector(
+            name="flow",
+            partial_grid_shape=(None, None, 1),
+            wave_characters=(f.WaveCharacter(wavelength=1.55e-6),),
+            exact_interpolation=True,
+            apodization=modal_apodization(s, config, steps, period),
+            switch=f.OnOffSwitch(fixed_on_time_steps=steps[-8 * period :]),
+        )
+        objects.append(flow)
+        constraints.extend(
+            [flow.same_size(volume, axes=(0, 1)), flow.place_at_center(volume)]
+        )
     return f.place_objects(objects, config, constraints, jax.random.PRNGKey(s.seed))
 
 

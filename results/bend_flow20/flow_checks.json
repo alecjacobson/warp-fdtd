@@ -1,0 +1,13 @@
+{
+  "finite_vector_field": true,
+  "transmission_change_from_adding_detector": 0.0,
+  "candidate_sha256": "034c4aa0e3b933dd617dcc09824c11d535e7cc6d349cd7e1d3349108ec420ade",
+  "formula": "0.5 * Re(E_phasor cross conjugate(H_phasor)) in FDTDX field units",
+  "sampling": "Upstream exact_interpolation: spatial E_z co-location and (H_previous+H_current)/2 time centering; Hann-weighted final eight periods.",
+  "window_support_fs": [
+    258.5699423754788,
+    299.9426584169762
+  ],
+  "slice_z_um_from_lower_face": 0.75,
+  "scope": "Cycle-averaged monochromatic flow, xy projection of a 3D field on one slice. Streamlines are not a full-volume energy budget; color is normalized magnitude, not watts."
+}

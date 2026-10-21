@@ -186,6 +186,68 @@ Each manifest also identifies and checksums the measured fields, detector traces
 and parameter gradients where available. The small case retains full 3D fields;
 large cases retain cross sections and detector measurements.
 
+## Integration, grid support, and diagnostic plots
+
+The pinned solver uses the explicit, staggered Yee leapfrog update: electric and
+magnetic fields advance through local curl operations. The bend uses no implicit
+global linear solve per time step. Source/reference-mode setup does solve an
+eigenproblem, separately from propagation. The frequency-adjoint gradient method
+also uses time-domain FDTD runs; its name does not make the forward solver implicit.
+For a uniform grid, `dt = courant_factor * dx / (c * sqrt(3))`; the 20 nm bend uses
+0.03813 fs. At fixed physical volume and duration, halving spacing therefore means
+eight times as many cells and twice as many steps, approximately 16 times the work.
+
+`UniformGrid`, `QuasiUniformGrid` (different constant spacings per axis), and custom
+`RectilinearGrid` edge arrays are supported by the pinned version. Nonuniform
+rectilinear meshes remain a fixed tensor-product topology; a narrow interval on
+one axis extends across the other two axes. No octree hierarchy, evolving AMR,
+error-driven refinement, or local time subcycling is implemented in this version.
+The global CFL bound uses the smallest spacing on each axis. Source:
+[grid implementation](https://github.com/ymahlau/fdtdx/blob/2cab8dbb2af9a43ec6443712f011f50ecf58790b/src/fdtdx/core/grid.py),
+[forward step](https://github.com/ymahlau/fdtdx/blob/2cab8dbb2af9a43ec6443712f011f50ecf58790b/src/fdtdx/fdtd/forward.py).
+
+The [cycle-averaged Poynting plot](results/bend_flow20/poynting_flow.png) uses a new
+passive `PhasorDetector` on the central xy plane, with all six field components,
+upstream exact spatial interpolation, H time centering, and a Hann window over the
+last eight optical periods. It computes `0.5 * Re(E cross conjugate(H))`. Adding the
+detector leaves the saved candidate's modal transmission unchanged. The arrows show
+the in-plane projection of a 3D vector; they are not a full-volume energy balance.
+Streamline density is not proportional to transported power; color encodes magnitude.
+Colors are relative magnitude in FDTDX field units. Raw phasors, vectors, a PDF,
+and validation metadata are saved beside the PNG. This is a steady monochromatic
+cycle average, not an average of the turn-on transient or an instantaneous snapshot.
+
+The [accuracy trends](results/convergence/accuracy_trends.png) measure a periodic,
+homogeneous vacuum Maxwell mode at wavelength 1550 nm using the actual upstream
+`forward()` updates on GPU. Initial E is one spatial cosine mode and H is zero.
+The grid is 4 × 4 × N with uniform transverse fields and periodic boundaries.
+We fit frequency, amplitude, and phase from its evolution over 20 optical periods.
+This removes PML, source, geometry-rasterization, and settling ambiguities and supplies
+the analytic continuum reference `omega = c*k`.
+
+Eighteen float32 runs span 8–128 cells per wavelength and CFL factors 0.125–0.99.
+Joint spatial/time refinement has measured order 2.001–2.004. At CFL factor 0.99,
+frequency error decreases from 1.756% to 0.00672%. To isolate time error at a fixed
+32-cell mesh, the reference is the exactly integrated spatial discretization,
+`omega_h = 2*c*sin(k*dx/2)/dx`; its measured temporal order is 2.002. Every measured
+frequency agrees with the fully discrete Yee dispersion relation to within 4.3e-7
+relative error. Raw traces, fits, settings, and a PDF are retained.
+
+The third panel shows a real cancellation effect: on a fixed mesh, smaller dt
+reduces time error but can increase total error relative to the continuum. This
+is why spatial resolution, time-step size, and total simulation duration need
+separate studies. The earlier 200/300/400 fs bend runs tested settling, not temporal
+discretization. The bend's 10 nm result is a finer-grid reference estimate, not
+analytic ground truth; its two mesh levels do not establish an observed order or
+a rigorous continuum error bound. The smooth periodic test's second-order result
+does not certify second-order convergence at staircased dielectric interfaces.
+
+Reproduce both diagnostics without changing the existing benchmark cases:
+
+```bash
+bash scripts/diagnostics.sh
+```
+
 ## Attribution
 
 `baseline/scene.py` adapts the MIT-licensed FDTDX example. The upstream license is

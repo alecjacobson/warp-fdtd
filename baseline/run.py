@@ -51,6 +51,11 @@ def main():
     p.add_argument("--finite-difference", action="store_true")
     p.add_argument("--quality-monitors", action="store_true")
     p.add_argument(
+        "--poynting-plane",
+        action="store_true",
+        help="Record co-located E/H phasors on the central xy plane",
+    )
+    p.add_argument(
         "--modal-window", choices=["rectangular", "hann"], default="rectangular"
     )
     p.add_argument("--objective", choices=["flux", "modal"], default="flux")
@@ -82,6 +87,8 @@ def main():
     args = p.parse_args()
     if args.reps < 1 or args.epochs < 1:
         p.error("reps and epochs must be positive")
+    if args.poynting_plane and (args.scene != "bend" or args.mode != "forward"):
+        p.error("--poynting-plane currently requires forward mode with the bend scene")
     if args.mode != "forward" and args.gradient == "none":
         p.error("gradient/optimize require --gradient")
     if args.max_steps is not None and (
@@ -364,6 +371,20 @@ def main():
         if args.trace:
             result["trace_directory"] = str(args.output / "profiler")
         # Retain compact cross sections and detector traces for CPU/GPU comparisons and figures.
+        if args.poynting_plane:
+            flow = next(o for o in objects.detectors if o.name == "flow")
+            np.savez_compressed(
+                args.output / "phasors.npz",
+                phasors=np.asarray(arrays.detector_states["flow"]["phasor"])[
+                    0, 0, ..., 0
+                ],
+                inv_eps=np.asarray(
+                    arrays.inv_permittivities[..., flow.grid_slice[2].start]
+                ),
+                grid_slice=np.asarray(flow.grid_slice_tuple),
+                dt_s=config.time_step_duration,
+                window_weights=np.asarray(flow._window_at_time_step_arr),
+            )
         mid = arrays.fields.E.shape[3] // 2
         np.savez_compressed(
             args.output / "arrays.npz",
