@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "manifests_checked": 5,
+  "file_sha256_checks": 17,
+  "cases": [
+    "forward50_gpu",
+    "forward10_gpu",
+    "hann_10nm",
+    "gradient20_hann_exact",
+    "gradient20_hann_adjoint"
+  ],
+  "exact_and_frequency_adjoint_input_arrays_identical": true,
+  "gradient_input_arrays_compared": 65,
+  "method": "SHA256 of exported inputs and referenced result, field and gradient archives; numpy.array_equal across all exact/adjoint input arrays"
+}

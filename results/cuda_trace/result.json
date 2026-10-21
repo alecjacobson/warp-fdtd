@@ -1,0 +1,139 @@
+{
+  "settings": {
+    "spacing_nm": 50.0,
+    "time_fs": 30.0,
+    "seed": 0,
+    "backend": "gpu",
+    "gradient": "none",
+    "parameterization": "smooth",
+    "exact_interpolation": false,
+    "pml_cells": 10,
+    "domain_um": 4,
+    "voxel_nm": 50.0,
+    "quality_monitors": false,
+    "precision": "float32",
+    "scene": "bend",
+    "source_profile": "current"
+  },
+  "environment": {
+    "started_utc": "2026-10-21T14:35:44.322623+00:00",
+    "upstream_sha": "2cab8dbb2af9a43ec6443712f011f50ecf58790b",
+    "harness_sha256": {
+      "baseline/__init__.py": "145f00e0ee56a09a754d58ed87669d62088433670e013623a12ae880505ef7fe",
+      "baseline/common.py": "e7a0c2e19ae1515b792f0815497083df81ff9f7e719d6ce7f67931432017b3e3",
+      "baseline/compare.py": "7edf51b013161bbe0c6944fd2e3e5c1bee98c34829b4a008f4694265b0c6c3dd",
+      "baseline/physics.py": "8b81437fa8e2b7c2ed98a77e058f091208586dc4e757cce48bfe0b4b80e00485",
+      "baseline/protocol_checks.py": "7bd9ae9c609be62624861a87f3b1ff91e5aa1ad08ade31399122fd03c001be8d",
+      "baseline/report.py": "38af1593c49a152348995c3f69ee543a91bd675674a94ecd2867d01fd6d7a986",
+      "baseline/run.py": "95220c6b69224e09c7162069e9b4f5e807db15e42241569cfdf47f60b471ccee",
+      "baseline/scene.py": "0d479102f03002b3a7d55a883acee52aa687bed0b313b8b1a5a57fb3dd64b3c0"
+    },
+    "python": "3.12.15",
+    "jax": "0.12.0",
+    "jax_enable_x64": false,
+    "requirements_sha256": "80d4daccc80308750433ea45e45a0d32217feda6f978158680cda26f789420db",
+    "cpu_model": "AMD EPYC 9B45",
+    "devices": [
+      {
+        "kind": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+        "platform": "gpu"
+      }
+    ],
+    "nvidia_smi": "GPU 0: NVIDIA RTX PRO 6000 Blackwell Server Edition (UUID: GPU-822536da-f2f9-2caf-83b8-9b1974483e63)\n  MIG 1g.24gb     Device  0: (UUID: MIG-5d3bb68b-2d20-590e-92a3-a0ff8bc701ed)",
+    "driver": "595.58.03",
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "cpu_quota": "400000 100000",
+    "host_memory_limit": "17179869184",
+    "environment": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+      "JAX_PLATFORMS": "cuda,cpu",
+      "OMP_NUM_THREADS": "4"
+    }
+  },
+  "mode": "forward",
+  "status": "complete",
+  "arguments": {
+    "mode": "forward",
+    "output": "results/cuda_trace",
+    "spacing_nm": 50.0,
+    "voxel_nm": 50.0,
+    "time_fs": 30.0,
+    "seed": 0,
+    "backend": "gpu",
+    "gradient": "none",
+    "parameterization": "smooth",
+    "exact_interpolation": false,
+    "pml_cells": 10,
+    "domain_um": 4,
+    "reps": 2,
+    "epochs": 250,
+    "beta": 1.0,
+    "load": null,
+    "resume": null,
+    "finite_difference": false,
+    "quality_monitors": false,
+    "objective": "flux",
+    "init": "random",
+    "fixed_beta": false,
+    "precision": "float32",
+    "max_steps": null,
+    "scene": "bend",
+    "source_profile": "current",
+    "trace": true
+  },
+  "setup_seconds": 3.253060458227992,
+  "shape": [
+    80,
+    80,
+    30
+  ],
+  "time_steps": 315,
+  "configured_time_steps": 315,
+  "physical_evaluation": true,
+  "parameters": 1024,
+  "compile_seconds": 1.0467315316200256,
+  "executable_memory": {
+    "argument_size_in_bytes": 772968,
+    "output_size_in_bytes": 8961156,
+    "alias_size_in_bytes": 768868,
+    "temp_size_in_bytes": 121112
+  },
+  "warmup_seconds": 0.4366090763360262,
+  "run_seconds": [
+    0.0903110345825553,
+    0.08944740332663059
+  ],
+  "median_seconds": 0.08987921895459294,
+  "measurements": [
+    {
+      "input_flux": 1.86024740601279e-15,
+      "output_flux": 1.8409371033152542e-21,
+      "transmission": 9.896194796965574e-07
+    },
+    {
+      "input_flux": 1.86024740601279e-15,
+      "output_flux": 1.8409371033152542e-21,
+      "transmission": 9.896194796965574e-07
+    }
+  ],
+  "gcups": 0.672903043700842,
+  "trace_directory": "results/cuda_trace/profiler",
+  "memory_stats": {
+    "num_allocs": 3232,
+    "bytes_in_use": 9236992,
+    "peak_bytes_in_use": 134762496,
+    "largest_alloc_size": 33554432,
+    "bytes_limit": 19025362944,
+    "bytes_reserved": 0,
+    "peak_bytes_reserved": 0,
+    "largest_free_block_bytes": 67108864,
+    "pool_bytes": 136314880,
+    "peak_pool_bytes": 136314880
+  }
+}

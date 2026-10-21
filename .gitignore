@@ -1,0 +1,13 @@
+.venv/
+upstream/
+__pycache__/
+.pytest_cache/
+results/**/arrays*.npz
+!results/forward50_cpu/arrays.npz
+!results/forward50_gpu/arrays.npz
+!results/forward10_gpu/arrays.npz
+!results/hann_*/arrays.npz
+!results/gradient20_hann_*/arrays.npz
+results/**/checkpoint*.pkl
+results/**/profiler/**/*.pb
+*.log

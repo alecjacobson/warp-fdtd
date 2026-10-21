@@ -1,0 +1,91 @@
+{
+  "settings": {
+    "spacing_nm": 20,
+    "time_fs": 200,
+    "seed": 0,
+    "backend": "gpu",
+    "gradient": "exact",
+    "parameterization": "smooth",
+    "exact_interpolation": false,
+    "pml_cells": 10,
+    "domain_um": 4,
+    "voxel_nm": 20
+  },
+  "environment": {
+    "upstream_sha": "2cab8dbb2af9a43ec6443712f011f50ecf58790b",
+    "python": "3.12.15",
+    "jax": "0.12.0",
+    "devices": [
+      {
+        "kind": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+        "platform": "gpu"
+      }
+    ],
+    "nvidia_smi": "GPU 0: NVIDIA RTX PRO 6000 Blackwell Server Edition (UUID: GPU-822536da-f2f9-2caf-83b8-9b1974483e63)\n  MIG 1g.24gb     Device  0: (UUID: MIG-5d3bb68b-2d20-590e-92a3-a0ff8bc701ed)",
+    "driver": "595.58.03",
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "cpu_quota": "400000 100000",
+    "host_memory_limit": "17179869184",
+    "environment": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+      "JAX_PLATFORMS": "cuda,cpu",
+      "OMP_NUM_THREADS": "4"
+    }
+  },
+  "mode": "gradient",
+  "status": "complete",
+  "setup_seconds": 3.928522518835962,
+  "shape": [
+    200,
+    200,
+    75
+  ],
+  "time_steps": 5245,
+  "parameters": 6400,
+  "resolved_reversible_checkpoints": 18,
+  "compile_seconds": 3.5227550296112895,
+  "executable_memory": {
+    "argument_size_in_bytes": 942747784,
+    "output_size_in_bytes": 1037148172,
+    "alias_size_in_bytes": 942722180,
+    "temp_size_in_bytes": 3058108192
+  },
+  "gradient_norm": 0.03448941558599472,
+  "warmup_seconds": 54.8407165100798,
+  "run_seconds": [
+    54.7851645257324,
+    54.5451473928988
+  ],
+  "median_seconds": 54.6651559593156,
+  "measurements": [
+    {
+      "input_flux": 2.844719919288573e-16,
+      "output_flux": 1.4557750123667747e-17,
+      "transmission": 0.05117463320493698
+    },
+    {
+      "input_flux": 2.844719919288573e-16,
+      "output_flux": 1.4557750123667747e-17,
+      "transmission": 0.05117463320493698
+    }
+  ],
+  "gcups": 0.28784332037231786,
+  "memory_stats": {
+    "num_allocs": 3321,
+    "bytes_in_use": 1143051008,
+    "peak_bytes_in_use": 4327561216,
+    "largest_alloc_size": 3058108416,
+    "bytes_limit": 19025362944,
+    "bytes_reserved": 0,
+    "peak_bytes_reserved": 0,
+    "largest_free_block_bytes": 4294967296,
+    "pool_bytes": 6444548096,
+    "peak_pool_bytes": 6444548096
+  }
+}

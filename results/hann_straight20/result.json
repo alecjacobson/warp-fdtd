@@ -1,0 +1,166 @@
+{
+  "settings": {
+    "spacing_nm": 20,
+    "time_fs": 200,
+    "seed": 0,
+    "backend": "gpu",
+    "gradient": "none",
+    "parameterization": "smooth",
+    "exact_interpolation": true,
+    "pml_cells": 10,
+    "domain_um": 4,
+    "voxel_nm": 20,
+    "quality_monitors": true,
+    "precision": "float32",
+    "scene": "straight",
+    "source_profile": "current",
+    "pad_domain": false,
+    "modal_window": "hann"
+  },
+  "environment": {
+    "started_utc": "2026-10-21T15:11:44.716217+00:00",
+    "upstream_sha": "2cab8dbb2af9a43ec6443712f011f50ecf58790b",
+    "harness_sha256": {
+      "baseline/__init__.py": "145f00e0ee56a09a754d58ed87669d62088433670e013623a12ae880505ef7fe",
+      "baseline/common.py": "2523c074b7db324ab2c47c8d97ceb8ca4eeb3902abb3649788b90c54d7044d3b",
+      "baseline/compare.py": "381ec97c85e6b396549b5d7fd3a8f2b95a9be510b88807a376a7625ba81153ac",
+      "baseline/export_case.py": "c1c30fb368a6dddc6cb10b37ad6b1a913c7ccfd937ec1c5bd847a0fe037022bf",
+      "baseline/physics.py": "ad4ed758d6b1dcdd46f3eed58234e6bcce85a18dbe9f47a82ae24d5f9e05e4b6",
+      "baseline/protocol_checks.py": "10126e71cce9f1dd42dae41ff5c69fbc88a4e804977bbb491f6024616be642f3",
+      "baseline/quality_checks.py": "b3a054b3ef40d55918b05d6d1de727f24e32cc129d4e926f91bbfbdd680adb42",
+      "baseline/report.py": "6381fbc28b31b436f8e9be360d8841f85b4d62b49ef1977c794e2a76cbac4980",
+      "baseline/run.py": "42416dd967427e76c1e4e12e6a1355523f90674974176da4713a7ad0bdca839a",
+      "baseline/scene.py": "45a3d931f3a05dcb1ffbabed25561f35ae5f3169099fddb5a2ab28a924af9341"
+    },
+    "python": "3.12.15",
+    "jax": "0.12.0",
+    "jax_enable_x64": false,
+    "requirements_sha256": "80d4daccc80308750433ea45e45a0d32217feda6f978158680cda26f789420db",
+    "cpu_model": "AMD EPYC 9B45",
+    "devices": [
+      {
+        "kind": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+        "platform": "gpu"
+      }
+    ],
+    "nvidia_smi": "GPU 0: NVIDIA RTX PRO 6000 Blackwell Server Edition (UUID: GPU-822536da-f2f9-2caf-83b8-9b1974483e63)\n  MIG 1g.24gb     Device  0: (UUID: MIG-5d3bb68b-2d20-590e-92a3-a0ff8bc701ed)",
+    "driver": "595.58.03",
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "cpu_quota": "400000 100000",
+    "host_memory_limit": "17179869184",
+    "environment": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+      "JAX_PLATFORMS": "cuda,cpu",
+      "OMP_NUM_THREADS": "4"
+    }
+  },
+  "mode": "forward",
+  "status": "complete",
+  "arguments": {
+    "mode": "forward",
+    "output": "results/hann_straight20",
+    "spacing_nm": 20,
+    "voxel_nm": 20,
+    "time_fs": 200,
+    "seed": 0,
+    "backend": "gpu",
+    "gradient": "none",
+    "parameterization": "smooth",
+    "exact_interpolation": true,
+    "pml_cells": 10,
+    "domain_um": 4,
+    "reps": 1,
+    "epochs": 250,
+    "beta": 1.0,
+    "load": null,
+    "resume": null,
+    "finite_difference": false,
+    "quality_monitors": true,
+    "modal_window": "hann",
+    "objective": "modal",
+    "init": "random",
+    "fixed_beta": false,
+    "precision": "float32",
+    "max_steps": null,
+    "scene": "straight",
+    "save_full_fields": false,
+    "source_profile": "current",
+    "trace": false,
+    "pad_domain": false
+  },
+  "setup_seconds": 7.58716706559062,
+  "shape": [
+    200,
+    200,
+    75
+  ],
+  "time_steps": 5245,
+  "configured_time_steps": 5245,
+  "physical_evaluation": true,
+  "parameters": 0,
+  "dtypes": {
+    "E": "float32",
+    "H": "float32",
+    "inverse_permittivity": "float32",
+    "detectors": {
+      "input": {
+        "poynting_flux": "float32"
+      },
+      "output": {
+        "poynting_flux": "float32"
+      },
+      "mode_in": {
+        "phasor": "complex64"
+      },
+      "mode_reflected": {
+        "phasor": "complex64"
+      },
+      "mode_out": {
+        "phasor": "complex64"
+      }
+    }
+  },
+  "compile_seconds": 0.7918295171111822,
+  "executable_memory": {
+    "argument_size_in_bytes": 14162180,
+    "output_size_in_bytes": 108562552,
+    "alias_size_in_bytes": 14162180,
+    "temp_size_in_bytes": 108007184
+  },
+  "warmup_seconds": 12.145674036815763,
+  "run_seconds": [
+    12.318321238271892
+  ],
+  "median_seconds": 12.318321238271892,
+  "measurements": [
+    {
+      "input_flux": 2.8395911347929483e-16,
+      "modal_reflection": 7.865172847232316e-06,
+      "modal_transmission": 1.000045895576477,
+      "mode_in": 0.9945182800292969,
+      "mode_out": 0.9945639371871948,
+      "mode_reflected": 7.82205825089477e-06,
+      "output_flux": 3.6890100679805456e-16,
+      "transmission": 1.2991342544555664
+    }
+  ],
+  "gcups": 1.277365616275114,
+  "memory_stats": {
+    "num_allocs": 4237,
+    "bytes_in_use": 153091840,
+    "peak_bytes_in_use": 384075008,
+    "largest_alloc_size": 108007424,
+    "bytes_limit": 19025362944,
+    "bytes_reserved": 0,
+    "peak_bytes_reserved": 0,
+    "largest_free_block_bytes": 268435456,
+    "pool_bytes": 538968064,
+    "peak_pool_bytes": 538968064
+  }
+}

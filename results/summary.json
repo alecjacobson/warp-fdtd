@@ -1,0 +1,103 @@
+{
+  "completed_runs": [
+    "hann_200fs",
+    "gradient50_checkpointed",
+    "forward50_gpu",
+    "ring20_optimized",
+    "ring20_initial",
+    "forward50_cpu",
+    "gradient50_exact64",
+    "quality_200fs",
+    "gradient50_modal",
+    "forward10_gpu",
+    "smoke50",
+    "capacity192m",
+    "hann_400fs",
+    "gradient50_adjoint",
+    "hann_300fs",
+    "gradient50_exact",
+    "gradient20_hann_adjoint",
+    "gradient20_exact",
+    "hann_straight20",
+    "cuda_trace",
+    "gradient50_compressed",
+    "gradient50_paper",
+    "gradient20_hann_exact",
+    "hann_thicker_pml",
+    "forward20_gpu",
+    "quality_400fs",
+    "straight20_calibration",
+    "forward25_gpu",
+    "gradient20_modal_exact",
+    "hann_10nm",
+    "gradient20_modal_adjoint",
+    "quality_300fs",
+    "quality_thicker_pml"
+  ],
+  "comparisons": {
+    "cpu_gpu": {
+      "scope": "full_3d_fields",
+      "relative_l2_errors": {
+        "E": 0.00025369509239681065,
+        "H": 0.00021877558901906013,
+        "input": 5.819531907036435e-06,
+        "output": 0.0001825949875637889
+      },
+      "passed": true,
+      "speedup": 12.00412880791562
+    },
+    "gradients": {
+      "exact": {
+        "relative_l2_error": 5.8623250239041446e-06,
+        "cosine": 0.9999999999858423,
+        "best_finite_difference_relative_error": 8.345682414311844e-05,
+        "passed": true,
+        "thresholds": {
+          "relative_l2_error": 0.0001,
+          "cosine_min": 0.99,
+          "finite_difference_error": 0.01
+        }
+      },
+      "paper": {
+        "relative_l2_error": 0.005745837299447721,
+        "cosine": 0.9999992980735132,
+        "best_finite_difference_relative_error": 0.007555176485640977,
+        "passed": true,
+        "thresholds": {
+          "relative_l2_error": 0.05,
+          "cosine_min": 0.99,
+          "finite_difference_error": 0.01
+        }
+      },
+      "compressed": {
+        "relative_l2_error": 0.04727592527486447,
+        "cosine": 0.9999561593230459,
+        "best_finite_difference_relative_error": 0.02994992271459751,
+        "passed": false,
+        "thresholds": {
+          "relative_l2_error": 0.05,
+          "cosine_min": 0.99,
+          "finite_difference_error": 0.01
+        }
+      }
+    },
+    "frequency_adjoint": {
+      "relative_l2_error_vs_segmented": 0.003915340683919875,
+      "cosine": 0.9999923387487099,
+      "best_finite_difference_relative_error": 0.0012933123477864995,
+      "passed": true
+    },
+    "frequency_adjoint_full": {
+      "relative_l2_error_vs_segmented": 0.0004486304178616972,
+      "cosine": 0.9999999200456234,
+      "speedup": 2.1943112740625312,
+      "passed": true
+    },
+    "frequency_adjoint_hann": {
+      "relative_l2_error_vs_segmented": 0.0005295221070201197,
+      "cosine": 0.9999998907787119,
+      "speedup": 2.2004008850168075,
+      "passed": true
+    }
+  }
+}

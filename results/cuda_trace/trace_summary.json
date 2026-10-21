@@ -1,0 +1,56 @@
+{
+  "trace": "results/cuda_trace/profiler/plugins/profile/2026_10_21_14_35_49/ajacobson-gke.trace.json.gz",
+  "gpu_events": 5418,
+  "gpu_event_time_ms": 16.536887,
+  "top_gpu_events": [
+    [
+      "MemcpyD2D",
+      632
+    ],
+    [
+      "set_case_condition",
+      630
+    ],
+    [
+      "loop_add_fusion_2",
+      315
+    ],
+    [
+      "loop_add_fusion",
+      315
+    ],
+    [
+      "input_concatenate_fusion_1",
+      315
+    ],
+    [
+      "loop_dynamic_update_slice_fusion_2",
+      315
+    ],
+    [
+      "loop_dynamic_update_slice_fusion_3",
+      315
+    ],
+    [
+      "loop_add_fusion_3",
+      315
+    ],
+    [
+      "loop_add_fusion_1",
+      315
+    ],
+    [
+      "input_concatenate_fusion",
+      315
+    ],
+    [
+      "loop_dynamic_update_slice_fusion_4",
+      315
+    ],
+    [
+      "loop_dynamic_update_slice_fusion_5",
+      315
+    ]
+  ],
+  "note": "Warmup trace; event durations can overlap. Unprofiled repetitions are timed separately."
+}

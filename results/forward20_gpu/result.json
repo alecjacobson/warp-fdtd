@@ -1,0 +1,108 @@
+{
+  "settings": {
+    "spacing_nm": 20.0,
+    "time_fs": 200,
+    "seed": 0,
+    "backend": "gpu",
+    "gradient": "none",
+    "parameterization": "smooth",
+    "exact_interpolation": false,
+    "pml_cells": 10,
+    "domain_um": 4,
+    "voxel_nm": 20.0,
+    "quality_monitors": false
+  },
+  "environment": {
+    "upstream_sha": "2cab8dbb2af9a43ec6443712f011f50ecf58790b",
+    "python": "3.12.15",
+    "jax": "0.12.0",
+    "devices": [
+      {
+        "kind": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+        "platform": "gpu"
+      }
+    ],
+    "nvidia_smi": "GPU 0: NVIDIA RTX PRO 6000 Blackwell Server Edition (UUID: GPU-822536da-f2f9-2caf-83b8-9b1974483e63)\n  MIG 1g.24gb     Device  0: (UUID: MIG-5d3bb68b-2d20-590e-92a3-a0ff8bc701ed)",
+    "driver": "595.58.03",
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "cpu_quota": "400000 100000",
+    "host_memory_limit": "17179869184",
+    "environment": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+      "JAX_PLATFORMS": "cuda,cpu",
+      "OMP_NUM_THREADS": "4"
+    }
+  },
+  "mode": "forward",
+  "status": "complete",
+  "setup_seconds": 3.330059719271958,
+  "shape": [
+    200,
+    200,
+    75
+  ],
+  "time_steps": 5245,
+  "parameters": 6400,
+  "compile_seconds": 1.1337517593055964,
+  "executable_memory": {
+    "argument_size_in_bytes": 12027784,
+    "output_size_in_bytes": 106402468,
+    "alias_size_in_bytes": 12002180,
+    "temp_size_in_bytes": 726296
+  },
+  "warmup_seconds": 9.011480742134154,
+  "run_seconds": [
+    8.94587183278054,
+    8.809623927809298,
+    8.968019110150635,
+    8.785311413928866,
+    8.950312237255275
+  ],
+  "median_seconds": 8.94587183278054,
+  "measurements": [
+    {
+      "input_flux": 2.844719919288573e-16,
+      "output_flux": 1.4557750123667747e-17,
+      "transmission": 0.05117463320493698
+    },
+    {
+      "input_flux": 2.844719919288573e-16,
+      "output_flux": 1.4557750123667747e-17,
+      "transmission": 0.05117463320493698
+    },
+    {
+      "input_flux": 2.844719919288573e-16,
+      "output_flux": 1.4557750123667747e-17,
+      "transmission": 0.05117463320493698
+    },
+    {
+      "input_flux": 2.844719919288573e-16,
+      "output_flux": 1.4557750123667747e-17,
+      "transmission": 0.05117463320493698
+    },
+    {
+      "input_flux": 2.844719919288573e-16,
+      "output_flux": 1.4557750123667747e-17,
+      "transmission": 0.05117463320493698
+    }
+  ],
+  "gcups": 1.758911852765643,
+  "memory_stats": {
+    "num_allocs": 3568,
+    "bytes_in_use": 137913088,
+    "peak_bytes_in_use": 259845888,
+    "largest_alloc_size": 67108864,
+    "bytes_limit": 19025362944,
+    "bytes_reserved": 0,
+    "peak_bytes_reserved": 0,
+    "largest_free_block_bytes": 98217728,
+    "pool_bytes": 270532608,
+    "peak_pool_bytes": 270532608
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "window": "hann",
+  "runs": {
+    "straight20_calibration": "results/hann_straight20",
+    "quality_200fs": "results/hann_200fs",
+    "quality_300fs": "results/hann_300fs",
+    "quality_400fs": "results/hann_400fs",
+    "quality_thicker_pml": "results/hann_thicker_pml",
+    "quality_10nm": "results/hann_10nm"
+  },
+  "thresholds": {
+    "calibration_T_error": 0.01,
+    "calibration_R_max": 0.001,
+    "time_T_absolute_change": 0.005,
+    "pml_T_absolute_change": 0.005,
+    "mesh_T_absolute_change": 0.01,
+    "target_fine_mesh_T_min": 0.92
+  },
+  "missing": [],
+  "passed": true,
+  "checks": {
+    "straight_calibration": true,
+    "time_convergence": true,
+    "pml_convergence": true,
+    "mesh_convergence": true,
+    "same_physical_material_cross_section": true,
+    "fine_mesh_quality_target": true
+  },
+  "time_T_change": 4.363059997558594e-05,
+  "pml_T_change": 1.3828277587890625e-05,
+  "mesh_T_change": 0.002990126609802246,
+  "fine_mesh_T": 0.9319190382957458,
+  "fine_mesh_R": 2.6573692593956366e-05,
+  "candidate_sha256": "034c4aa0e3b933dd617dcc09824c11d535e7cc6d349cd7e1d3349108ec420ade"
+}

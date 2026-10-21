@@ -1,0 +1,9 @@
+[
+  {
+    "stage": "post-optimization evaluation wrapper",
+    "cause": "Editing the active shell script changed the byte offsets at which bash resumed reading after the optimizer exited.",
+    "observed_error": "pts/run.sh: No such file or directory",
+    "impact": "Optimizer completed all 20 steps; structured history, best/final parameters and checkpoint intact. Original optimization stdout log was overwritten by the failed command redirection. No convergence evaluation started.",
+    "recovery": "Continue with a separate finalized evaluate.sh after adjoint.sh; do not edit active shell scripts."
+  }
+]

@@ -1,0 +1,162 @@
+{
+  "settings": {
+    "spacing_nm": 50.0,
+    "time_fs": 200,
+    "seed": 0,
+    "backend": "cpu",
+    "gradient": "none",
+    "parameterization": "smooth",
+    "exact_interpolation": false,
+    "pml_cells": 10,
+    "domain_um": 4,
+    "voxel_nm": 50.0,
+    "quality_monitors": false,
+    "precision": "float32",
+    "scene": "bend",
+    "source_profile": "current",
+    "pad_domain": false
+  },
+  "environment": {
+    "started_utc": "2026-10-21T15:02:26.060596+00:00",
+    "upstream_sha": "2cab8dbb2af9a43ec6443712f011f50ecf58790b",
+    "harness_sha256": {
+      "baseline/__init__.py": "145f00e0ee56a09a754d58ed87669d62088433670e013623a12ae880505ef7fe",
+      "baseline/common.py": "2523c074b7db324ab2c47c8d97ceb8ca4eeb3902abb3649788b90c54d7044d3b",
+      "baseline/compare.py": "381ec97c85e6b396549b5d7fd3a8f2b95a9be510b88807a376a7625ba81153ac",
+      "baseline/physics.py": "ad4ed758d6b1dcdd46f3eed58234e6bcce85a18dbe9f47a82ae24d5f9e05e4b6",
+      "baseline/protocol_checks.py": "10126e71cce9f1dd42dae41ff5c69fbc88a4e804977bbb491f6024616be642f3",
+      "baseline/quality_checks.py": "7d885a504d0e1b7116626156fc78f8f0fff703aa21f226be6b3083b79b7bdc9c",
+      "baseline/report.py": "6381fbc28b31b436f8e9be360d8841f85b4d62b49ef1977c794e2a76cbac4980",
+      "baseline/run.py": "f62cf2729bdba3ff9bf668942321d8304a2cf79aae5e4e9bb0980880e21d10fb",
+      "baseline/scene.py": "053af0b325866c12425f9969838ae20bb9c32f32ad1a9025680913f55fb06716"
+    },
+    "python": "3.12.15",
+    "jax": "0.12.0",
+    "jax_enable_x64": false,
+    "requirements_sha256": "80d4daccc80308750433ea45e45a0d32217feda6f978158680cda26f789420db",
+    "cpu_model": "AMD EPYC 9B45",
+    "devices": [
+      {
+        "kind": "cpu",
+        "platform": "cpu"
+      }
+    ],
+    "nvidia_smi": "GPU 0: NVIDIA RTX PRO 6000 Blackwell Server Edition (UUID: GPU-822536da-f2f9-2caf-83b8-9b1974483e63)\n  MIG 1g.24gb     Device  0: (UUID: MIG-5d3bb68b-2d20-590e-92a3-a0ff8bc701ed)",
+    "driver": "595.58.03",
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "cpu_quota": "400000 100000",
+    "host_memory_limit": "17179869184",
+    "environment": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+      "JAX_PLATFORMS": "cpu",
+      "OMP_NUM_THREADS": "4"
+    }
+  },
+  "mode": "forward",
+  "status": "complete",
+  "arguments": {
+    "mode": "forward",
+    "output": "results/forward50_cpu",
+    "spacing_nm": 50.0,
+    "voxel_nm": 50.0,
+    "time_fs": 200,
+    "seed": 0,
+    "backend": "cpu",
+    "gradient": "none",
+    "parameterization": "smooth",
+    "exact_interpolation": false,
+    "pml_cells": 10,
+    "domain_um": 4,
+    "reps": 5,
+    "epochs": 250,
+    "beta": 1.0,
+    "load": null,
+    "resume": null,
+    "finite_difference": false,
+    "quality_monitors": false,
+    "objective": "flux",
+    "init": "random",
+    "fixed_beta": false,
+    "precision": "float32",
+    "max_steps": null,
+    "scene": "bend",
+    "save_full_fields": true,
+    "source_profile": "current",
+    "trace": false,
+    "pad_domain": false
+  },
+  "setup_seconds": 2.2159785395488143,
+  "shape": [
+    80,
+    80,
+    30
+  ],
+  "time_steps": 2098,
+  "configured_time_steps": 2098,
+  "physical_evaluation": true,
+  "parameters": 1024,
+  "dtypes": {
+    "E": "float32",
+    "H": "float32",
+    "inverse_permittivity": "float32",
+    "detectors": {
+      "input": {
+        "poynting_flux": "float32"
+      },
+      "output": {
+        "poynting_flux": "float32"
+      }
+    }
+  },
+  "compile_seconds": 0.9899736028164625,
+  "executable_memory": {
+    "argument_size_in_bytes": 772968,
+    "output_size_in_bytes": 8961156,
+    "alias_size_in_bytes": 768868,
+    "temp_size_in_bytes": 5001816
+  },
+  "warmup_seconds": 2.704793006181717,
+  "run_seconds": [
+    2.37839028891176,
+    2.356536852195859,
+    2.424090520478785,
+    2.398671085946262,
+    2.470013191923499
+  ],
+  "median_seconds": 2.398671085946262,
+  "measurements": [
+    {
+      "input_flux": 1.860237241617423e-15,
+      "output_flux": 9.990546486839089e-17,
+      "transmission": 0.053705766797065735
+    },
+    {
+      "input_flux": 1.860237241617423e-15,
+      "output_flux": 9.990546486839089e-17,
+      "transmission": 0.053705766797065735
+    },
+    {
+      "input_flux": 1.860237241617423e-15,
+      "output_flux": 9.990546486839089e-17,
+      "transmission": 0.053705766797065735
+    },
+    {
+      "input_flux": 1.860237241617423e-15,
+      "output_flux": 9.990546486839089e-17,
+      "transmission": 0.053705766797065735
+    },
+    {
+      "input_flux": 1.860237241617423e-15,
+      "output_flux": 9.990546486839089e-17,
+      "transmission": 0.053705766797065735
+    }
+  ],
+  "gcups": 0.16793298687764496,
+  "memory_stats": null
+}

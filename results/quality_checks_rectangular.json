@@ -1,0 +1,25 @@
+{
+  "window": "rectangular",
+  "runs": {
+    "straight20_calibration": "results/straight20_calibration",
+    "quality_200fs": "results/quality_200fs",
+    "quality_300fs": "results/quality_300fs",
+    "quality_400fs": "results/quality_400fs",
+    "quality_thicker_pml": "results/quality_thicker_pml",
+    "quality_10nm": "results/quality_10nm"
+  },
+  "thresholds": {
+    "calibration_T_error": 0.01,
+    "calibration_R_max": 0.001,
+    "time_T_absolute_change": 0.005,
+    "pml_T_absolute_change": 0.005,
+    "mesh_T_absolute_change": 0.01,
+    "target_fine_mesh_T_min": 0.92
+  },
+  "missing": [
+    "quality_10nm"
+  ],
+  "passed": false,
+  "time_T_change": 0.017850935459136963,
+  "time_convergence": false
+}

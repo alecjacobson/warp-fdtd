@@ -1,0 +1,16 @@
+{
+  "epoch": 19,
+  "beta": 50.0,
+  "gradient_seconds": 55.68379372544587,
+  "step_seconds": 55.68839760310948,
+  "grad_norm": 0.014739549718797207,
+  "objective": 0.9217196702957153,
+  "input_flux": 2.8395956346554806e-16,
+  "modal_reflection": 9.760985449247528e-06,
+  "modal_transmission": 0.9217196702957153,
+  "mode_in": 0.9983587861061096,
+  "mode_out": 0.9202069640159607,
+  "mode_reflected": 9.7449656095705e-06,
+  "output_flux": 3.5203552202703737e-16,
+  "transmission": 1.2397382259368896
+}
