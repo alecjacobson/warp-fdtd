@@ -86,14 +86,17 @@ class Solver:
         self.steps = m["time_steps"]
         if self.steps < 1 or not np.isfinite(m["dt_s"]) or m["dt_s"] <= 0:
             raise ValueError("Positive time step and trajectory length required")
-        expected_dt = 0.99 / np.sqrt(3) * dx / 299792458.0
+        factor = m["settings"].get("courant_factor", 0.99)
+        if not np.isfinite(factor) or not 0 < factor <= 0.99:
+            raise ValueError("Require 0 < exported CFL factor <= 0.99")
+        expected_dt = factor / np.sqrt(3) * dx / 299792458.0
         if not np.isclose(m["dt_s"], expected_dt, rtol=1e-4, atol=0):
-            raise ValueError("Only the exported CFL factor 0.99 is supported")
+            raise ValueError("Exported time step disagrees with the declared CFL factor")
         self.device = wp.get_device(device)
         self.graph_steps = graph_steps
         if graph_steps < 1:
             raise ValueError("graph_steps must be positive")
-        self.courant = 0.99 / np.sqrt(3)
+        self.courant = factor / np.sqrt(3)
         self.E = wp.zeros((3, self.n), dtype=float, device=self.device)
         self.H = wp.zeros_like(self.E)
         self.hprev = wp.zeros_like(self.H)

@@ -1,34 +1,40 @@
 # Warp FDTD
 
-Pure NVIDIA Warp 3D electromagnetic solver, compared with pinned, unmodified
-FDTDX on an optimized silicon 90° waveguide bend. The flagship uses explicit
-Yee updates, a uniform grid, CPML, injected modes and Hann-window modal detectors.
+Pure NVIDIA Warp 3D electromagnetics, compared with pinned, unmodified FDTDX
+on an optimized silicon 90° waveguide bend. The flagship uses explicit Yee
+updates, a uniform grid, CPML, injected modes and Hann-window modal detectors.
 
-**Measured status:** **2.96–3.24× faster** matched forward runs;
-**93.1919%** fine-grid transmission. Adaptive flagship results are pending.
+**Measured status:** **2.96–3.24× faster** matched forward runs. Adaptive
+flagship gains and continuum reference uncertainty remain unresolved.
 
 | Same-input flagship workload | FDTDX | Warp | Speedup |
 |---|---:|---:|---:|
 | 20 nm · 3M cells · 200 fs | 14.683 s | 4.534 s | 3.24× |
 | 10 nm · 24M cells · 300 fs | 316.138 s | 106.709 s | 2.96× |
 
-![Flagship performance and numerical agreement](results/warp/performance.png)
+![Flagship performance and same-input numerical agreement](results/warp/performance.png)
 
-Field agreement is against FDTDX, not continuum ground truth. These archived
-mesh levels have slightly different source/output positions; controlled physical
-convergence is tracked in [#25](https://github.com/alecjacobson/warp-fdtd/issues/25).
-The 3M-cell material gradient is **1.98× faster** than
-FDTDX's fast adjoint, with **1.85e-06** relative gradient error
-and **8.06 GB** of stored history.
+The new fixed-geometry convergence study reaches **93.2438% transmission at
+6.67 nm / 81M cells**. Compared with that mesh, the 10 nm complex electric-field
+L2 difference is **1.47%**, and Poynting-vector L2 difference **1.62%**. These are
+mesh differences, not continuum error bounds; [#30](https://github.com/alecjacobson/warp-fdtd/issues/30)
+tracks the remaining reference-accuracy budget.
 
-![Flagship time-averaged power flow](results/warp/flagship_flow.png)
+![Controlled flagship mesh trends and boundary/time controls](results/physical_reference/comparison/convergence.png)
 
-Common-scale central slices of the full 3D bend, 20 nm / 300 fs. Poynting-vector
-relative L2 difference: **4.51e-07**. Measurements use an RTX PRO 6000 Blackwell
-**MIG 1g.24gb**, float32, synchronized warm runs; timings exclude compilation,
-setup and host postprocessing.
+![Common-scale time-averaged power flow across three 3D meshes](results/physical_reference/comparison/power_flow.png)
 
-[Reproduction and limitations](docs/warp.md) ·
+Power-flow images show a common z=790 nm slice, normalized by incident power.
+Timing fixtures retain their archived source/port positions; the separate
+convergence study fixes physical geometry and observation windows. Reference
+generation and volume-observer timings are excluded from speedup claims.
+The archived 3M-cell material gradient is **1.98× faster**, with **1.85e-6**
+relative agreement with FDTDX's fast adjoint.
+
+Measurements use an RTX PRO 6000 Blackwell **MIG 1g.24gb**, float32 and
+synchronized warm runs; throughput timings exclude compilation, setup and host
+postprocessing.
+
+[Reproduction](docs/warp.md) · [Controlled references](docs/physical-reference.md) ·
 [Adaptivity progress](docs/adaptivity-progress.md) ·
-[Prioritized issues](https://github.com/alecjacobson/warp-fdtd/issues) ·
-[Raw results](results/warp)
+[Prioritized issues](https://github.com/alecjacobson/warp-fdtd/issues)
