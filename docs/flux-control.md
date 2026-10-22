@@ -100,3 +100,40 @@ separate verification tasks.
 OPENBLAS_NUM_THREADS=1 .venv/bin/python -m warp_fdtd.slab_validation \
   --output results/warp/slab_flux_gpu
 ```
+
+## Measured GPU results
+
+The original million-step control and all twelve material/CFL million-step cases
+pass on the RTX PRO 6000 Blackwell MIG 1g.24gb. The sweep maxima are energy
+drift **5.54e-6** and normalized Gauss residual **1.03e-6**. CPU and GPU checkpoint
+metrics agree exactly in these runs. All **22 regression tests** pass.
+
+The `--flux --flux-plain` ablation retains shared-edge metric-consistent fluxes
+but removes the two-float accumulator. It preserves second-order convergence
+and energy (maximum drift 1.73e-6), but its million-step Gauss residual reaches
+**7.30e-4**, failing the unchanged 1e-4 gate. Shared fluxes alone are insufficient.
+That failure is retained in `results/warp/flux_plain_gpu/result.json`.
+
+| Grid | Ordinary float32 | Ordinary float64 | Two-float flux | Owned arrays: float32 / float64 / flux |
+|---|---:|---:|---:|---:|
+| 64³ | 0.024013 s | 0.206630 s | 0.071081 s | 9.44 / 18.88 / 22.02 MB |
+| 128³ | 0.483669 s | 1.588842 s | 1.154028 s | 75.50 / 151.00 / 176.16 MB |
+
+Five synchronized warm repetitions of 1024 steps; raw samples and code hashes
+are in `results/warp/flux_cost_final/result.json`. At 128³ the flux control is
+1.38× faster than the passing float64 control, but 2.39× slower than ordinary
+float32 and uses more memory. The smaller grid has a different memory/cache
+regime. This is a correctness/performance tradeoff, not an adaptive flagship win.
+[#32](https://github.com/alecjacobson/warp-fdtd/issues/32) tracks cost reduction
+and production integration. The ordinary float32 control remains a failed
+long-time constraint reference, even though its short-run timing is reported.
+
+GPU Fresnel convergence slopes are **2.002 / 2.020** for epsilon=2.25 / 12.25.
+The finite-slab slopes are **2.008 / 1.982**; maximum residual slab energy is
+reported per run and stays below the 1e-5 gate. These are normal-incidence
+convergence checks. Oblique, sphere/Mie and coarse–fine interface tests remain
+open under #13–#15.
+
+The initial GPU results and the final rerun after adding the ablation are both
+retained. All passing long-time checkpoint metrics are identical between those
+versions; `*_gpu_final` and `flux_cost_final` identify the final implementation.
