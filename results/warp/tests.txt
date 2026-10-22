@@ -6,7 +6,7 @@ test_full_3d_fields_flux_and_reset (test_warp_solver.SolverTests.test_full_3d_fi
 test_source_staggering (test_warp_solver.SolverTests.test_source_staggering) ... ok
 
 ----------------------------------------------------------------------
-Ran 6 tests in 0.553s
+Ran 6 tests in 0.495s
 
 OK
 Warp 1.18.0 initialized:
@@ -17,7 +17,7 @@ Warp 1.18.0 initialized:
    Kernel cache:
      /home/horde/.cache/warp/1.18.0
 Module warp_fdtd.kernels a85e393 load on device 'cuda:0' took 0.44 ms  (cached)
-Module warp_fdtd.adjoint 482ebf8 load on device 'cuda:0' took 0.33 ms  (cached)
-Module warp_fdtd.detectors 32a09fc load on device 'cuda:0' took 0.29 ms  (cached)
-Module warp_fdtd.material 2f66d49 load on device 'cuda:0' took 0.42 ms  (cached)
-Module warp_fdtd.periodic 90b95b4 load on device 'cuda:0' took 0.28 ms  (cached)
+Module warp_fdtd.adjoint 482ebf8 load on device 'cuda:0' took 0.31 ms  (cached)
+Module warp_fdtd.detectors 32a09fc load on device 'cuda:0' took 0.28 ms  (cached)
+Module warp_fdtd.material 2f66d49 load on device 'cuda:0' took 0.43 ms  (cached)
+Module warp_fdtd.periodic 90b95b4 load on device 'cuda:0' took 0.30 ms  (cached)

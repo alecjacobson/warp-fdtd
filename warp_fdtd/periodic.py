@@ -111,7 +111,7 @@ class Periodic:
         self.method = method
         self.courant = cfl / np.sqrt(3)
         self.dt = 1550e-9 / n * self.courant / 299792458.0
-        self.steps = int(np.ceil(20 * (1550e-9 / 299792458.0) / self.dt))
+        self.steps = round(20 * (1550e-9 / 299792458.0) / self.dt)
         self.device = wp.get_device("cuda:0")
         initial = np.zeros((6, *self.shape), np.float32)
         initial[0] = np.cos(2 * np.pi * np.arange(self.shape[2], dtype=np.float32) / n)
