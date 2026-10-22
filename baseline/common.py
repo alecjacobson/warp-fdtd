@@ -45,6 +45,7 @@ def environment():
         },
         "python": platform.python_version(),
         "jax": jax.__version__,
+        "jax_default_matmul_precision": jax.config.jax_default_matmul_precision,
         "jax_enable_x64": jax.config.read("jax_enable_x64"),
         "requirements_sha256": hashlib.sha256(
             (ROOT / "requirements.lock").read_bytes()

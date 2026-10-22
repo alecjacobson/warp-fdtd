@@ -99,3 +99,80 @@ The observed coarse-grid frequency convergence order is 3.97; the Yee order is
 2.01. These are frequency-error results, not a claim of zero dissipation. The
 error-versus-runtime panel compares the two Warp methods; archived FDTDX mode
 execution timing included first execution and is deliberately not used there.
+
+## Exact material adjoint
+
+`warp_fdtd.adjoint.Adjoint` supplies an explicit transpose of the discrete Yee
+and CPML recurrences, including the transpose of detector interpolation. It
+records three forward curl components only in the 80×80×20 design volume.
+Reverse mode through the Gaussian/subpixel material map uses Warp's tape; the
+large time trajectory is not recorded on a tape. The current driver deliberately
+supports the fixed 20 nm, 4×4×1.5 µm smooth bend geometry.
+
+The 3M-cell gradient takes **12.742 s**, versus **55.385 s** for FDTDX exact and
+**25.227 s** for FDTDX's accepted frequency adjoint: **4.35× / 1.98×** speedup.
+The full 6,400-parameter gradient differs from FDTDX exact by **1.85e-6 relative
+L2**, cosine **0.9999999999992**. Three directional finite-difference step sizes
+agree within 0.074%; best error is 0.032%. A changed-design replay also passes
+finite differences (0.091%) and increases coarse-grid transmission from 92.8977%
+to 93.0711%. This last check is a design-update smoke test, not a comparison of
+optimization quality or budgets.
+
+The history buffer alone is **8.056 GB** (decimal), plus fields, CPML, adjoint
+buffers and graphs. This is a deliberate speed/memory tradeoff: FDTDX's fast
+adjoint uses substantially less memory. No large-scale gradient memory advantage
+is claimed. Timing includes forward, refreshed objective cotangents, reverse,
+material pullback and gradient transfer. Initial material construction and graph
+compilation are excluded. Raw synchronized repetitions and finite differences
+are in [the gradient record](../results/warp/gradient20/result.json).
+
+A material-map precision discrepancy required a separate reference. The original
+FDTDX default convolution uses reduced-precision products; direct float32 Warp
+Gaussian filtering differed by up to 0.00106 in inverse permittivity at a few
+interfaces. The new FDTDX reference uses `JAX_DEFAULT_MATMUL_PRECISION=highest`,
+with this flag recorded in provenance, and agrees in inverse permittivity to
+1.61e-6. The original forward results remain untouched. Both exact and fast
+FDTDX gradient baselines were remeasured at the matching precision. The fast
+reference itself agrees with exact to 0.0513% relative L2.
+
+Captured graph source buffers are updated in place after every objective
+measurement. Reallocating them would leave old pointers inside the captured
+graph. The changed-design regression verifies graph reuse and finite differences.
+
+```python
+import numpy as np
+from warp_fdtd.adjoint import Adjoint
+from warp_fdtd.detectors import attach
+
+solver = Adjoint("results/warp_reference/gradient20_highest_exact")
+attach(solver)
+params = solver.data["parameters/p0"].squeeze(-1)
+loss, gradient = solver.differentiate(params)  # loss = -modal transmission
+updated = np.clip(params - 0.2 * gradient / np.linalg.norm(gradient), 0, 1)
+next_loss, next_gradient = solver.differentiate(updated)
+```
+
+Reproduce the gradient validation with an otherwise idle GPU and enough free
+memory (the 24 GB partition used here suffices):
+
+```bash
+OPENBLAS_NUM_THREADS=1 taskset -c 0-3 .venv/bin/python -m warp_fdtd.gradient_benchmark --reps 3
+```
+
+The six fast GPU regression tests include the full CPML-state transpose identity,
+the detector space/time transpose identity, material-map finite differences, a
+periodic mode varying along all three axes and its divergence constraint, source
+half-step timing, and full 3D field/flux agreement and replay. The full adjoint
+and changed-design finite differences above are separate integration checks.
+
+To regenerate the matching FDTDX references, use the pinned baseline environment:
+
+```bash
+for method in exact adjoint; do
+  JAX_DEFAULT_MATMUL_PRECISION=highest scripts/run.sh gradient --gradient "$method" \
+    --quality-monitors --exact-interpolation --modal-window hann --objective modal \
+    --beta 50 --load results/ring20_optimized/best_params.npz \
+    --output "results/gradient20_highest_$method" --reps 2
+done
+JAX_DEFAULT_MATMUL_PRECISION=highest bash scripts/export_references.sh gradient20_highest_exact
+```
