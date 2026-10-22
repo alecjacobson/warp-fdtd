@@ -1,0 +1,106 @@
+{
+  "status": "complete",
+  "scope": "Uniform storage tradeoff, not adaptivity; owned-array bytes are not device peak memory",
+  "rows": [
+    {
+      "spacing_nm": 20,
+      "shape": [
+        200,
+        200,
+        75
+      ],
+      "full_seconds": 4.5341285932809114,
+      "packed_seconds": 6.0082089733332396,
+      "full_owned_bytes": 267173512,
+      "packed_owned_bytes": 157738312,
+      "packed_speedup": 0.754655607587075,
+      "owned_storage_reduction": 1.693776918317726,
+      "parity_scope": "Saved mid-z E/H slices and full modal planes, not full-volume flagship fields",
+      "saved_array_parity": [
+        {
+          "file": "fields.npz",
+          "arrays_bitwise_equal": {
+            "E": true,
+            "H": true
+          },
+          "full_sha256": "df74dd97be798e238d4af5ad676057fad9fdd7104d028043c1a3addd1e73dd13",
+          "packed_sha256": "df74dd97be798e238d4af5ad676057fad9fdd7104d028043c1a3addd1e73dd13"
+        },
+        {
+          "file": "mode_in_phasors.npz",
+          "arrays_bitwise_equal": {
+            "phasors": true
+          },
+          "full_sha256": "c62afeded9329537fcd642523fa5ab4a6b1b9c4666eb12a17c74f353b087b2c4",
+          "packed_sha256": "c62afeded9329537fcd642523fa5ab4a6b1b9c4666eb12a17c74f353b087b2c4"
+        },
+        {
+          "file": "mode_out_phasors.npz",
+          "arrays_bitwise_equal": {
+            "phasors": true
+          },
+          "full_sha256": "c7535596e36ea2c0a0fcd020a3539bac98960a33fed8ee86e47d7ef2b39e3335",
+          "packed_sha256": "c7535596e36ea2c0a0fcd020a3539bac98960a33fed8ee86e47d7ef2b39e3335"
+        },
+        {
+          "file": "mode_reflected_phasors.npz",
+          "arrays_bitwise_equal": {
+            "phasors": true
+          },
+          "full_sha256": "c62afeded9329537fcd642523fa5ab4a6b1b9c4666eb12a17c74f353b087b2c4",
+          "packed_sha256": "c62afeded9329537fcd642523fa5ab4a6b1b9c4666eb12a17c74f353b087b2c4"
+        }
+      ]
+    },
+    {
+      "spacing_nm": 10,
+      "shape": [
+        400,
+        400,
+        150
+      ],
+      "full_seconds": 106.7088264664635,
+      "packed_seconds": 139.6848964728415,
+      "full_owned_bytes": 2124193792,
+      "packed_owned_bytes": 1264043392,
+      "packed_speedup": 0.7639253001645069,
+      "owned_storage_reduction": 1.6804753740605765,
+      "parity_scope": "Saved mid-z E/H slices and full modal planes, not full-volume flagship fields",
+      "saved_array_parity": [
+        {
+          "file": "fields.npz",
+          "arrays_bitwise_equal": {
+            "E": true,
+            "H": true
+          },
+          "full_sha256": "42480f415003b742182a7d8c5778c41fa452037d811c932f98832844582fe68b",
+          "packed_sha256": "42480f415003b742182a7d8c5778c41fa452037d811c932f98832844582fe68b"
+        },
+        {
+          "file": "mode_in_phasors.npz",
+          "arrays_bitwise_equal": {
+            "phasors": true
+          },
+          "full_sha256": "be637ae01c34f974a738da122c3e179e4629aed225d9c7ec14b3488b60cd3d5e",
+          "packed_sha256": "be637ae01c34f974a738da122c3e179e4629aed225d9c7ec14b3488b60cd3d5e"
+        },
+        {
+          "file": "mode_out_phasors.npz",
+          "arrays_bitwise_equal": {
+            "phasors": true
+          },
+          "full_sha256": "33f56e29f723a044027d817028c38f6d374688571b071a6ca99ebbb57160fbfa",
+          "packed_sha256": "33f56e29f723a044027d817028c38f6d374688571b071a6ca99ebbb57160fbfa"
+        },
+        {
+          "file": "mode_reflected_phasors.npz",
+          "arrays_bitwise_equal": {
+            "phasors": true
+          },
+          "full_sha256": "be637ae01c34f974a738da122c3e179e4629aed225d9c7ec14b3488b60cd3d5e",
+          "packed_sha256": "be637ae01c34f974a738da122c3e179e4629aed225d9c7ec14b3488b60cd3d5e"
+        }
+      ]
+    }
+  ]
+}

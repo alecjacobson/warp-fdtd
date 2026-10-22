@@ -35,6 +35,9 @@ def cpml(
     position: int,
     slot: int,
     i: int,
+    nx: int,
+    ny: int,
+    nz: int,
 ):
     c = coeff[axis, position]
     if c[0] != 0.0:
@@ -44,14 +47,44 @@ def cpml(
     return c[2] * d
 
 
-def make_update(electric):
+@wp.func
+def cpml_packed(
+    d: float,
+    psi: wp.array2d(dtype=float),
+    coeff: wp.array2d(dtype=wp.vec4),
+    axis: int,
+    position: int,
+    slot: int,
+    i: int,
+    nx: int,
+    ny: int,
+    nz: int,
+):
+    c = coeff[axis, position]
+    if c[0] != 0.0:
+        plane = int(c[3])
+        index = plane * ny * nz + i % (ny * nz)
+        if axis == 1:
+            index = plane * nx * nz + (i // (ny * nz)) * nz + i % nz
+        elif axis == 2:
+            index = plane * nx * ny + i // nz
+        p = c[1] * psi[slot, index] + c[0] * d
+        psi[slot, index] = p
+        return c[2] * d + p
+    return c[2] * d
+
+
+def make_update(electric, packed=False):
+    coeff_type = wp.vec4 if packed else wp.vec3
+    boundary = cpml_packed if packed else cpml
+
     @wp.kernel
     def update(
         f: wp.array2d(dtype=float),
         g: wp.array2d(dtype=float),
         inv_eps: wp.array(dtype=float),
         psi: wp.array2d(dtype=float),
-        coeff: wp.array2d(dtype=wp.vec3),
+        coeff: wp.array2d(dtype=coeff_type),
         source: wp.array2d(dtype=float),
         waves: wp.array2d(dtype=float),
         step: wp.array(dtype=int),
@@ -77,12 +110,12 @@ def make_update(electric):
             dx = sample(g, x + 1, y, z, nx, ny, nz, periodic) - v
             dy = sample(g, x, y + 1, z, nx, ny, nz, periodic) - v
             dz = sample(g, x, y, z + 1, nx, ny, nz, periodic) - v
-        dxz = cpml(dx[2], psi, coeff, 0, x, 0, i)
-        dxy = cpml(dx[1], psi, coeff, 0, x, 1, i)
-        dyx = cpml(dy[0], psi, coeff, 1, y, 2, i)
-        dyz = cpml(dy[2], psi, coeff, 1, y, 3, i)
-        dzy = cpml(dz[1], psi, coeff, 2, z, 4, i)
-        dzx = cpml(dz[0], psi, coeff, 2, z, 5, i)
+        dxz = boundary(dx[2], psi, coeff, 0, x, 0, i, nx, ny, nz)
+        dxy = boundary(dx[1], psi, coeff, 0, x, 1, i, nx, ny, nz)
+        dyx = boundary(dy[0], psi, coeff, 1, y, 2, i, nx, ny, nz)
+        dyz = boundary(dy[2], psi, coeff, 1, y, 3, i, nx, ny, nz)
+        dzy = boundary(dz[1], psi, coeff, 2, z, 4, i, nx, ny, nz)
+        dzx = boundary(dz[0], psi, coeff, 2, z, 5, i, nx, ny, nz)
         curl = wp.vec3(dyz - dzy, dzx - dxz, dxy - dyx)
         old = wp.vec3(f[0, i], f[1, i], f[2, i])
         t = step[0]
@@ -111,6 +144,8 @@ def make_update(electric):
 
 update_e = make_update(True)
 update_h = make_update(False)
+update_e_packed = make_update(True, packed=True)
+update_h_packed = make_update(False, packed=True)
 
 
 @wp.kernel

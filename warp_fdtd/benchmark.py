@@ -9,7 +9,7 @@ import subprocess
 import time
 import numpy as np
 import warp as wp
-from .solver import Solver
+from .solver import Solver, owned_array_bytes
 from .detectors import attach, measurements
 
 
@@ -18,13 +18,14 @@ def main():
     p.add_argument("--case", default="results/warp_reference/forward50_gpu")
     p.add_argument("--output", default="results/warp/forward50_gpu")
     p.add_argument("--reps", type=int, default=3)
+    p.add_argument("--cpml-storage", choices=("full", "packed"), default="full")
     args = p.parse_args()
     if args.reps < 1:
         p.error("--reps must be positive")
     out = Path(args.output)
     out.mkdir(parents=True, exist_ok=True)
     start = time.perf_counter()
-    s = Solver(args.case)
+    s = Solver(args.case, cpml_storage=args.cpml_storage)
     setup = time.perf_counter() - start
     if s.meta["settings"].get("gradient", "none") != "none":
         raise ValueError("Forward benchmarks require forward-only reference timing")
@@ -90,6 +91,9 @@ def main():
         numpy=np.__version__,
         timing_scope="Synchronized complete trajectory, source and all exported detectors; reset/compilation/host postprocessing excluded",
         status="complete",
+        cpml_storage=s.cpml_storage,
+        owned_device_array_bytes=owned_array_bytes(s),
+        memory_scope="Live solver and detector array allocations; excludes graph/allocator/driver overhead; not measured peak memory",
         case=args.case,
         inputs_sha256=s.meta["inputs_sha256"],
         shape=s.shape,

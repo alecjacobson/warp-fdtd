@@ -13,8 +13,50 @@ import warp as wp
 from . import kernels as k
 
 
+def pack_coefficients(coeff, shape):
+    """Rank active planes separately per axis; pad six histories to largest slab.
+
+    The fourth coefficient is a small exact integer plane rank, not a potentially
+    inexact float32 flat offset. E/H can have different active planes.
+    """
+    packed = np.zeros((*coeff.shape[:2], 4), np.float32)
+    packed[..., :3] = coeff
+    slab_sizes = []
+    for axis, length in enumerate(shape):
+        active = coeff[axis, :length, 0] != 0
+        packed[axis, :length, 3] = np.maximum(np.cumsum(active) - 1, 0)
+        slab_sizes.append(int(active.sum()) * (int(np.prod(shape)) // length))
+    return packed, max(1, *slab_sizes)
+
+
+def owned_array_bytes(solver):
+    """Live owned Warp-array storage, excluding allocator/graph/driver overhead.
+
+    This is not a measurement of peak device memory. NumPy setup/input arrays
+    are host storage and are intentionally excluded.
+    """
+    seen = set()
+    def size(value):
+        if isinstance(value, wp.array):
+            if value.ptr in seen:
+                return 0
+            seen.add(value.ptr)
+            return int(value.capacity)
+        if isinstance(value, dict):
+            return sum(size(v) for v in value.values())
+        if isinstance(value, (list, tuple)):
+            return sum(size(v) for v in value)
+        return 0
+    return size(vars(solver)) + sum(size(vars(m)) for m in solver.monitors)
+
+
 class Solver:
-    def __init__(self, case, device="cuda:0", graph_steps=64):
+    def __init__(self, case, device="cuda:0", graph_steps=64, cpml_storage="full"):
+        if cpml_storage not in ("full", "packed"):
+            raise ValueError("cpml_storage must be full or packed")
+        self.cpml_storage = cpml_storage
+        self.update_e = k.update_e_packed if cpml_storage == "packed" else k.update_e
+        self.update_h = k.update_h_packed if cpml_storage == "packed" else k.update_h
         self.path = Path(case)
         self.meta = json.loads((self.path / "manifest.json").read_text())
         raw = self.path / "inputs.npz"
@@ -56,8 +98,6 @@ class Solver:
         self.H = wp.zeros_like(self.E)
         self.hprev = wp.zeros_like(self.H)
         self.eps = wp.array(eps.reshape(-1), dtype=float, device=self.device)
-        self.psi_e = wp.zeros((6, self.n), dtype=float, device=self.device)
-        self.psi_h = wp.zeros_like(self.psi_e)
         self.step = wp.zeros(1, dtype=int, device=self.device)
         self.coeffs = {}
         for field in "EH":
@@ -78,7 +118,14 @@ class Solver:
                     (f"pml_a_{field}", f"pml_b_{field}", f"inv_kappa_{field}")
                 ):
                     coeff[axis, lo:hi, j] = d[f"{name}/{key}"].ravel()
-            self.coeffs[field] = wp.array(coeff, dtype=wp.vec3, device=self.device)
+            if cpml_storage == "packed":
+                packed, psi_size = pack_coefficients(coeff, self.shape)
+                self.coeffs[field] = wp.array(packed, dtype=wp.vec4, device=self.device)
+            else:
+                psi_size = self.n
+                self.coeffs[field] = wp.array(coeff, dtype=wp.vec3, device=self.device)
+            setattr(self, "psi_" + field.lower(), wp.zeros(
+                (6, psi_size), dtype=float, device=self.device))
         sources = [o for o in m["objects"] if o["class"] == "ModePlaneSource"]
         if len(sources) != 1:
             raise ValueError("Exactly one exported plane mode source required")
@@ -151,7 +198,7 @@ class Solver:
             0,
         ]
         wp.launch(
-            k.update_e,
+            self.update_e,
             self.n,
             inputs=[
                 self.E,
@@ -167,7 +214,7 @@ class Solver:
             device=self.device,
         )
         wp.launch(
-            k.update_h,
+            self.update_h,
             self.n,
             inputs=[
                 self.H,
