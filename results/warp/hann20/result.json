@@ -1,0 +1,48 @@
+{
+  "measurements": {
+    "mode_in": 0.9943254590034485,
+    "mode_reflected": 9.690073966339696e-06,
+    "mode_out": 0.9237008094787598,
+    "modal_transmission": 0.9289723008847913,
+    "modal_reflection": 9.745374493429408e-06
+  },
+  "field_reference_scope": "mid_z_cross_section",
+  "code_sha256": "01b990d27e3fa8b210a390b4f9b6e0342dd86bde272ed6b29a844cf85d977b30",
+  "python": "3.12.15",
+  "numpy": "2.4.6",
+  "timing_scope": "Synchronized complete trajectory, source and all exported detectors; reset/compilation/host postprocessing excluded",
+  "status": "complete",
+  "case": "results/warp_reference/hann_200fs",
+  "inputs_sha256": "b0204def81eda54a8fb8ac4eb008e8ae8e47ad5df0f79835d4f95e9e17030b58",
+  "shape": [
+    200,
+    200,
+    75
+  ],
+  "steps": 5245,
+  "dt_s": 3.81315355221175e-17,
+  "warp_version": "1.18.0",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+  "git_commit": "51467799bf82598f76a9611efcf707e369614f76",
+  "setup_seconds": 0.43389570713043213,
+  "compile_graph_seconds": 0.02171268593519926,
+  "warmup_seconds": 4.535083853639662,
+  "seconds": [
+    4.533431144431233,
+    4.533405885100365,
+    4.533321555703878
+  ],
+  "median_seconds": 4.533405885100365,
+  "gcups": 3.4709003338340274,
+  "reference_seconds": 14.682565216906369,
+  "speedup": 3.238749317629501,
+  "relative_l2": {
+    "E": 3.606191758513287e-06,
+    "H": 3.2824462391324444e-06,
+    "modal_transmission_absolute": 2.4140112786508183e-07,
+    "input_flux": 5.548489525608602e-07,
+    "output_flux": 2.649899897733121e-06
+  },
+  "finite_fields": true,
+  "passed": true
+}

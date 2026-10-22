@@ -1,0 +1,41 @@
+{
+  "measurements": {},
+  "field_reference_scope": "mid_z_cross_section",
+  "code_sha256": "16f4197402b3082564b000bf614c01e0ba2b6ef757fbcac07d2bbbc3662afbee",
+  "python": "3.12.15",
+  "numpy": "2.4.6",
+  "timing_scope": "Synchronized complete trajectory, source and all exported detectors; reset/compilation/host postprocessing excluded",
+  "status": "complete",
+  "case": "results/warp_reference/forward10_gpu",
+  "inputs_sha256": "d3a3099c21f55e75912080679fccc2e6b06e77f3ef224b3cef02c70e9976b89d",
+  "shape": [
+    400,
+    400,
+    150
+  ],
+  "steps": 10490,
+  "dt_s": 1.906553897207441e-17,
+  "warp_version": "1.18.0",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+  "git_commit": "51467799bf82598f76a9611efcf707e369614f76",
+  "setup_seconds": 0.3602850614115596,
+  "compile_graph_seconds": 0.02781794313341379,
+  "warmup_seconds": 57.47097036615014,
+  "seconds": [
+    57.470641125924885,
+    57.47055029589683,
+    57.47031084634364
+  ],
+  "median_seconds": 57.47055029589683,
+  "gcups": 4.380678429278494,
+  "reference_seconds": 132.1443293383345,
+  "speedup": 2.299339899443578,
+  "relative_l2": {
+    "E": 6.310134483234307e-06,
+    "H": 3.0532142653470525e-06,
+    "input_flux": 7.905563847998565e-07,
+    "output_flux": 0.0
+  },
+  "finite_fields": true,
+  "passed": true
+}

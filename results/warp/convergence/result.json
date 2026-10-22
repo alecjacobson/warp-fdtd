@@ -1,0 +1,1019 @@
+{
+  "status": "complete",
+  "rows": [
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 8,
+      "courant_factor": 0.99,
+      "shape": [
+        4,
+        4,
+        8
+      ],
+      "steps": 280,
+      "dx_nm": 193.75,
+      "dt_fs": 0.3693988809716323,
+      "compile_seconds": 0.3572773337364197,
+      "seconds": [
+        0.0017529185861349106,
+        0.0017565889284014702,
+        0.0017549991607666016
+      ],
+      "median_seconds": 0.0017549991607666016,
+      "measured_frequency_ratio": 0.9824382480155661,
+      "continuum_relative_error": 0.017561751984433882,
+      "temporal_relative_error": 0.008150772133115769,
+      "predicted_frequency_ratio": 0.982438227901176,
+      "prediction_residual": 2.0473948980637147e-08,
+      "fit_relative_rms": 2.8649187637065293e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 8,
+      "courant_factor": 0.5,
+      "shape": [
+        4,
+        4,
+        8
+      ],
+      "steps": 555,
+      "dx_nm": 193.75,
+      "dt_fs": 0.18656509139981434,
+      "compile_seconds": 0.0043737273663282394,
+      "seconds": [
+        0.003678318113088608,
+        0.0036734575405716896,
+        0.003681098110973835
+      ],
+      "median_seconds": 0.003678318113088608,
+      "measured_frequency_ratio": 0.9764884033551938,
+      "continuum_relative_error": 0.023511596644806176,
+      "temporal_relative_error": 0.00204520722810253,
+      "predicted_frequency_ratio": 0.9764884280969437,
+      "prediction_residual": 2.533747367472472e-08,
+      "fit_relative_rms": 2.9337786466229986e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 8,
+      "courant_factor": 0.25,
+      "shape": [
+        4,
+        4,
+        8
+      ],
+      "steps": 1109,
+      "dx_nm": 193.75,
+      "dt_fs": 0.09328254569990717,
+      "compile_seconds": 0.0035195183008909225,
+      "seconds": [
+        0.006951276212930679,
+        0.006953866221010685,
+        0.00695529580116272
+      ],
+      "median_seconds": 0.006953866221010685,
+      "measured_frequency_ratio": 0.9749915508689708,
+      "continuum_relative_error": 0.025008449131029176,
+      "temporal_relative_error": 0.0005091788896263161,
+      "predicted_frequency_ratio": 0.9749915661531754,
+      "prediction_residual": 1.5676242859363754e-08,
+      "fit_relative_rms": 4.761507453763166e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 16,
+      "courant_factor": 0.99,
+      "shape": [
+        4,
+        4,
+        16
+      ],
+      "steps": 560,
+      "dx_nm": 96.875,
+      "dt_fs": 0.18469944048581616,
+      "compile_seconds": 0.004579936154186726,
+      "seconds": [
+        0.0036792270839214325,
+        0.0036847982555627823,
+        0.0036806482821702957
+      ],
+      "median_seconds": 0.0036806482821702957,
+      "measured_frequency_ratio": 0.995657561058503,
+      "continuum_relative_error": 0.0043424389414969955,
+      "temporal_relative_error": 0.002084075400064833,
+      "predicted_frequency_ratio": 0.9956575478747661,
+      "prediction_residual": 1.324123632961971e-08,
+      "fit_relative_rms": 3.98045283097335e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 16,
+      "courant_factor": 0.5,
+      "shape": [
+        4,
+        4,
+        16
+      ],
+      "steps": 1109,
+      "dx_nm": 96.875,
+      "dt_fs": 0.09328254569990717,
+      "compile_seconds": 0.003505747765302658,
+      "seconds": [
+        0.007219175808131695,
+        0.007217226549983025,
+        0.007221534848213196
+      ],
+      "median_seconds": 0.007219175808131695,
+      "measured_frequency_ratio": 0.9941128068836594,
+      "continuum_relative_error": 0.005887193116340561,
+      "temporal_relative_error": 0.0005293505432848455,
+      "predicted_frequency_ratio": 0.9941128264684506,
+      "prediction_residual": 1.9700773012942818e-08,
+      "fit_relative_rms": 3.3877424330232114e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 16,
+      "courant_factor": 0.25,
+      "shape": [
+        4,
+        4,
+        16
+      ],
+      "steps": 2218,
+      "dx_nm": 96.875,
+      "dt_fs": 0.046641272849953584,
+      "compile_seconds": 0.00432868767529726,
+      "seconds": [
+        0.014529000967741013,
+        0.014523711055517197,
+        0.014530351385474205
+      ],
+      "median_seconds": 0.014529000967741013,
+      "measured_frequency_ratio": 0.9937181852044346,
+      "continuum_relative_error": 0.0062818147955654435,
+      "temporal_relative_error": 0.00013218176154161654,
+      "predicted_frequency_ratio": 0.9937182040870146,
+      "prediction_residual": 1.9001946349739285e-08,
+      "fit_relative_rms": 3.483808261960788e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 32,
+      "courant_factor": 0.99,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "steps": 1120,
+      "dx_nm": 48.4375,
+      "dt_fs": 0.09234972024290808,
+      "compile_seconds": 0.003968417644500732,
+      "seconds": [
+        0.007349085062742233,
+        0.007347916252911091,
+        0.007345125079154968
+      ],
+      "median_seconds": 0.007347916252911091,
+      "measured_frequency_ratio": 0.9989174266824168,
+      "continuum_relative_error": 0.001082573317583213,
+      "temporal_relative_error": 0.0005238747837998936,
+      "predicted_frequency_ratio": 0.998917412914493,
+      "prediction_residual": 1.3782844865417587e-08,
+      "fit_relative_rms": 4.581135534799999e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 32,
+      "courant_factor": 0.5,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "steps": 2218,
+      "dx_nm": 48.4375,
+      "dt_fs": 0.046641272849953584,
+      "compile_seconds": 0.00433212798088789,
+      "seconds": [
+        0.014506720937788486,
+        0.014507530257105827,
+        0.014504331164062023
+      ],
+      "median_seconds": 0.014506720937788486,
+      "measured_frequency_ratio": 0.9985276430674931,
+      "continuum_relative_error": 0.001472356932506913,
+      "temporal_relative_error": 0.00013346432312166812,
+      "predicted_frequency_ratio": 0.998527662362645,
+      "prediction_residual": 1.9323602828968944e-08,
+      "fit_relative_rms": 4.878907926180391e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 32,
+      "courant_factor": 0.25,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "steps": 4435,
+      "dx_nm": 48.4375,
+      "dt_fs": 0.023320636424976792,
+      "compile_seconds": 0.00358461681753397,
+      "seconds": [
+        0.02900361269712448,
+        0.02902604267001152,
+        0.02900440152734518
+      ],
+      "median_seconds": 0.02900440152734518,
+      "measured_frequency_ratio": 0.998427684872271,
+      "continuum_relative_error": 0.0015723151277290404,
+      "temporal_relative_error": 3.3345376221127765e-05,
+      "predicted_frequency_ratio": 0.9984277013626787,
+      "prediction_residual": 1.6516376377673225e-08,
+      "fit_relative_rms": 7.888615959628027e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 64,
+      "courant_factor": 0.99,
+      "shape": [
+        4,
+        4,
+        64
+      ],
+      "steps": 2240,
+      "dx_nm": 24.21875,
+      "dt_fs": 0.04617486012145404,
+      "compile_seconds": 0.002714307978749275,
+      "seconds": [
+        0.014948231168091297,
+        0.014945700764656067,
+        0.014946180395781994
+      ],
+      "median_seconds": 0.014946180395781994,
+      "measured_frequency_ratio": 0.9997295568856315,
+      "continuum_relative_error": 0.00027044311436852375,
+      "temporal_relative_error": 0.00013115640139238494,
+      "predicted_frequency_ratio": 0.9997295427305174,
+      "prediction_residual": 1.4158943573150395e-08,
+      "fit_relative_rms": 6.411560653824423e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 64,
+      "courant_factor": 0.5,
+      "shape": [
+        4,
+        4,
+        64
+      ],
+      "steps": 4435,
+      "dx_nm": 24.21875,
+      "dt_fs": 0.023320636424976792,
+      "compile_seconds": 0.0034715384244918823,
+      "seconds": [
+        0.029595792293548584,
+        0.030408282764256,
+        0.029601871967315674
+      ],
+      "median_seconds": 0.029601871967315674,
+      "measured_frequency_ratio": 0.9996318632528455,
+      "continuum_relative_error": 0.0003681367471545238,
+      "temporal_relative_error": 3.342352427737616e-05,
+      "predicted_frequency_ratio": 0.999631882138574,
+      "prediction_residual": 1.889268330668159e-08,
+      "fit_relative_rms": 8.179831765537528e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 64,
+      "courant_factor": 0.25,
+      "shape": [
+        4,
+        4,
+        64
+      ],
+      "steps": 8869,
+      "dx_nm": 24.21875,
+      "dt_fs": 0.011660318212488396,
+      "compile_seconds": 0.004157716408371925,
+      "seconds": [
+        0.0592325534671545,
+        0.05925075523555279,
+        0.059241135604679585
+      ],
+      "median_seconds": 0.059241135604679585,
+      "measured_frequency_ratio": 0.9996067918953726,
+      "continuum_relative_error": 0.0003932081046273961,
+      "temporal_relative_error": 8.342095435764918e-06,
+      "predicted_frequency_ratio": 0.9996068098309604,
+      "prediction_residual": 1.794264270493784e-08,
+      "fit_relative_rms": 1.1519438824327075e-06,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 128,
+      "courant_factor": 0.99,
+      "shape": [
+        4,
+        4,
+        128
+      ],
+      "steps": 4479,
+      "dx_nm": 12.109375,
+      "dt_fs": 0.02308743006072702,
+      "compile_seconds": 0.005145217292010784,
+      "seconds": [
+        0.029938441701233387,
+        0.029941990971565247,
+        0.029941732063889503
+      ],
+      "median_seconds": 0.029941732063889503,
+      "measured_frequency_ratio": 0.9999324116937611,
+      "continuum_relative_error": 6.75883062388749e-05,
+      "temporal_relative_error": 3.281077168271196e-05,
+      "predicted_frequency_ratio": 0.9999323975323076,
+      "prediction_residual": 1.4162411021700905e-08,
+      "fit_relative_rms": 8.4257146235706e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 128,
+      "courant_factor": 0.5,
+      "shape": [
+        4,
+        4,
+        128
+      ],
+      "steps": 8869,
+      "dx_nm": 12.109375,
+      "dt_fs": 0.011660318212488396,
+      "compile_seconds": 0.0042716870084404945,
+      "seconds": [
+        0.059224204160273075,
+        0.05922984518110752,
+        0.05918671377003193
+      ],
+      "median_seconds": 0.059224204160273075,
+      "measured_frequency_ratio": 0.9999079525532997,
+      "continuum_relative_error": 9.204744670032738e-05,
+      "temporal_relative_error": 8.349175380173435e-06,
+      "predicted_frequency_ratio": 0.9999079684527157,
+      "prediction_residual": 1.5900879390962075e-08,
+      "fit_relative_rms": 1.0109850656062957e-06,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 128,
+      "courant_factor": 0.25,
+      "shape": [
+        4,
+        4,
+        128
+      ],
+      "steps": 17737,
+      "dx_nm": 12.109375,
+      "dt_fs": 0.005830159106244198,
+      "compile_seconds": 0.003257998265326023,
+      "seconds": [
+        0.11843670811504126,
+        0.11845225747674704,
+        0.11841570865362883
+      ],
+      "median_seconds": 0.11843670811504126,
+      "measured_frequency_ratio": 0.999901678252023,
+      "continuum_relative_error": 9.832174797697046e-05,
+      "temporal_relative_error": 2.0742441269039347e-06,
+      "predicted_frequency_ratio": 0.9999016952398645,
+      "prediction_residual": 1.698951157536044e-08,
+      "fit_relative_rms": 1.41438395822886e-06,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 32,
+      "courant_factor": 0.7,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "steps": 1584,
+      "dx_nm": 48.4375,
+      "dt_fs": 0.06529778198993502,
+      "compile_seconds": 0.004676506854593754,
+      "seconds": [
+        0.010366263799369335,
+        0.010372073389589787,
+        0.010365893132984638
+      ],
+      "median_seconds": 0.010366263799369335,
+      "measured_frequency_ratio": 0.9986556730920794,
+      "continuum_relative_error": 0.0013443269079206344,
+      "temporal_relative_error": 0.00026170024419580606,
+      "predicted_frequency_ratio": 0.9986556913542418,
+      "prediction_residual": 1.8286745451234765e-08,
+      "fit_relative_rms": 4.236979608783494e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 32,
+      "courant_factor": 0.35,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "steps": 3168,
+      "dx_nm": 48.4375,
+      "dt_fs": 0.03264889099496751,
+      "compile_seconds": 0.004005287773907185,
+      "seconds": [
+        0.020840966142714024,
+        0.020838018506765366,
+        0.02084500715136528
+      ],
+      "median_seconds": 0.020840966142714024,
+      "measured_frequency_ratio": 0.9984596692024771,
+      "continuum_relative_error": 0.0015403307975229152,
+      "temporal_relative_error": 6.538114327780953e-05,
+      "predicted_frequency_ratio": 0.998459683003029,
+      "prediction_residual": 1.3821841893246756e-08,
+      "fit_relative_rms": 6.296807529838542e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0,
+      "method": "yee",
+      "cells_per_wavelength": 32,
+      "courant_factor": 0.125,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "steps": 8869,
+      "dx_nm": 48.4375,
+      "dt_fs": 0.011660318212488396,
+      "compile_seconds": 0.004159587435424328,
+      "seconds": [
+        0.05842358432710171,
+        0.05841670371592045,
+        0.05839452426880598
+      ],
+      "median_seconds": 0.05841670371592045,
+      "measured_frequency_ratio": 0.9984027043281924,
+      "continuum_relative_error": 0.0015972956718075526,
+      "temporal_relative_error": 8.324658704150778e-06,
+      "predicted_frequency_ratio": 0.9984027195548412,
+      "prediction_residual": 1.5251008900207808e-08,
+      "fit_relative_rms": 1.0993828960106714e-06,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.015234666878961245,
+      "method": "rk4",
+      "cells_per_wavelength": 8,
+      "courant_factor": 0.99,
+      "shape": [
+        4,
+        4,
+        8
+      ],
+      "steps": 280,
+      "dx_nm": 193.75,
+      "dt_fs": 0.3693988809716323,
+      "compile_seconds": 0.0050568971782922745,
+      "seconds": [
+        0.0034348778426647186,
+        0.003430658020079136,
+        0.003430497832596302
+      ],
+      "median_seconds": 0.003430658020079136,
+      "measured_frequency_ratio": 0.9979688304108673,
+      "continuum_relative_error": 0.002031169589132742,
+      "temporal_relative_error": 0.0003123218484731849,
+      "predicted_frequency_ratio": 0.9979688167817238,
+      "prediction_residual": 1.365688317989111e-08,
+      "fit_relative_rms": 2.4253379837157276e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0005141142577063107,
+      "method": "rk4",
+      "cells_per_wavelength": 8,
+      "courant_factor": 0.5,
+      "shape": [
+        4,
+        4,
+        8
+      ],
+      "steps": 555,
+      "dx_nm": 193.75,
+      "dt_fs": 0.18656509139981434,
+      "compile_seconds": 0.005933077074587345,
+      "seconds": [
+        0.006802394986152649,
+        0.006800046190619469,
+        0.006797135807573795
+      ],
+      "median_seconds": 0.006800046190619469,
+      "measured_frequency_ratio": 0.9982591626654167,
+      "continuum_relative_error": 0.0017408373345833006,
+      "temporal_relative_error": 2.1489541292218917e-05,
+      "predicted_frequency_ratio": 0.9982591820602273,
+      "prediction_residual": 1.9428632369589138e-08,
+      "fit_relative_rms": 4.0710934995749316e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 1.6131199479407776e-05,
+      "method": "rk4",
+      "cells_per_wavelength": 8,
+      "courant_factor": 0.25,
+      "shape": [
+        4,
+        4,
+        8
+      ],
+      "steps": 1109,
+      "dx_nm": 193.75,
+      "dt_fs": 0.09328254569990717,
+      "compile_seconds": 0.004753557033836842,
+      "seconds": [
+        0.013573131524026394,
+        0.013566642068326473,
+        0.013564062304794788
+      ],
+      "median_seconds": 0.013566642068326473,
+      "measured_frequency_ratio": 0.9982792363411485,
+      "continuum_relative_error": 0.001720763658851543,
+      "temporal_relative_error": 1.3812917428746019e-06,
+      "predicted_frequency_ratio": 0.9982792570392844,
+      "prediction_residual": 2.073381355494064e-08,
+      "fit_relative_rms": 5.873226216674561e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 0.0004932317227582805,
+      "method": "rk4",
+      "cells_per_wavelength": 16,
+      "courant_factor": 0.99,
+      "shape": [
+        4,
+        4,
+        16
+      ],
+      "steps": 560,
+      "dx_nm": 96.875,
+      "dt_fs": 0.18469944048581616,
+      "compile_seconds": 0.006396105512976646,
+      "seconds": [
+        0.0069321757182478905,
+        0.0069262562319636345,
+        0.006929435767233372
+      ],
+      "median_seconds": 0.006929435767233372,
+      "measured_frequency_ratio": 0.9998687939407928,
+      "continuum_relative_error": 0.00013120605920724504,
+      "temporal_relative_error": 2.0750795472923578e-05,
+      "predicted_frequency_ratio": 0.9998687809204224,
+      "prediction_residual": 1.3022079192737124e-08,
+      "fit_relative_rms": 4.7303543018505325e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 1.660067438513657e-05,
+      "method": "rk4",
+      "cells_per_wavelength": 16,
+      "courant_factor": 0.5,
+      "shape": [
+        4,
+        4,
+        16
+      ],
+      "steps": 1109,
+      "dx_nm": 96.875,
+      "dt_fs": 0.09328254569990717,
+      "compile_seconds": 0.004773007705807686,
+      "seconds": [
+        0.013707920908927917,
+        0.013708031736314297,
+        0.013706411235034466
+      ],
+      "median_seconds": 0.013707920908927917,
+      "measured_frequency_ratio": 0.9998881566910651,
+      "continuum_relative_error": 0.00011184330893487804,
+      "temporal_relative_error": 1.3859062021337465e-06,
+      "predicted_frequency_ratio": 0.9998881732652793,
+      "prediction_residual": 1.6576067851659104e-08,
+      "fit_relative_rms": 6.36602185378215e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 3.674416705345962e-07,
+      "method": "rk4",
+      "cells_per_wavelength": 16,
+      "courant_factor": 0.25,
+      "shape": [
+        4,
+        4,
+        16
+      ],
+      "steps": 2218,
+      "dx_nm": 96.875,
+      "dt_fs": 0.046641272849953584,
+      "compile_seconds": 0.005885615944862366,
+      "seconds": [
+        0.027305464260280132,
+        0.02731393277645111,
+        0.02730752434581518
+      ],
+      "median_seconds": 0.02730752434581518,
+      "measured_frequency_ratio": 0.999889439537433,
+      "continuum_relative_error": 0.0001105604625669665,
+      "temporal_relative_error": 1.0291811858298416e-07,
+      "predicted_frequency_ratio": 0.999889456574954,
+      "prediction_residual": 1.7039404553997883e-08,
+      "fit_relative_rms": 1.0872220737370225e-06,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 1.5258640982396265e-05,
+      "method": "rk4",
+      "cells_per_wavelength": 32,
+      "courant_factor": 0.99,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "steps": 1120,
+      "dx_nm": 48.4375,
+      "dt_fs": 0.09234972024290808,
+      "compile_seconds": 0.0053336769342422485,
+      "seconds": [
+        0.013823091983795166,
+        0.01382492110133171,
+        0.013822442851960659
+      ],
+      "median_seconds": 0.013823091983795166,
+      "measured_frequency_ratio": 0.999991743902018,
+      "continuum_relative_error": 8.25609798205118e-06,
+      "temporal_relative_error": 1.3048351014122161e-06,
+      "predicted_frequency_ratio": 0.9999917327000835,
+      "prediction_residual": 1.1202027083712096e-08,
+      "fit_relative_rms": 5.232041493822033e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": -1.5327364044637193e-07,
+      "method": "rk4",
+      "cells_per_wavelength": 32,
+      "courant_factor": 0.5,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "steps": 2218,
+      "dx_nm": 48.4375,
+      "dt_fs": 0.046641272849953584,
+      "compile_seconds": 0.005878846161067486,
+      "seconds": [
+        0.027383663691580296,
+        0.02739368285983801,
+        0.02738648373633623
+      ],
+      "median_seconds": 0.02738648373633623,
+      "measured_frequency_ratio": 0.9999929437920984,
+      "continuum_relative_error": 7.056207901645628e-06,
+      "temporal_relative_error": 1.049366802341467e-07,
+      "predicted_frequency_ratio": 0.999992962814386,
+      "prediction_residual": 1.9022421526848632e-08,
+      "fit_relative_rms": 1.016890634798577e-06,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": -4.70440358224522e-07,
+      "method": "rk4",
+      "cells_per_wavelength": 32,
+      "courant_factor": 0.25,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "steps": 4435,
+      "dx_nm": 48.4375,
+      "dt_fs": 0.023320636424976792,
+      "compile_seconds": 0.0046875569969415665,
+      "seconds": [
+        0.05474196746945381,
+        0.05474289692938328,
+        0.0547398766502738
+      ],
+      "median_seconds": 0.05474196746945381,
+      "measured_frequency_ratio": 0.9999930245977733,
+      "continuum_relative_error": 6.975402226716554e-06,
+      "temporal_relative_error": 2.4130443421199743e-08,
+      "predicted_frequency_ratio": 0.9999930433538202,
+      "prediction_residual": 1.875617738900104e-08,
+      "fit_relative_rms": 1.5907858870623052e-06,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 1.1011324109189147e-06,
+      "method": "rk4",
+      "cells_per_wavelength": 64,
+      "courant_factor": 0.99,
+      "shape": [
+        4,
+        4,
+        64
+      ],
+      "steps": 2240,
+      "dx_nm": 24.21875,
+      "dt_fs": 0.04617486012145404,
+      "compile_seconds": 0.0037690075114369392,
+      "seconds": [
+        0.027535732835531235,
+        0.027540982700884342,
+        0.02755043376237154
+      ],
+      "median_seconds": 0.027540982700884342,
+      "measured_frequency_ratio": 0.9999994955201793,
+      "continuum_relative_error": 5.044798206954582e-07,
+      "temporal_relative_error": 6.927702689285553e-08,
+      "predicted_frequency_ratio": 0.9999994822642806,
+      "prediction_residual": 1.3255905484399477e-08,
+      "fit_relative_rms": 7.258005034301317e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": -8.826505546455365e-07,
+      "method": "rk4",
+      "cells_per_wavelength": 64,
+      "courant_factor": 0.5,
+      "shape": [
+        4,
+        4,
+        64
+      ],
+      "steps": 4435,
+      "dx_nm": 24.21875,
+      "dt_fs": 0.023320636424976792,
+      "compile_seconds": 0.004702417179942131,
+      "seconds": [
+        0.05466415733098984,
+        0.0546433562412858,
+        0.05464428663253784
+      ],
+      "median_seconds": 0.05464428663253784,
+      "measured_frequency_ratio": 0.999999542482198,
+      "continuum_relative_error": 4.5751780197722525e-07,
+      "temporal_relative_error": 2.231498785754127e-08,
+      "predicted_frequency_ratio": 0.9999995594227721,
+      "prediction_residual": 1.694058149315225e-08,
+      "fit_relative_rms": 1.3229933251775058e-06,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": -1.1577534442253068e-07,
+      "method": "rk4",
+      "cells_per_wavelength": 64,
+      "courant_factor": 0.25,
+      "shape": [
+        4,
+        4,
+        64
+      ],
+      "steps": 8869,
+      "dx_nm": 24.21875,
+      "dt_fs": 0.011660318212488396,
+      "compile_seconds": 0.005643516778945923,
+      "seconds": [
+        0.1091805025935173,
+        0.1091497540473938,
+        0.10917700361460447
+      ],
+      "median_seconds": 0.10917700361460447,
+      "measured_frequency_ratio": 0.9999995519862761,
+      "continuum_relative_error": 4.480137238971338e-07,
+      "temporal_relative_error": 1.2810905558602315e-08,
+      "predicted_frequency_ratio": 0.9999995644612037,
+      "prediction_residual": 1.2474933086537021e-08,
+      "fit_relative_rms": 2.436084614188336e-06,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": -3.106342605363466e-07,
+      "method": "rk4",
+      "cells_per_wavelength": 128,
+      "courant_factor": 0.99,
+      "shape": [
+        4,
+        4,
+        128
+      ],
+      "steps": 4479,
+      "dx_nm": 12.109375,
+      "dt_fs": 0.02308743006072702,
+      "compile_seconds": 0.006979175843298435,
+      "seconds": [
+        0.06504655070602894,
+        0.06528280023485422,
+        0.06538858078420162
+      ],
+      "median_seconds": 0.06528280023485422,
+      "measured_frequency_ratio": 0.9999999785681353,
+      "continuum_relative_error": 2.143186472736147e-08,
+      "temporal_relative_error": 5.7800180197631335e-09,
+      "predicted_frequency_ratio": 0.9999999676254465,
+      "prediction_residual": 1.0942689199211486e-08,
+      "fit_relative_rms": 9.835251956875161e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": -2.0939312639356444e-07,
+      "method": "rk4",
+      "cells_per_wavelength": 128,
+      "courant_factor": 0.5,
+      "shape": [
+        4,
+        4,
+        128
+      ],
+      "steps": 8869,
+      "dx_nm": 12.109375,
+      "dt_fs": 0.011660318212488396,
+      "compile_seconds": 0.005644546821713448,
+      "seconds": [
+        0.12937754206359386,
+        0.12937250081449747,
+        0.1293799914419651
+      ],
+      "median_seconds": 0.12937754206359386,
+      "measured_frequency_ratio": 0.9999999540811385,
+      "continuum_relative_error": 4.59188614909678e-08,
+      "temporal_relative_error": 1.8706979520999312e-08,
+      "predicted_frequency_ratio": 0.9999999724521442,
+      "prediction_residual": 1.83710062717779e-08,
+      "fit_relative_rms": 2.1112813115272688e-06,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": -6.136659114197585e-08,
+      "method": "rk4",
+      "cells_per_wavelength": 128,
+      "courant_factor": 0.25,
+      "shape": [
+        4,
+        4,
+        128
+      ],
+      "steps": 17737,
+      "dx_nm": 12.109375,
+      "dt_fs": 0.005830159106244198,
+      "compile_seconds": 0.004186978563666344,
+      "seconds": [
+        0.25926198344677687,
+        0.2592665432021022,
+        0.25927659310400486
+      ],
+      "median_seconds": 0.2592665432021022,
+      "measured_frequency_ratio": 0.9999999590925326,
+      "continuum_relative_error": 4.090746741347573e-08,
+      "temporal_relative_error": 1.3695585221462636e-08,
+      "predicted_frequency_ratio": 0.999999972767118,
+      "prediction_residual": 1.3674585797041061e-08,
+      "fit_relative_rms": 3.426333192320485e-06,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 1.8820468307145788e-06,
+      "method": "rk4",
+      "cells_per_wavelength": 32,
+      "courant_factor": 0.7,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "steps": 1584,
+      "dx_nm": 48.4375,
+      "dt_fs": 0.06529778198993502,
+      "compile_seconds": 0.0062566762790083885,
+      "seconds": [
+        0.019651588052511215,
+        0.01964360848069191,
+        0.019643178209662437
+      ],
+      "median_seconds": 0.01964360848069191,
+      "measured_frequency_ratio": 0.9999927011402947,
+      "continuum_relative_error": 7.298859705295868e-06,
+      "temporal_relative_error": 3.475901705352058e-07,
+      "predicted_frequency_ratio": 0.9999927190458602,
+      "prediction_residual": 1.7905695814945943e-08,
+      "fit_relative_rms": 7.669702211898275e-07,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": -1.641627638271359e-07,
+      "method": "rk4",
+      "cells_per_wavelength": 32,
+      "courant_factor": 0.35,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "steps": 3168,
+      "dx_nm": 48.4375,
+      "dt_fs": 0.03264889099496751,
+      "compile_seconds": 0.005416985601186752,
+      "seconds": [
+        0.03932767640799284,
+        0.0393181461840868,
+        0.03933348599821329
+      ],
+      "median_seconds": 0.03932767640799284,
+      "measured_frequency_ratio": 0.9999930120770673,
+      "continuum_relative_error": 6.987922932744084e-06,
+      "temporal_relative_error": 3.665123660123726e-08,
+      "predicted_frequency_ratio": 0.9999930280880976,
+      "prediction_residual": 1.601114196780884e-08,
+      "fit_relative_rms": 1.1636977588424997e-06,
+      "finite_fields": true
+    },
+    {
+      "amplitude_loss_20_periods": 1.9249373806040637e-07,
+      "method": "rk4",
+      "cells_per_wavelength": 32,
+      "courant_factor": 0.125,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "steps": 8869,
+      "dx_nm": 48.4375,
+      "dt_fs": 0.011660318212488396,
+      "compile_seconds": 0.005692176520824432,
+      "seconds": [
+        0.11002630274742842,
+        0.11002901382744312,
+        0.11002585291862488
+      ],
+      "median_seconds": 0.11002630274742842,
+      "measured_frequency_ratio": 0.9999930330471936,
+      "continuum_relative_error": 6.966952806441995e-06,
+      "temporal_relative_error": 1.5680964526865182e-08,
+      "predicted_frequency_ratio": 0.9999930483920872,
+      "prediction_residual": 1.5345000381472573e-08,
+      "fit_relative_rms": 2.1023764244264243e-06,
+      "finite_fields": true
+    }
+  ],
+  "orders": {
+    "yee": 2.0099500684922154,
+    "rk4": 3.9713174461077227
+  },
+  "scope": "Smooth homogeneous periodic Maxwell mode, 4x4xN grid, 20 optical periods; fourth-order path is not validated for dielectric interfaces or PML",
+  "passed": true
+}

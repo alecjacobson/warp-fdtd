@@ -1,0 +1,48 @@
+{
+  "measurements": {
+    "mode_in": 0.9943517446517944,
+    "mode_reflected": 9.688252248452045e-06,
+    "mode_out": 0.9236822128295898,
+    "modal_transmission": 0.9289290412549617,
+    "modal_reflection": 9.743284808983477e-06
+  },
+  "field_reference_scope": "mid_z_cross_section",
+  "code_sha256": "5bf7847c8496e87bc64ae65c8d593e02a0a316e7e085730a5255897f5bcb818d",
+  "python": "3.12.15",
+  "numpy": "2.4.6",
+  "timing_scope": "Synchronized complete trajectory, source and all exported detectors; reset/compilation/host postprocessing excluded",
+  "status": "complete",
+  "case": "results/warp_reference/bend_flow20",
+  "inputs_sha256": "43c68385b381735cdf86d62be7832f39568b848dc6ea695bed7a91828cac4a34",
+  "shape": [
+    200,
+    200,
+    75
+  ],
+  "steps": 7868,
+  "dt_s": 3.81315355221175e-17,
+  "warp_version": "1.18.0",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+  "git_commit": "51467799bf82598f76a9611efcf707e369614f76",
+  "setup_seconds": 0.30653446540236473,
+  "compile_graph_seconds": 0.02384994551539421,
+  "warmup_seconds": 6.922170018777251,
+  "seconds": [
+    6.920225519686937,
+    6.920423979870975,
+    6.920514499768615
+  ],
+  "median_seconds": 6.920423979870975,
+  "gcups": 3.410773685059694,
+  "reference_seconds": 21.036542911082506,
+  "speedup": 3.039776605056315,
+  "relative_l2": {
+    "E": 6.313875952118019e-06,
+    "H": 5.283119502858885e-06,
+    "modal_transmission_absolute": 1.2956901807026355e-07,
+    "input_flux": 5.497968800227682e-07,
+    "output_flux": 4.317711500334553e-06
+  },
+  "finite_fields": true,
+  "passed": true
+}
