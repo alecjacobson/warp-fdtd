@@ -11,6 +11,11 @@ from warp_fdtd.rectilinear import curl_numpy, divergence_numpy
 
 class FluxRectilinearTests(unittest.TestCase):
     def test_material_operator_and_exact_capture_state(self):
+        for accumulation in ("plain", "two_sum"):
+            with self.subTest(accumulation=accumulation):
+                self._check_material_operator(accumulation)
+
+    def _check_material_operator(self, accumulation):
         edges = [
             np.array([0, 0.1, 0.4, 0.7, 1]),
             np.array([0, 0.12, 0.3, 0.5, 0.8, 1]),

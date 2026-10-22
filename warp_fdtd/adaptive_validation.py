@@ -96,9 +96,16 @@ def main():
         action="store_true",
         help="Experimental shared-edge two-float flux storage",
     )
+    p.add_argument(
+        "--flux-plain",
+        action="store_true",
+        help="Ablate the two-float accumulator; requires --flux",
+    )
     p.add_argument("--device", default="cuda:0")
     p.add_argument("--long-steps", type=int, default=1000000)
     args = p.parse_args()
+    if args.flux_plain and not args.flux:
+        p.error("--flux-plain requires --flux")
     if args.flux and (args.precision != "float32" or args.compensated):
         p.error("--flux is a separate float32 control")
     if args.long_steps < 1:
@@ -110,7 +117,12 @@ def main():
         if args.flux:
             from .flux_rectilinear import FluxRectilinearPeriodic
 
-            return FluxRectilinearPeriodic(edges, cfl=cfl, device=args.device)
+            return FluxRectilinearPeriodic(
+                edges,
+                cfl=cfl,
+                device=args.device,
+                accumulation="plain" if args.flux_plain else "two_sum",
+            )
         return RectilinearPeriodic(
             edges,
             cfl=cfl,
@@ -227,6 +239,7 @@ def main():
         precision=args.precision,
         compensated=args.compensated,
         flux=args.flux,
+        flux_plain=args.flux_plain,
         gauss_normalization="Unit domain length; analytic change divided by initial combined E/H norm to avoid standing-wave nodes; broadband absolute residual divided by each instantaneous field norm",
         seed=51,
         configuration={

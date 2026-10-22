@@ -1,0 +1,203 @@
+{
+  "status": "complete",
+  "passed": true,
+  "backend": "flux",
+  "device": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+  "warp_version": "1.18.0",
+  "scope": "Planar normal-incidence half-space pulse in the 3D periodic operator only.",
+  "domain_lengths": [
+    1,
+    0.08,
+    0.08
+  ],
+  "interface_x": 0.5,
+  "initial_pulse_center": 0.2,
+  "pulse_sigma": 0.025,
+  "carrier_wavelength": 0.05,
+  "target_observation_time": 0.5,
+  "material_rule": "Arithmetic dual-volume average for tangential E at the interface; normal E uses its containing medium.",
+  "acceptance": {
+    "minimum_fine_three_level_order": 1.8,
+    "maximum_energy_drift": 0.0001,
+    "maximum_boundary_energy_fraction": 1e-06
+  },
+  "code_sha256": {
+    "rectilinear.py": "a96c4a60bf5dc378abe3241347a19dcf4b77ba13dbdf90b62869d1df2c46865f",
+    "flux_rectilinear.py": "6bd5e81df0036678158f3c7a7d3663df04f1a337ee7b7aded2fba2605d43c3ab",
+    "fresnel_validation.py": "425400e1dc9877f91862f181cd06d3f23e52a0363b10c02dc3374a8f5fcfa57e"
+  },
+  "orders": {
+    "2.25": 2.0018347268402974,
+    "12.25": 2.0196429534292277
+  },
+  "rows": [
+    {
+      "n": 512,
+      "shape": [
+        512,
+        4,
+        4
+      ],
+      "steps": 369,
+      "dt": 0.0013543325854508171,
+      "contrast": 2.25,
+      "cfl": 0.7,
+      "reflected_fraction": 0.0380827239769999,
+      "transmitted_fraction": 0.9619172888600365,
+      "analytic_reflection": 0.04000000000000001,
+      "analytic_transmission": 0.96,
+      "reflection_absolute_error": 0.0019172760230001112,
+      "transmission_absolute_error": 0.0019172888600365035,
+      "energy_relative_drift": 1.2837036322821405e-08,
+      "boundary_energy_fraction": 2.606213456748266e-14,
+      "cells_per_shortest_carrier_wavelength": 17.066666666666666
+    },
+    {
+      "n": 1024,
+      "shape": [
+        1024,
+        4,
+        4
+      ],
+      "steps": 733,
+      "dt": 0.0006819697411004676,
+      "contrast": 2.25,
+      "cfl": 0.7,
+      "reflected_fraction": 0.039524173036938816,
+      "transmitted_fraction": 0.9604758734821291,
+      "analytic_reflection": 0.04000000000000001,
+      "analytic_transmission": 0.96,
+      "reflection_absolute_error": 0.00047582696306119193,
+      "transmission_absolute_error": 0.00047587348212918545,
+      "energy_relative_drift": 4.65190679310723e-08,
+      "boundary_energy_fraction": 3.716884834315109e-14,
+      "cells_per_shortest_carrier_wavelength": 34.13333333333333
+    },
+    {
+      "n": 2048,
+      "shape": [
+        2048,
+        4,
+        4
+      ],
+      "steps": 1464,
+      "dt": 0.0003415933301520106,
+      "contrast": 2.25,
+      "cfl": 0.7,
+      "reflected_fraction": 0.03988125622838463,
+      "transmitted_fraction": 0.9601187131529697,
+      "analytic_reflection": 0.04000000000000001,
+      "analytic_transmission": 0.96,
+      "reflection_absolute_error": 0.00011874377161538024,
+      "transmission_absolute_error": 0.0001187131529697405,
+      "energy_relative_drift": 3.061864561892946e-08,
+      "boundary_energy_fraction": 5.992424922453401e-14,
+      "cells_per_shortest_carrier_wavelength": 68.26666666666667
+    },
+    {
+      "n": 4096,
+      "shape": [
+        4096,
+        4,
+        4
+      ],
+      "steps": 2926,
+      "dt": 0.0001708729773389985,
+      "contrast": 2.25,
+      "cfl": 0.7,
+      "reflected_fraction": 0.03997033635946428,
+      "transmitted_fraction": 0.9600296955966747,
+      "analytic_reflection": 0.04000000000000001,
+      "analytic_transmission": 0.96,
+      "reflection_absolute_error": 2.9663640535727842e-05,
+      "transmission_absolute_error": 2.9695596674761404e-05,
+      "energy_relative_drift": 3.195613906825656e-08,
+      "boundary_energy_fraction": 1.3924961317060466e-13,
+      "cells_per_shortest_carrier_wavelength": 136.53333333333333
+    },
+    {
+      "n": 512,
+      "shape": [
+        512,
+        4,
+        4
+      ],
+      "steps": 369,
+      "dt": 0.0013543325854508171,
+      "contrast": 12.25,
+      "cfl": 0.7,
+      "reflected_fraction": 0.269887999873184,
+      "transmitted_fraction": 0.7301119926596574,
+      "analytic_reflection": 0.308641975308642,
+      "analytic_transmission": 0.691358024691358,
+      "reflection_absolute_error": 0.038753975435458,
+      "transmission_absolute_error": 0.03875396796829944,
+      "energy_relative_drift": 7.467158558149833e-09,
+      "boundary_energy_fraction": 2.052676848672688e-12,
+      "cells_per_shortest_carrier_wavelength": 7.314285714285715
+    },
+    {
+      "n": 1024,
+      "shape": [
+        1024,
+        4,
+        4
+      ],
+      "steps": 733,
+      "dt": 0.0006819697411004676,
+      "contrast": 12.25,
+      "cfl": 0.7,
+      "reflected_fraction": 0.29984473077192353,
+      "transmitted_fraction": 0.700155284508843,
+      "analytic_reflection": 0.308641975308642,
+      "analytic_transmission": 0.691358024691358,
+      "reflection_absolute_error": 0.008797244536718485,
+      "transmission_absolute_error": 0.008797259817485026,
+      "energy_relative_drift": 1.528076642998144e-08,
+      "boundary_energy_fraction": 3.4638665229358454e-14,
+      "cells_per_shortest_carrier_wavelength": 14.62857142857143
+    },
+    {
+      "n": 2048,
+      "shape": [
+        2048,
+        4,
+        4
+      ],
+      "steps": 1464,
+      "dt": 0.0003415933301520106,
+      "contrast": 12.25,
+      "cfl": 0.7,
+      "reflected_fraction": 0.30649024063534097,
+      "transmitted_fraction": 0.6935097365776053,
+      "analytic_reflection": 0.308641975308642,
+      "analytic_transmission": 0.691358024691358,
+      "reflection_absolute_error": 0.0021517346733010423,
+      "transmission_absolute_error": 0.0021517118862472984,
+      "energy_relative_drift": 2.2787053799433465e-08,
+      "boundary_energy_fraction": 5.6544254238850525e-14,
+      "cells_per_shortest_carrier_wavelength": 29.25714285714286
+    },
+    {
+      "n": 4096,
+      "shape": [
+        4096,
+        4,
+        4
+      ],
+      "steps": 2926,
+      "dt": 0.0001708729773389985,
+      "contrast": 12.25,
+      "cfl": 0.7,
+      "reflected_fraction": 0.30810691782199945,
+      "transmitted_fraction": 0.6918930933847294,
+      "analytic_reflection": 0.308641975308642,
+      "analytic_transmission": 0.691358024691358,
+      "reflection_absolute_error": 0.000535057486642565,
+      "transmission_absolute_error": 0.0005350686933713877,
+      "energy_relative_drift": 1.1206728878221384e-08,
+      "boundary_energy_fraction": 1.2899029738035809e-13,
+      "cells_per_shortest_carrier_wavelength": 58.51428571428572
+    }
+  ]
+}

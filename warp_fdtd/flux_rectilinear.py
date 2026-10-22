@@ -49,7 +49,7 @@ def neighbor(i: int, axis: int, shift: int, nx: int, ny: int, nz: int):
     return (x * ny + y) * nz + z
 
 
-def make_face_update(forward):
+def make_face_update(forward, two_sum=True):
     @wp.kernel
     def update(
         flux: wp.array2d(dtype=float),
@@ -76,17 +76,25 @@ def make_face_update(forward):
                 -impulse[b, i],
                 impulse[b, neighbor(i, a, -1, nx, ny, nz)],
             )
-        state = wp.vec2(flux[c, i], correction[c, i])
-        for k in range(4):
-            state = accumulate(state[0], state[1], terms[k])
-        flux[c, i] = state[0]
-        correction[c, i] = state[1]
+        if wp.static(two_sum):
+            state = wp.vec2(flux[c, i], correction[c, i])
+            for k in range(4):
+                state = accumulate(state[0], state[1], terms[k])
+            flux[c, i] = state[0]
+            correction[c, i] = state[1]
+        else:
+            value = flux[c, i]
+            for k in range(4):
+                value = value + terms[k]
+            flux[c, i] = value
 
     return update
 
 
 update_d = make_face_update(False)
 update_b = make_face_update(True)
+update_d_plain = make_face_update(False, two_sum=False)
+update_b_plain = make_face_update(True, two_sum=False)
 
 
 class FluxRectilinearPeriodic(RectilinearPeriodic):
@@ -95,12 +103,21 @@ class FluxRectilinearPeriodic(RectilinearPeriodic):
     E/H attributes internally store high parts of D/B face fluxes. The diagnostic
     fields() method decodes physical E/H. Device storage is 21 float32 values per
     cell plus axis widths: 6 high, 6 low, 6 metric coefficients, 3 edge impulses.
+    The plain-accumulation ablation omits six low words (15 values/cell).
     """
 
-    def __init__(self, edges, permittivity=1.0, cfl=0.5, device="cuda:0"):
+    def __init__(
+        self, edges, permittivity=1.0, cfl=0.5, device="cuda:0", accumulation="two_sum"
+    ):
+        if accumulation not in ("two_sum", "plain"):
+            raise ValueError("accumulation must be two_sum or plain")
+        self.accumulation = accumulation
         super().__init__(edges, permittivity=permittivity, cfl=cfl, device=device)
-        self.correction_e = wp.zeros_like(self.E)
-        self.correction_h = wp.zeros_like(self.H)
+        if accumulation == "two_sum":
+            self.correction_e = wp.zeros_like(self.E)
+            self.correction_h = wp.zeros_like(self.H)
+        self.update_d = update_d if accumulation == "two_sum" else update_d_plain
+        self.update_b = update_b if accumulation == "two_sum" else update_b_plain
         self.impulse = wp.zeros_like(self.E)
         self.face_scales = []
         self.coefficients = []
@@ -144,7 +161,8 @@ class FluxRectilinearPeriodic(RectilinearPeriodic):
             flux = a * scale
             rounded = flux.astype("f")
             high.assign(rounded.reshape(3, -1))
-            low.assign((flux - rounded).astype("f").reshape(3, -1))
+            if self.accumulation == "two_sum":
+                low.assign((flux - rounded).astype("f").reshape(3, -1))
 
     def fields(self):
         # Low words protect accumulation; high words drive the explicit update.
@@ -156,8 +174,8 @@ class FluxRectilinearPeriodic(RectilinearPeriodic):
 
     def step(self):
         for source, coefficient, destination, correction, kernel in (
-            (self.H, self.coefficients[1], self.E, self.correction_e, update_d),
-            (self.E, self.coefficients[0], self.H, self.correction_h, update_b),
+            (self.H, self.coefficients[1], self.E, self.correction_e, self.update_d),
+            (self.E, self.coefficients[0], self.H, self.correction_h, self.update_b),
         ):
             wp.launch(
                 edge_impulses,

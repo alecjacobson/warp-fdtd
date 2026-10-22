@@ -1,0 +1,261 @@
+{
+  "status": "complete",
+  "passed": false,
+  "scope": "Periodic lossless rectilinear verification only; no dielectric scattering/CPML/block refinement/flagship acceptance",
+  "device": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+  "precision": "float32",
+  "compensated": false,
+  "flux": true,
+  "flux_plain": true,
+  "gauss_normalization": "Unit domain length; analytic change divided by initial combined E/H norm to avoid standing-wave nodes; broadband absolute residual divided by each instantaneous field norm",
+  "seed": 51,
+  "configuration": {
+    "graded_edge_formula": "u + 0.45/(2*pi)*sin(2*pi*u)",
+    "analytic_cfl": 0.5,
+    "long_time_cfl": 0.9,
+    "long_steps": 1000000,
+    "normalized_domain_lengths": [
+      1,
+      1,
+      1
+    ]
+  },
+  "acceptance": {
+    "minimum_smooth_order": 1.8,
+    "maximum_energy_relative_drift": 0.0001,
+    "maximum_normalized_gauss_residual": 0.0001
+  },
+  "code_sha256": {
+    "rectilinear.py": "a96c4a60bf5dc378abe3241347a19dcf4b77ba13dbdf90b62869d1df2c46865f",
+    "adaptive_validation.py": "e040c3a66932a7e955e51959802427c5dd3e33c06c52a14450bdd0956d7e5c7b",
+    "flux_rectilinear.py": "a406358d0706c157731c92fc8917f4f207a30e937fc6c388b47691e31c5abd08"
+  },
+  "warp_version": "1.18.0",
+  "rows": [
+    {
+      "graded": false,
+      "n": 8,
+      "steps": 28,
+      "dt": 0.036084391824351615,
+      "field_relative_l2": 0.21356663142877125,
+      "energy_relative_drift": 3.6216930876520337e-07,
+      "gauss_change_normalized": 1.263678560855291e-06,
+      "seconds": 0.0009151194244623184
+    },
+    {
+      "graded": false,
+      "n": 16,
+      "steps": 56,
+      "dt": 0.018042195912175808,
+      "field_relative_l2": 0.05301018234287254,
+      "energy_relative_drift": 3.565302053587516e-08,
+      "gauss_change_normalized": 6.0921066491151604e-06,
+      "seconds": 0.0006423890590667725
+    },
+    {
+      "graded": false,
+      "n": 32,
+      "steps": 112,
+      "dt": 0.009021097956087904,
+      "field_relative_l2": 0.013223810565869798,
+      "energy_relative_drift": 2.887240446725059e-08,
+      "gauss_change_normalized": 2.2356851689637585e-05,
+      "seconds": 0.001820429228246212
+    },
+    {
+      "graded": false,
+      "n": 64,
+      "steps": 224,
+      "dt": 0.004510548978043952,
+      "field_relative_l2": 0.0033069505563286445,
+      "energy_relative_drift": 1.6573509231676553e-08,
+      "gauss_change_normalized": 4.390245614768899e-05,
+      "seconds": 0.014961500652134418
+    },
+    {
+      "graded": true,
+      "n": 8,
+      "steps": 47,
+      "dt": 0.021465076801220184,
+      "field_relative_l2": 0.35510881345631273,
+      "energy_relative_drift": 1.0203687095255987e-07,
+      "gauss_change_normalized": 2.9850836681404987e-06,
+      "seconds": 0.0005430383607745171
+    },
+    {
+      "graded": true,
+      "n": 16,
+      "steps": 100,
+      "dt": 0.010130279634848369,
+      "field_relative_l2": 0.09018495515474324,
+      "energy_relative_drift": 1.4365112210867892e-08,
+      "gauss_change_normalized": 8.797159291682166e-06,
+      "seconds": 0.0011081090196967125
+    },
+    {
+      "graded": true,
+      "n": 32,
+      "steps": 203,
+      "dt": 0.004987638015664129,
+      "field_relative_l2": 0.02250210324790986,
+      "energy_relative_drift": 3.409200921566935e-09,
+      "gauss_change_normalized": 2.6054711987699743e-05,
+      "seconds": 0.00333480816334486
+    },
+    {
+      "graded": true,
+      "n": 64,
+      "steps": 407,
+      "dt": 0.002484060913907716,
+      "field_relative_l2": 0.005616562879001788,
+      "energy_relative_drift": 1.0291764107606127e-09,
+      "gauss_change_normalized": 7.352452709822525e-05,
+      "seconds": 0.027650252915918827
+    }
+  ],
+  "orders": {
+    "False": 2.004225443878464,
+    "True": 1.995011641639625
+  },
+  "long_time": [
+    {
+      "step": 100000,
+      "energy_relative_drift": 8.282562997674603e-07,
+      "gauss_e": 0.00022814111119828952,
+      "gauss_h": 0.0002252015953174984
+    },
+    {
+      "step": 200000,
+      "energy_relative_drift": 1.3090426476125572e-07,
+      "gauss_e": 0.0003127502086272486,
+      "gauss_h": 0.00030704487633133955
+    },
+    {
+      "step": 300000,
+      "energy_relative_drift": 1.4859024473068416e-06,
+      "gauss_e": 0.00038363497443830397,
+      "gauss_h": 0.0003708221715752625
+    },
+    {
+      "step": 400000,
+      "energy_relative_drift": 1.7284871263179014e-06,
+      "gauss_e": 0.0004172545848125945,
+      "gauss_h": 0.00046074135916810197
+    },
+    {
+      "step": 500000,
+      "energy_relative_drift": 1.1876774880237306e-06,
+      "gauss_e": 0.0004987098173707102,
+      "gauss_h": 0.0005094534791831534
+    },
+    {
+      "step": 600000,
+      "energy_relative_drift": 1.4015877480844097e-07,
+      "gauss_e": 0.0005812305923130557,
+      "gauss_h": 0.0005387391605070984
+    },
+    {
+      "step": 700000,
+      "energy_relative_drift": 2.2880255445834052e-07,
+      "gauss_e": 0.0006234662196658784,
+      "gauss_h": 0.0005714512132748638
+    },
+    {
+      "step": 800000,
+      "energy_relative_drift": 1.0689755236548137e-07,
+      "gauss_e": 0.0006349371302890538,
+      "gauss_h": 0.0006746697663421448
+    },
+    {
+      "step": 900000,
+      "energy_relative_drift": 1.4681704141317198e-07,
+      "gauss_e": 0.0006815981511955349,
+      "gauss_h": 0.0006701740442732497
+    },
+    {
+      "step": 1000000,
+      "energy_relative_drift": 1.3321870233617972e-06,
+      "gauss_e": 0.0007295923587607742,
+      "gauss_h": 0.0007087062278689416
+    }
+  ],
+  "operator": {
+    "weighted_curl_adjoint_residual": 1.1972522096572248e-16,
+    "rows": [
+      {
+        "cfl": 0.1,
+        "invariant_residual": 1.0502232561013175e-16,
+        "minimum_energy_eigenvalue": 0.012764127543693259,
+        "spectral_radius": 1.0000000000000095
+      },
+      {
+        "cfl": 0.1809090909090909,
+        "invariant_residual": 1.2254936066570806e-16,
+        "minimum_energy_eigenvalue": 0.01252585165699901,
+        "spectral_radius": 1.0000000000000095
+      },
+      {
+        "cfl": 0.26181818181818184,
+        "invariant_residual": 1.0226848023611541e-16,
+        "minimum_energy_eigenvalue": 0.012159109289114256,
+        "spectral_radius": 1.000000000000007
+      },
+      {
+        "cfl": 0.34272727272727277,
+        "invariant_residual": 1.3102216753787707e-16,
+        "minimum_energy_eigenvalue": 0.01167881537874813,
+        "spectral_radius": 1.0000000000000073
+      },
+      {
+        "cfl": 0.4236363636363637,
+        "invariant_residual": 1.3932374217543164e-16,
+        "minimum_energy_eigenvalue": 0.011104704751874922,
+        "spectral_radius": 1.0000000000000075
+      },
+      {
+        "cfl": 0.5045454545454546,
+        "invariant_residual": 1.6130002559421372e-16,
+        "minimum_energy_eigenvalue": 0.010456775478283671,
+        "spectral_radius": 1.000000000000009
+      },
+      {
+        "cfl": 0.5854545454545454,
+        "invariant_residual": 1.4079676312699348e-16,
+        "minimum_energy_eigenvalue": 0.009751981711428666,
+        "spectral_radius": 1.0000000000000084
+      },
+      {
+        "cfl": 0.6663636363636364,
+        "invariant_residual": 1.6904981292753852e-16,
+        "minimum_energy_eigenvalue": 0.00900321130192268,
+        "spectral_radius": 1.0000000000000104
+      },
+      {
+        "cfl": 0.7472727272727273,
+        "invariant_residual": 1.6652804851101261e-16,
+        "minimum_energy_eigenvalue": 0.008219652899207407,
+        "spectral_radius": 1.0000000000000082
+      },
+      {
+        "cfl": 0.8281818181818182,
+        "invariant_residual": 1.5989871521221771e-16,
+        "minimum_energy_eigenvalue": 0.007407577682586478,
+        "spectral_radius": 1.0000000000000062
+      },
+      {
+        "cfl": 0.9090909090909092,
+        "invariant_residual": 1.8932514315911495e-16,
+        "minimum_energy_eigenvalue": 0.00657106116588342,
+        "spectral_radius": 1.0000000000000053
+      },
+      {
+        "cfl": 0.99,
+        "invariant_residual": 1.985336460938369e-16,
+        "minimum_energy_eigenvalue": 0.005712513181365209,
+        "spectral_radius": 1.0000000000000115
+      }
+    ],
+    "passed": true,
+    "scope": "3x3x3 periodic nonuniform lossless operator; not a block-interface or CPML proof"
+  }
+}
