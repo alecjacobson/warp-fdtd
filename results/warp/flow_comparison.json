@@ -1,0 +1,5 @@
+{
+  "relative_l2_poynting": 4.5125204906071303e-07,
+  "passed": true,
+  "scope": "Single xy slice through the full 3D field; common scale, not independently normalized"
+}

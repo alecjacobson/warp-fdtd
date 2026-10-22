@@ -1,0 +1,36 @@
+{
+  "measurements": {},
+  "status": "complete",
+  "case": "results/warp_reference/forward50_gpu",
+  "inputs_sha256": "2b60b927686f5844bb52f3d21e9e0c4a193fbd859c1e974d4650c1f28aa5913b",
+  "shape": [
+    80,
+    80,
+    30
+  ],
+  "steps": 2098,
+  "dt_s": 9.532861001630942e-17,
+  "warp_version": "1.18.0",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+  "git_commit": "51467799bf82598f76a9611efcf707e369614f76",
+  "setup_seconds": 0.33964529540389776,
+  "compile_graph_seconds": 0.39923011884093285,
+  "warmup_seconds": 0.04996791947633028,
+  "seconds": [
+    0.04932680167257786,
+    0.04934287071228027,
+    0.04934400040656328
+  ],
+  "median_seconds": 0.04934287071228027,
+  "gcups": 8.16361095706879,
+  "reference_seconds": 0.1998205054551363,
+  "speedup": 4.049632754857242,
+  "relative_l2": {
+    "E": 4.9954637161274835e-06,
+    "H": 4.299594300889968e-06,
+    "input_flux": 1.708605736894242e-06,
+    "output_flux": 1.969462573470082e-06
+  },
+  "finite_fields": true,
+  "passed": true
+}

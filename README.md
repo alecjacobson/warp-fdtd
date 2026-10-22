@@ -1,254 +1,41 @@
-# FDTDX baseline for a future Warp implementation
+# Warp FDTD
 
-This repository measures the unmodified FDTDX solver and builds a silicon waveguide
-bend. It separates solver performance, numerical correctness, optimization quality,
-and reproduction of the published experiment. Results are local measurements, not
-claims about all GPUs or all FDTDX workloads.
+Pure NVIDIA Warp 3D electromagnetic solver, compared against pinned, unmodified
+FDTDX. The implemented flagship is a silicon 90° waveguide bend with all six E/H
+components, CPML, an injected mode, and Hann-window modal detectors.
 
-Read the [measured report](results/REPORT.md), [quality gates](results/quality_checks.json),
-and [numerical comparisons](results/comparisons.json). Raw per-run JSON retains failures
-and every timed repetition. Full reproduction is `bash scripts/reproduce.sh`; it
-replaces the named result directories and takes roughly an hour or more on this partition.
+**Status:** forward correctness gates pass on the saved cases. On the tested
+RTX PRO 6000 Blackwell **MIG 1g.24gb** (46 SMs), matched forward runs are
+**2.30–4.05× faster**. Fine-grid bend transmission is **93.1919%**.
+The smooth periodic test measures order **3.97** with Warp’s optional fourth-order propagator versus **2.01** with Yee. This higher-order path is not yet validated for dielectric interfaces or CPML.
 
-The baseline is pinned to FDTDX commit
-[`2cab8dbb2af9a43ec6443712f011f50ecf58790b`](https://github.com/ymahlau/fdtdx/tree/2cab8dbb2af9a43ec6443712f011f50ecf58790b),
-version 0.6.3, with JAX 0.12.0 and Python 3.12.15. All Python distributions are
-pinned in `requirements.lock`. `upstream/` is an unmodified checkout, deliberately
-separate from this measurement harness. The scripts reject a dirty or wrong checkout.
+| Matched workload | FDTDX | Warp | Speedup |
+|---|---:|---:|---:|
+| 192k cells, flux | 0.200 s | 0.049 s | 4.05× |
+| 3M cells, modal | 14.683 s | 4.533 s | 3.24× |
+| 24M cells, flux | 132.144 s | 57.471 s | 2.30× |
+| 24M cells, modal | 316.138 s | 106.640 s | 2.96× |
 
-## Hardware actually available
+![Latest performance and field agreement](results/warp/performance.png)
 
-- NVIDIA RTX PRO 6000 Blackwell Server Edition **MIG 1g.24gb**, 46 SMs;
-  24,192 MiB exposed by NVIDIA, about 19.0 GB allocator limit under default JAX policy.
-- AMD EPYC 9B45 host, **four CPU equivalents by cgroup quota**, 16 GiB host RAM limit.
-- CPU affinity is fixed to logical CPUs 0–3; BLAS uses one thread. GPU and CPU
-  benchmark processes run sequentially. Host CPU/GPU sharing outside this container
-  cannot be excluded; this is a MIG partition, not an exclusive full GPU.
+![Latest measured accuracy trends](results/warp/accuracy.png)
 
-The paper used H100 hardware, including four GPUs at its largest scale. Direct
-runtime ratios against those published numbers are not hardware speedups.
-Multi-GPU and billion-cell capacity require additional hardware and are unvalidated here.
+![Flagship power-flow comparison](results/warp/flagship_flow.png)
 
-## Reproduce
+The flow panels use one common scale; vector-field relative L2 difference is
+**4.51e-07**. These are slices of full 3D simulations. Timing excludes setup,
+compilation and host postprocessing; raw repeats and limitations are in
+[measurement details](docs/warp.md). No general superiority claim is made for
+untested geometries, hardware, boundaries or gradients.
 
 ```bash
-scripts/bootstrap.sh
-scripts/validate.sh
-.venv/bin/python -m baseline.compare
-scripts/run.sh forward --output results/my_forward --reps 5
-scripts/run.sh gradient --gradient exact --output results/my_gradient --reps 3
+uv venv .venv-warp
+uv pip install --python .venv-warp/bin/python -r requirements-warp.txt
+.venv-warp/bin/python -m unittest discover -s tests -v
+.venv-warp/bin/python -m warp_fdtd.benchmark
 ```
 
-The default simulation is 4 × 4 × 1.5 µm, 20 nm spacing, 200 fs, float32,
-Courant factor 0.99, six 10-cell PMLs, 1550 nm fundamental mode excitation,
-400 nm square silicon guides, a 600 nm silica substrate, and a 1.6 × 1.6 µm
-design region with 6,400 parameters. The grid has 3 million cells and 5,245 steps.
-Material relative permittivities are air=1, silica=2.25, silicon=12.25.
-
-Every run writes settings, exact package/hardware provenance, setup and compilation
-times, first-execution warmup, every synchronized repetition, median runtime,
-allocator peak, compiler memory analysis, finite-field checks, and measurements to
-`results/<name>/result.json`. Outputs are synchronized using `jax.block_until_ready`.
-First execution is excluded from steady-state timing. GCUPS means complete electric
-and magnetic cell updates per second; for a gradient run it is only **forward-equivalent**
-work per gradient evaluation, not a count of all backward/recomputation updates.
-
-Timings include device parameter application, field/boundary/detector reset, source
-injection, PMLs, detector collection and objective calculation. They exclude mesh/source
-setup, compilation, validation reductions, host copies, plotting and file writes.
-Optimization records gradient time and synchronized update time separately.
-Allocator peaks include setup/compilation/warmup; they are not total board memory.
-
-## Correctness and quality
-
-`baseline.physics` calls unmodified upstream analytic test functions directly on
-CUDA because upstream pytest's root conftest forces CPU. It tests wave speed and
-impedance in vacuum/dielectric and Fresnel transmission. The upstream Fresnel
-"power conservation" test derives R from 1−T; it is not an independent measurement
-of reflected power. A separate CPU pytest run covers reversible recorder and
-segmented-gradient equivalence, with results in `results/gradient_tests.xml`.
-
-`baseline.compare` checks GPU/CPU detector traces and full three-dimensional E/H fields against
-a relative L2 tolerance of 1e-3. It compares full parameter gradients with
-checkpointed autodiff, including cosine similarity and a central finite-difference
-step-size sweep along the gradient direction. Float32 cancellation at small steps
-must not be confused with a solver gradient error. All step sizes and failures are
-retained. Binary/brush transformations use straight-through estimators; ordinary
-finite differences are not a validity test for those surrogate derivatives.
-
-Three reversible recording choices are exposed:
-
-- `exact`: uncompressed float32, segmented recording, automatic checkpoint count.
-- `paper`: sample every two steps and store float16 (paper-era example setting).
-- `compressed`: sample every five steps and store float8 (current example setting).
-
-The paper-era core-flux ratio uses input periods 3–5 and the final two output periods.
-Since the current source ramps up over four periods, this ratio is **not sufficient
-evidence of physical transmission efficiency**. `--quality-monitors` adds separate
-forward/backward input mode overlaps and output overlap over the last eight periods,
-with exact field interpolation and the full transverse aperture. Report both metrics.
-Use `--modal-window hann` for the quality protocol. Eight rounded periods with a
-rectangular window gave a 1.785 percentage-point duration dependence on the saved
-design. FDTDX's built-in Hann apodization removes this phasor-window sensitivity;
-both sets of measurements are retained. The optimization used the original rectangular
-window; the independent evaluator changes only the measurement window.
-Use longer-time, finer-grid and PML/padding checks before certifying a design.
-`baseline.quality_checks` requires straight-guide T within 1% of unity and R below
-0.1%, duration/PML transmission changes below 0.5 percentage point, mesh changes
-below 1 percentage point, and fine-mesh transmission of at least 92%. It also checks
-that the physical material cross section and saved candidate match across evaluations.
-These gates were set before evaluating the optimized candidate. `--pad-domain`
-extends all outer faces when increasing PML thickness, preserving the active geometry.
-The historical source used an abrupt cosine without this ramp: `--source-profile paper`
-restores that waveform. The ramp concern applies to mixing the old monitor windows
-with the modern source, not to a demonstrated flaw in the original paper.
-
-## Inverse design and the published result
-
-The target is the silicon bend in
-[Mahlau et al., arXiv:2412.12360v2](https://arxiv.org/html/2412.12360v2), which reports
-92% efficiency. Geometry and legacy monitor placement are adapted from the
-[December 2024 example](https://github.com/ymahlau/fdtdx/blob/a0a1c98b11fb765dbd8c6d339dde79fca1bfe148/examples/optimize_ceviche_corner.py).
-The current upstream example has changed geometry, duration and parameterization;
-running it alone does not reproduce that paper.
-
-The harness supports the binary pretraining and 100 nm circular-brush phase:
-
-```bash
-scripts/run.sh optimize --gradient paper --source-profile paper --parameterization binary --epochs 250 \
-  --output results/paper_pretrain_seed0
-scripts/run.sh optimize --gradient paper --source-profile paper --parameterization brush --epochs 20 \
-  --load results/paper_pretrain_seed0/final_params.npz --output results/paper_brush_seed0
-scripts/run.sh forward --source-profile paper --parameterization brush --quality-monitors --exact-interpolation \
-  --load results/paper_brush_seed0/best_params.npz --output results/paper_eval_seed0
-```
-
-This is a port to the current solver, not an exact historical software reproduction.
-`PaperBrush` restores the old brush's complemented forward values and unchanged
-straight-through derivative, so latent orientation stays consistent with pretraining.
-`PaperClosestIndex` flattens the current isotropic material lookup table to avoid
-an upstream broadcasting error in inverse-permittivity quantization. These adapters
-are checked by `baseline.protocol_checks`; they do not modify the measured solver.
-Do not assert the 92% result from the existence of these commands. Full reproduction
-also needs independent evaluation and multiple seeds (the publication compared five).
-At approximately a minute per exact gradient, long runs take hours on this partition.
-
-A separate practical baseline can optimize from a specified quarter-annulus using
-`--init ring --objective modal --fixed-beta --beta 50`. This is explicitly a different
-initialization and objective from the publication. It can establish a useful device
-and solver baseline without representing a random-start paper reproduction.
-`scripts/quality.sh` runs this optimization and its independent evaluations.
-`bash scripts/evaluate_hann.sh` repeats only the independent evaluations of the saved
-candidate. `bash scripts/finalize_baseline.sh` checks gradients with this window,
-runs the capacity stress case, and exports the fine-grid inputs.
-`scripts/adjoint.sh` compares the newer frequency-adjoint method with exact segmented
-gradients on the modal objective, including a full-resolution optimized candidate.
-An adjoint speedup is accepted only alongside gradient agreement; short CW runs or
-unsettled resonances can invalidate the frequency approximation.
-
-Optimization checkpoints every five steps, retains the best **evaluated** parameter
-set and its metric, and saves the final unevaluated update separately. Resume with
-the same command plus `--resume <run>/checkpoint.pkl`. Only load local trusted pickle
-checkpoints. Parameter `.npz` files are the interchange format for later Warp work.
-
-## Fair comparison contract for Warp
-
-Match geometry/rasterized materials, all six field components, dtype, grid, Courant
-factor, step count, boundary thickness and profiles, source waveform/mode, detector
-positions, interpolation, reset behavior and output quantity. For inverse design,
-also match parameter transforms, initial parameters, objective, derivative accuracy,
-optimizer, seed and optimization budget. Save identical input arrays for both engines.
-
-Compare full synchronized forward runs and end-to-end optimization separately from
-kernel-only timings. Report cold compilation, warm execution, dispersion across
-repetitions, memory, and attained physical quality. Do not compare a Warp vacuum
-stencil with FDTDX's full PML/source/detector/gradient workload, exclude FDTDX setup
-while including Warp setup, or silently lower precision/monitor accuracy. GPU speed
-claims here apply to this specific MIG partition and four-core CPU allocation.
-
-Predeclare the cross-engine gates before implementing Warp: full small-grid E/H
-relative L2 error at most 1e-3, same-grid modal transmission difference at most
-0.001 absolute (0.1 percentage point), and parameter-gradient relative L2 error
-below 1% with cosine above 0.999 against exact segmented differentiation. Retain
-the independent physical-quality gates above. Compare the faster accepted FDTDX
-frequency adjoint as well as the exact reference when measuring optimization.
-
-`baseline.export_case` writes `inputs.npz` and a checksummed manifest under
-`results/warp_reference/<case>/` for the small full-field comparison, 24-million-cell
-performance and quality cases, and exact/frequency-adjoint gradient cases. This includes the full inverse-permittivity
-array, grid edges, source/reference-mode arrays, staggered source timing offsets,
-CPML coefficients, detector sample steps, and Hann weights. The manifest points to
-the pinned update conventions. Recreate it with the command in
-`scripts/export_references.sh`; the exporter verifies material agreement with the
-evaluated cross section. Match this quality case separately from the default faster
-performance cases, which use different detector interpolation and measurement work.
-Each manifest also identifies and checksums the measured fields, detector traces,
-and parameter gradients where available. The small case retains full 3D fields;
-large cases retain cross sections and detector measurements.
-
-## Integration, grid support, and diagnostic plots
-
-The pinned solver uses the explicit, staggered Yee leapfrog update: electric and
-magnetic fields advance through local curl operations. The bend uses no implicit
-global linear solve per time step. Source/reference-mode setup does solve an
-eigenproblem, separately from propagation. The frequency-adjoint gradient method
-also uses time-domain FDTD runs; its name does not make the forward solver implicit.
-For a uniform grid, `dt = courant_factor * dx / (c * sqrt(3))`; the 20 nm bend uses
-0.03813 fs. At fixed physical volume and duration, halving spacing therefore means
-eight times as many cells and twice as many steps, approximately 16 times the work.
-
-`UniformGrid`, `QuasiUniformGrid` (different constant spacings per axis), and custom
-`RectilinearGrid` edge arrays are supported by the pinned version. Nonuniform
-rectilinear meshes remain a fixed tensor-product topology; a narrow interval on
-one axis extends across the other two axes. No octree hierarchy, evolving AMR,
-error-driven refinement, or local time subcycling is implemented in this version.
-The global CFL bound uses the smallest spacing on each axis. Source:
-[grid implementation](https://github.com/ymahlau/fdtdx/blob/2cab8dbb2af9a43ec6443712f011f50ecf58790b/src/fdtdx/core/grid.py),
-[forward step](https://github.com/ymahlau/fdtdx/blob/2cab8dbb2af9a43ec6443712f011f50ecf58790b/src/fdtdx/fdtd/forward.py).
-
-The [cycle-averaged Poynting plot](results/bend_flow20/poynting_flow.png) uses a new
-passive `PhasorDetector` on the central xy plane, with all six field components,
-upstream exact spatial interpolation, H time centering, and a Hann window over the
-last eight optical periods. It computes `0.5 * Re(E cross conjugate(H))`. Adding the
-detector leaves the saved candidate's modal transmission unchanged. The arrows show
-the in-plane projection of a 3D vector; they are not a full-volume energy balance.
-Streamline density is not proportional to transported power; color encodes magnitude.
-Colors are relative magnitude in FDTDX field units. Raw phasors, vectors, a PDF,
-and validation metadata are saved beside the PNG. This is a steady monochromatic
-cycle average, not an average of the turn-on transient or an instantaneous snapshot.
-
-The [accuracy trends](results/convergence/accuracy_trends.png) measure a periodic,
-homogeneous vacuum Maxwell mode at wavelength 1550 nm using the actual upstream
-`forward()` updates on GPU. Initial E is one spatial cosine mode and H is zero.
-The grid is 4 × 4 × N with uniform transverse fields and periodic boundaries.
-We fit frequency, amplitude, and phase from its evolution over 20 optical periods.
-This removes PML, source, geometry-rasterization, and settling ambiguities and supplies
-the analytic continuum reference `omega = c*k`.
-
-Eighteen float32 runs span 8–128 cells per wavelength and CFL factors 0.125–0.99.
-Joint spatial/time refinement has measured order 2.001–2.004. At CFL factor 0.99,
-frequency error decreases from 1.756% to 0.00672%. To isolate time error at a fixed
-32-cell mesh, the reference is the exactly integrated spatial discretization,
-`omega_h = 2*c*sin(k*dx/2)/dx`; its measured temporal order is 2.002. Every measured
-frequency agrees with the fully discrete Yee dispersion relation to within 4.3e-7
-relative error. Raw traces, fits, settings, and a PDF are retained.
-
-The third panel shows a real cancellation effect: on a fixed mesh, smaller dt
-reduces time error but can increase total error relative to the continuum. This
-is why spatial resolution, time-step size, and total simulation duration need
-separate studies. The earlier 200/300/400 fs bend runs tested settling, not temporal
-discretization. The bend's 10 nm result is a finer-grid reference estimate, not
-analytic ground truth; its two mesh levels do not establish an observed order or
-a rigorous continuum error bound. The smooth periodic test's second-order result
-does not certify second-order convergence at staircased dielectric interfaces.
-
-Reproduce both diagnostics without changing the existing benchmark cases:
-
-```bash
-bash scripts/diagnostics.sh
-```
-
-## Attribution
-
-`baseline/scene.py` adapts the MIT-licensed FDTDX example. The upstream license is
-preserved in `NOTICE`. Solver sources are not modified by this repository.
+[Prioritized issues](https://github.com/alecjacobson/warp-fdtd/issues) ·
+[Solver and reproduction](docs/warp.md) ·
+[FDTDX baseline methodology](docs/fdtdx-baseline.md) ·
+[Raw results](results/warp)
