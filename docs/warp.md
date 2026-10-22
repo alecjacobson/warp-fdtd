@@ -1,5 +1,9 @@
 # Warp solver measurements
 
+Spatial and temporal adaptivity are proposed next experiments, not current
+solver features. See the [literature review and proposed acceptance tests](adaptivity-research.md)
+and its linked issues, which await the user's check-in before implementation.
+
 The runtime imports Warp and NumPy, not JAX or FDTDX. NumPy reads immutable
 reference bundles and prepares temporal source and detector coefficients on the
 host. Field updates, CPML recurrence, source injection and detector accumulation
