@@ -42,6 +42,11 @@ class Solver:
         self.shape = eps.shape[1:]
         self.n = int(np.prod(self.shape))
         self.steps = m["time_steps"]
+        if self.steps < 1 or not np.isfinite(m["dt_s"]) or m["dt_s"] <= 0:
+            raise ValueError("Positive time step and trajectory length required")
+        expected_dt = 0.99 / np.sqrt(3) * dx / 299792458.0
+        if not np.isclose(m["dt_s"], expected_dt, rtol=1e-4, atol=0):
+            raise ValueError("Only the exported CFL factor 0.99 is supported")
         self.device = wp.get_device(device)
         self.graph_steps = graph_steps
         if graph_steps < 1:
@@ -93,6 +98,10 @@ class Solver:
             raise ValueError("Source must span complete yz plane")
         self.sources, self.waves = {}, {}
         name = src["name"]
+        if not np.array_equal(d[name + "/_time_step_to_on_idx"], np.arange(self.steps)):
+            raise ValueError("Switched source schedules are not supported")
+        if src["num_startup_periods"] <= 0:
+            raise ValueError("Source must have a positive startup ramp")
         for field in "EH":
             profile = d[f"{name}/_{field}"]
             if np.iscomplexobj(profile):
