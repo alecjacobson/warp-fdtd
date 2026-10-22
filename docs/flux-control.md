@@ -68,6 +68,35 @@ resolution, energy drift and residual boundary energy. Its passing gate tests
 second-order convergence, not a fixed accuracy at every coarse resolution.
 
 This remains a periodic rectilinear correctness control. It does not establish
-oblique scattering, slab resonances, 3D sphere/Mie accuracy, coarse–fine face/edge/
+oblique scattering, frequency-resolved slab spectra, 3D sphere/Mie accuracy, coarse–fine face/edge/
 corner coupling, local time stepping, source/CPML compatibility or adjoints.
 Those dependencies remain in [#13–#16](https://github.com/alecjacobson/warp-fdtd/issues/13).
+
+## Finite-slab spectral integral
+
+`warp_fdtd.slab_validation` adds a finite slab with both interfaces. It compares
+separated outgoing packet energies with the analytic Fabry–Perot transmission
+integrated over the known Gaussian carrier spectrum. For n=sqrt(epsilon),
+interface power reflection rho=((1-n)/(1+n))² and slab thickness d,
+
+T(k)=(1-rho)² / (1-2 rho cos(2 n k d)+rho²).
+
+The Poisson-kernel expansion gives an analytic Gaussian-weighted cosine series.
+The cosine moment at delay tau is
+exp(-tau²/(4 sigma²)) [cos(k0 tau)+exp(-sigma² k0²)] / [1+exp(-sigma² k0²)].
+The series is summed through 64 terms; the reported geometric tail bound is
+2 rho^65/(1+rho), excluding floating-point evaluation error. An independent
+SciPy spectral quadrature test checks both narrow and broad real-pulse spectra.
+
+The domain is 3×0.08×0.08, the slab occupies x=[1.2,1.22], and the pulse starts
+at x=0.5 with sigma=0.06 and carrier wavelength 0.05. At t≈1.6 the reflected
+and transmitted packets remain away from the periodic boundaries. Residual
+slab energy is reported and must be below 1e-5; boundary energy below 1e-6.
+The same second-order and 1e-4 energy-drift gates apply. This tests the integrated
+Fabry–Perot response; a resolved frequency sweep and oblique incidence remain
+separate verification tasks.
+
+```bash
+OPENBLAS_NUM_THREADS=1 .venv/bin/python -m warp_fdtd.slab_validation \
+  --output results/warp/slab_flux_gpu
+```
