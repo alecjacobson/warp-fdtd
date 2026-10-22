@@ -107,3 +107,23 @@ are measured at 20 nm and do not certify the fine-grid uncertainty.
 ![Mesh and control trends](../results/physical_reference/comparison/convergence.png)
 
 ![Common-scale power flow](../results/physical_reference/comparison/power_flow.png)
+
+## Further reference refinement (#30)
+
+The opt-in 5 nm case has 192M cells. The 81M-cell run measured 8.654 GB peak
+live JAX allocation; further refinement must be checked against actual allocator
+capacity. The following explicitly raises the allocator limit, with preallocation
+still disabled. It is a capacity/accuracy experiment, not a default workload or
+a promised passing reference. Its environment and peak allocation are recorded.
+
+```bash
+OPENBLAS_NUM_THREADS=1 taskset -c 0-3 .venv/bin/python -m baseline.reference_study \
+  --cases mesh5 --jax-memory-fraction 0.9
+# After completion, compare the three finest levels:
+OPENBLAS_NUM_THREADS=1 .venv/bin/python -m warp_fdtd.reference_report \
+  --mesh-cases mesh10 mesh6p67 mesh5 --controls
+```
+
+The existing 20/10/6.67 nm report remains the published result until the finer
+run completes and is reviewed. A three-fine-level report still requires the
+uncertainty and observation-quadrature checks in #30.
