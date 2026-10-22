@@ -51,6 +51,8 @@ class PhysicalReferenceTests(unittest.TestCase):
                 )
         with self.assertRaisesRegex(ValueError, "representable"):
             layout(settings(spacing_nm=30, pml_cells=10, pad_domain=True))
+        with self.assertRaisesRegex(ValueError, "representable"):
+            layout(settings(spacing_nm=25, pml_cells=8))
         with self.assertRaisesRegex(ValueError, "PML"):
             layout(settings(pml_cells=20))
 

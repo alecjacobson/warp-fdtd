@@ -112,6 +112,16 @@ def main():
         np.arange(a + (10 if c == 2 else 0), b + (0 if c == 2 else 1), 20.0)
         for c, (a, b) in enumerate(ROI_NM)
     ]
+    if len(set(args.mesh_cases)) != 3:
+        p.error("Three distinct mesh cases required")
+    spacings = [
+        json.loads((args.root / "bundles" / n / "manifest.json").read_text())[
+            "settings"
+        ]["spacing_nm"]
+        for n in args.mesh_cases
+    ]
+    if not all(a > b for a, b in zip(spacings, spacings[1:])):
+        p.error("Mesh cases must be ordered from coarse to fine")
     finest = args.mesh_cases[-1]
     ref, manifest, reference = load_volume(args.root, finest, targets)
     origin = np.asarray(ref["physical_contract"]["origin_nm"])
@@ -125,6 +135,8 @@ def main():
         eps = 1.0 / z["inv_permittivity"][np.ix_([0], *cell_indices)]
     flow_ref = poynting(reference)
     rows = []
+    slices = []
+    slice_z = int(np.argmin(np.abs(targets[2] - 800)))
     coarse = None
     for name in [*args.mesh_cases, *args.controls]:
         r, m, fields = (
@@ -151,6 +163,8 @@ def main():
             (args.root / "bundles" / baseline_name / "manifest.json").read_text()
         )
         transmission = m["reference_measurements"]["modal_transmission"]
+        if name in args.mesh_cases:
+            slices.append(poynting(fields)[..., slice_z].copy())
         rows.append(
             dict(
                 case=name,
@@ -160,6 +174,11 @@ def main():
                 steps=r["time_steps"],
                 dt_s=r["dt_s"],
                 modal_transmission=transmission,
+                modal_reflection=m["reference_measurements"]["modal_reflection"],
+                modal_reflection_absolute_difference=abs(
+                    m["reference_measurements"]["modal_reflection"]
+                    - baseline_manifest["reference_measurements"]["modal_reflection"]
+                ),
                 modal_transmission_absolute_difference=abs(
                     transmission
                     - baseline_manifest["reference_measurements"]["modal_transmission"]
@@ -196,6 +215,10 @@ def main():
         normalization="Unit area-weighted incident mode power and input eigenmode phase; no fit to propagated fields.",
         electric_norm="Fine-grid scalar epsilon, piecewise constant in the cell containing each common physical sample.",
         timing_scope="Reference generation and passive volume diagnostics are excluded from performance claims.",
+        code_sha256={
+            n: digest(Path("warp_fdtd", n))
+            for n in ("reference_report.py", "reference_fields.py")
+        },
         rows=rows,
     )
     (out / "result.json").write_text(
@@ -233,7 +256,15 @@ def main():
     )
     axes[2].set_xticks(
         np.arange(len(controls)),
-        ["450 fs", "Half dt", "400 nm PML", "4.4 µm domain"][: len(controls)],
+        [
+            {
+                "time20_450": "450 fs",
+                "cfl20_half": "Half dt",
+                "pml20_400": "400 nm PML",
+                "domain20_4p4": "4.4 µm domain",
+            }.get(r["case"], r["case"])
+            for r in controls
+        ],
         rotation=20,
     )
     axes[2].set(
@@ -243,6 +274,50 @@ def main():
     for ax in axes:
         ax.grid(alpha=0.2)
     fig.savefig(out / "convergence.png", dpi=180)
+    plt.close(fig)
+    fig, axes = plt.subplots(1, 3, figsize=(12, 4.4), layout="constrained")
+    peak = max(float(np.linalg.norm(slices[-1], axis=0).max()), 1e-30)
+    grid_x, grid_y = np.meshgrid(targets[0] / 1000, targets[1] / 1000, indexing="ij")
+    stride = (slice(None, None, 12), slice(None, None, 12))
+    for ax, flow, row in zip(axes, slices, mesh):
+        magnitude = np.linalg.norm(flow, axis=0)
+        plotted = ax.pcolormesh(
+            grid_x,
+            grid_y,
+            np.log10(np.maximum(magnitude / peak, 1e-6)),
+            shading="auto",
+            vmin=-5,
+            vmax=0,
+            cmap="inferno",
+        )
+        planar = np.maximum(np.linalg.norm(flow[:2], axis=0), peak * 1e-8)
+        mask = magnitude[stride] / peak > 1e-3
+        ax.quiver(
+            grid_x[stride][mask],
+            grid_y[stride][mask],
+            (flow[0] / planar)[stride][mask],
+            (flow[1] / planar)[stride][mask],
+            color="white",
+            alpha=0.65,
+            scale=23,
+            width=0.004,
+        )
+        ax.set(
+            aspect="equal",
+            xlabel="Design x (µm)",
+            ylabel="Design y (µm)",
+            title=f"{row['spacing_nm']:.3g} nm · T={100 * row['modal_transmission']:.4f}%",
+        )
+    fig.colorbar(
+        plotted,
+        ax=axes,
+        label="log10(|time-averaged S| / fine-slice peak)",
+        shrink=0.75,
+    )
+    fig.suptitle(
+        f"Controlled 3D bend: common z={targets[2][slice_z]:.0f} nm slice, unit incident power"
+    )
+    fig.savefig(out / "power_flow.png", dpi=180)
     plt.close(fig)
     print(json.dumps(record, indent=2))
 
