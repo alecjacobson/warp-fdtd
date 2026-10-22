@@ -170,6 +170,39 @@ def flow():
 def accuracy():
     base = read(ROOT / "results/convergence/result.json")["rows"]
     new = read(OUT / "convergence/result.json")
+    timing = read(ROOT / "results/periodic_performance/result.json")["rows"]
+    fd = next(r for r in timing if r["cells_per_wavelength"] == 64)
+    wa = next(
+        r
+        for r in new["rows"]
+        if r["method"] == "rk4"
+        and r["cells_per_wavelength"] == 32
+        and r["courant_factor"] == 0.99
+    )
+    comparison = dict(
+        fdtdx_cells_per_wavelength=64,
+        warp_cells_per_wavelength=32,
+        fdtdx_seconds=fd["median_seconds"],
+        warp_seconds=wa["median_seconds"],
+        speedup=fd["median_seconds"] / wa["median_seconds"],
+        frequency_error_reduction=fd["continuum_relative_error"]
+        / wa["continuum_relative_error"],
+        warp_amplitude_loss_20_periods=wa["amplitude_loss_20_periods"],
+        scope="Periodic smooth vacuum mode; one interior example from complete plotted mesh sweeps, not a bend/interface result",
+    )
+    (OUT / "periodic_cost_comparison.json").write_text(
+        json.dumps(comparison, indent=2) + "\n"
+    )
+    for r in timing:
+        matched = next(
+            w
+            for w in new["rows"]
+            if w["method"] == "yee"
+            and w["courant_factor"] == 0.99
+            and w["cells_per_wavelength"] == r["cells_per_wavelength"]
+        )
+        assert r["steps"] == matched["steps"] and r["shape"] == matched["shape"]
+        assert np.isclose(r["dt_fs"], matched["dt_fs"], rtol=1e-5, atol=0)
     fig, axes = plt.subplots(1, 3, figsize=(13, 3.9), layout="constrained")
     for label, rows, style in [
         ("FDTDX Yee", base, "s--"),
@@ -195,13 +228,19 @@ def accuracy():
             style,
             label=label,
         )
-        if label != "FDTDX Yee":
-            axes[2].loglog(
-                [r["median_seconds"] * 1e3 for r in selected],
-                [r["continuum_relative_error"] for r in selected],
-                style,
-                label=label,
-            )
+        cost_rows = timing if label == "FDTDX Yee" else selected
+        color = {
+            "FDTDX Yee": "tab:blue",
+            "Warp Yee": "tab:orange",
+            "Warp fourth order": "tab:green",
+        }[label]
+        axes[2].loglog(
+            [r["median_seconds"] * 1e3 for r in cost_rows],
+            [r["continuum_relative_error"] for r in cost_rows],
+            style,
+            label=label,
+            color=color,
+        )
     axes[0].set(
         xlabel="Grid spacing (nm)",
         ylabel="Relative frequency error vs continuum",
@@ -215,7 +254,7 @@ def accuracy():
     axes[2].set(
         xlabel="Warm trajectory runtime (ms)",
         ylabel="Relative frequency error vs continuum",
-        title="Warp accuracy per runtime",
+        title="Measured accuracy per runtime",
     )
     axes[0].set_xticks(
         [12.109, 24.219, 48.438, 96.875, 193.75],
@@ -259,6 +298,9 @@ def main():
         if conv
         else "A fourth-order periodic accuracy study is in progress; the flagship currently uses matched Yee discretization."
     )
+    if conv:
+        cost = read(OUT / "periodic_cost_comparison.json")
+        acc_status += f" At 32 cells/λ versus FDTDX’s 64, it is **{cost['speedup']:.2f}× faster** with **{cost['frequency_error_reduction']:.1f}× lower frequency error** on that test."
     gradient_path = OUT / "gradient20/result.json"
     gradient = read(gradient_path) if gradient_path.exists() else None
     gradient_status = ""

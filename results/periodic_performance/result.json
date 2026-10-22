@@ -1,0 +1,184 @@
+{
+  "status": "complete",
+  "environment": {
+    "started_utc": "2026-10-22T01:35:00.497036+00:00",
+    "upstream_sha": "2cab8dbb2af9a43ec6443712f011f50ecf58790b",
+    "harness_sha256": {
+      "baseline/__init__.py": "145f00e0ee56a09a754d58ed87669d62088433670e013623a12ae880505ef7fe",
+      "baseline/common.py": "8a0837fd7ba4c40b6e785871643560664e14230dfb5166125dfb45c436a840b6",
+      "baseline/compare.py": "61e07dc701800a13a44e5b9174c013069c1ccb6589c8337056797c574c6eb0be",
+      "baseline/convergence.py": "d0c30276bb08a4aeed3be6435a79db9fb4c34bf44e3d285fdd0e1cca8957a46d",
+      "baseline/export_case.py": "5c69a0fbbdbb3febdc00ede4e7ac6f4c9d3fc674900a308019760d05626756cb",
+      "baseline/periodic_benchmark.py": "8720e627b33efb1c42c782a4cc58dfa0aeb0077eb0ec9aa1422b7e3323a50201",
+      "baseline/physics.py": "ad4ed758d6b1dcdd46f3eed58234e6bcce85a18dbe9f47a82ae24d5f9e05e4b6",
+      "baseline/protocol_checks.py": "10126e71cce9f1dd42dae41ff5c69fbc88a4e804977bbb491f6024616be642f3",
+      "baseline/quality_checks.py": "296be4fbba666fccec6084ed20bcd1cec63d9d85b58e452ebcea2c767f3c728c",
+      "baseline/report.py": "7851bd1d052922a9c2494c7fce1bcbc045fe5d29b110a822aa8c5c20c5868745",
+      "baseline/run.py": "e567b3a9786ee0b7a70878403eeb26d7597b5d73d29402f313596b2ffa3888f4",
+      "baseline/scene.py": "e7e939a1db6b6670b0a04bccf8b52101ef31a73a86c404cd3d51cca92a1f4b17",
+      "baseline/visualize_flow.py": "a6e6f13d82c01d88cd0541040fb583b960ca9541d53092bc8a1aa5cfa40b7718"
+    },
+    "python": "3.12.15",
+    "jax": "0.12.0",
+    "jax_default_matmul_precision": null,
+    "jax_enable_x64": false,
+    "requirements_sha256": "80d4daccc80308750433ea45e45a0d32217feda6f978158680cda26f789420db",
+    "cpu_model": "AMD EPYC 9B45",
+    "devices": [
+      {
+        "kind": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+        "platform": "gpu"
+      }
+    ],
+    "nvidia_smi": "GPU 0: NVIDIA RTX PRO 6000 Blackwell Server Edition (UUID: GPU-822536da-f2f9-2caf-83b8-9b1974483e63)\n  MIG 1g.24gb     Device  0: (UUID: MIG-5d3bb68b-2d20-590e-92a3-a0ff8bc701ed)",
+    "driver": "595.58.03",
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "cpu_quota": "400000 100000",
+    "host_memory_limit": "17179869184",
+    "environment": {
+      "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+      "OMP_NUM_THREADS": "4",
+      "OPENBLAS_NUM_THREADS": "1",
+      "JAX_PLATFORMS": "cuda,cpu"
+    }
+  },
+  "scope": "4x4xN periodic vacuum Maxwell mode, initial Ex=cos(2*pi*z/N), H=0, 20 periods, identical point probe E_x[0,0,0] each step. Warm timing excludes compile/first execution, includes final fields and probe trajectory.",
+  "rows": [
+    {
+      "method": "fdtdx_yee",
+      "cells_per_wavelength": 8,
+      "courant_factor": 0.99,
+      "shape": [
+        4,
+        4,
+        8
+      ],
+      "steps": 280,
+      "dt_fs": 0.3693988809716323,
+      "dx_nm": 193.75,
+      "compile_seconds": 0.07923128269612789,
+      "warmup_seconds": 0.006510596722364426,
+      "seconds": [
+        0.0024882787838578224,
+        0.0024383682757616043,
+        0.0024284590035676956
+      ],
+      "median_seconds": 0.0024383682757616043,
+      "measured_frequency_ratio": 0.9824382451505955,
+      "continuum_relative_error": 0.017561754849404476,
+      "prediction_residual": 1.755776501966011e-08,
+      "fit_relative_rms": 3.33823566604582e-07,
+      "finite_fields": true
+    },
+    {
+      "method": "fdtdx_yee",
+      "cells_per_wavelength": 16,
+      "courant_factor": 0.99,
+      "shape": [
+        4,
+        4,
+        16
+      ],
+      "steps": 560,
+      "dt_fs": 0.18469944048581616,
+      "dx_nm": 96.875,
+      "compile_seconds": 0.07543061394244432,
+      "warmup_seconds": 0.005547146312892437,
+      "seconds": [
+        0.004788688383996487,
+        0.004741467535495758,
+        0.004719657823443413
+      ],
+      "median_seconds": 0.004741467535495758,
+      "measured_frequency_ratio": 0.995657561950145,
+      "continuum_relative_error": 0.004342438049855013,
+      "prediction_residual": 1.4136767090278113e-08,
+      "fit_relative_rms": 3.406930773383947e-07,
+      "finite_fields": true
+    },
+    {
+      "method": "fdtdx_yee",
+      "cells_per_wavelength": 32,
+      "courant_factor": 0.99,
+      "shape": [
+        4,
+        4,
+        32
+      ],
+      "steps": 1120,
+      "dt_fs": 0.09234972024290808,
+      "dx_nm": 48.4375,
+      "compile_seconds": 0.07234099693596363,
+      "warmup_seconds": 0.01012631319463253,
+      "seconds": [
+        0.009371045045554638,
+        0.009322813712060452,
+        0.009313845075666904
+      ],
+      "median_seconds": 0.009322813712060452,
+      "measured_frequency_ratio": 0.9989174272538919,
+      "continuum_relative_error": 0.0010825727461081236,
+      "prediction_residual": 1.4354939459337857e-08,
+      "fit_relative_rms": 3.5179428276142086e-07,
+      "finite_fields": true
+    },
+    {
+      "method": "fdtdx_yee",
+      "cells_per_wavelength": 64,
+      "courant_factor": 0.99,
+      "shape": [
+        4,
+        4,
+        64
+      ],
+      "steps": 2239,
+      "dt_fs": 0.04617486012145404,
+      "dx_nm": 24.21875,
+      "compile_seconds": 0.07400612533092499,
+      "warmup_seconds": 0.019275697879493237,
+      "seconds": [
+        0.018586349673569202,
+        0.018536369316279888,
+        0.01857047714293003
+      ],
+      "median_seconds": 0.01857047714293003,
+      "measured_frequency_ratio": 0.9997295560572445,
+      "continuum_relative_error": 0.0002704439427555494,
+      "prediction_residual": 1.3330332393479694e-08,
+      "fit_relative_rms": 5.911840075498202e-07,
+      "finite_fields": true
+    },
+    {
+      "method": "fdtdx_yee",
+      "cells_per_wavelength": 128,
+      "courant_factor": 0.99,
+      "shape": [
+        4,
+        4,
+        128
+      ],
+      "steps": 4479,
+      "dt_fs": 0.023087420527852676,
+      "dx_nm": 12.109375,
+      "compile_seconds": 0.07880665268748999,
+      "warmup_seconds": 0.040816265158355236,
+      "seconds": [
+        0.03688690811395645,
+        0.0368568180128932,
+        0.03688003681600094
+      ],
+      "median_seconds": 0.03688003681600094,
+      "measured_frequency_ratio": 0.9999328237268844,
+      "continuum_relative_error": 6.717627311558783e-05,
+      "prediction_residual": 4.262504755825347e-07,
+      "fit_relative_rms": 8.316095078742564e-07,
+      "finite_fields": true
+    }
+  ],
+  "passed": true
+}

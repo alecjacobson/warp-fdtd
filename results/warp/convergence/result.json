@@ -14,13 +14,13 @@
       "steps": 280,
       "dx_nm": 193.75,
       "dt_fs": 0.3693988809716323,
-      "compile_seconds": 0.3572773337364197,
+      "compile_seconds": 0.006982115097343922,
       "seconds": [
-        0.0017529185861349106,
-        0.0017565889284014702,
-        0.0017549991607666016
+        0.0017705587670207024,
+        0.0017612185329198837,
+        0.001767628826200962
       ],
-      "median_seconds": 0.0017549991607666016,
+      "median_seconds": 0.001767628826200962,
       "measured_frequency_ratio": 0.9824382480155661,
       "continuum_relative_error": 0.017561751984433882,
       "temporal_relative_error": 0.008150772133115769,
@@ -39,22 +39,22 @@
         4,
         8
       ],
-      "steps": 555,
+      "steps": 554,
       "dx_nm": 193.75,
       "dt_fs": 0.18656509139981434,
-      "compile_seconds": 0.0043737273663282394,
+      "compile_seconds": 0.00429510697722435,
       "seconds": [
-        0.003678318113088608,
-        0.0036734575405716896,
-        0.003681098110973835
+        0.0036895563825964928,
+        0.0036845682188868523,
+        0.00368545763194561
       ],
-      "median_seconds": 0.003678318113088608,
-      "measured_frequency_ratio": 0.9764884033551938,
-      "continuum_relative_error": 0.023511596644806176,
-      "temporal_relative_error": 0.00204520722810253,
+      "median_seconds": 0.00368545763194561,
+      "measured_frequency_ratio": 0.9764884043420781,
+      "continuum_relative_error": 0.023511595657921935,
+      "temporal_relative_error": 0.002045208240815777,
       "predicted_frequency_ratio": 0.9764884280969437,
-      "prediction_residual": 2.533747367472472e-08,
-      "fit_relative_rms": 2.9337786466229986e-07,
+      "prediction_residual": 2.4326827552378916e-08,
+      "fit_relative_rms": 2.7273633724157564e-07,
       "finite_fields": true
     },
     {
@@ -70,13 +70,13 @@
       "steps": 1109,
       "dx_nm": 193.75,
       "dt_fs": 0.09328254569990717,
-      "compile_seconds": 0.0035195183008909225,
+      "compile_seconds": 0.0034811487421393394,
       "seconds": [
-        0.006951276212930679,
-        0.006953866221010685,
-        0.00695529580116272
+        0.006983055733144283,
+        0.006987025961279869,
+        0.006986535154283047
       ],
-      "median_seconds": 0.006953866221010685,
+      "median_seconds": 0.006986535154283047,
       "measured_frequency_ratio": 0.9749915508689708,
       "continuum_relative_error": 0.025008449131029176,
       "temporal_relative_error": 0.0005091788896263161,
@@ -98,13 +98,13 @@
       "steps": 560,
       "dx_nm": 96.875,
       "dt_fs": 0.18469944048581616,
-      "compile_seconds": 0.004579936154186726,
+      "compile_seconds": 0.004508667625486851,
       "seconds": [
-        0.0036792270839214325,
-        0.0036847982555627823,
-        0.0036806482821702957
+        0.003694206476211548,
+        0.0036932583898305893,
+        0.0037011979147791862
       ],
-      "median_seconds": 0.0036806482821702957,
+      "median_seconds": 0.003694206476211548,
       "measured_frequency_ratio": 0.995657561058503,
       "continuum_relative_error": 0.0043424389414969955,
       "temporal_relative_error": 0.002084075400064833,
@@ -126,13 +126,13 @@
       "steps": 1109,
       "dx_nm": 96.875,
       "dt_fs": 0.09328254569990717,
-      "compile_seconds": 0.003505747765302658,
+      "compile_seconds": 0.003475077450275421,
       "seconds": [
-        0.007219175808131695,
-        0.007217226549983025,
-        0.007221534848213196
+        0.0072503462433815,
+        0.007257976569235325,
+        0.007247745059430599
       ],
-      "median_seconds": 0.007219175808131695,
+      "median_seconds": 0.0072503462433815,
       "measured_frequency_ratio": 0.9941128068836594,
       "continuum_relative_error": 0.005887193116340561,
       "temporal_relative_error": 0.0005293505432848455,
@@ -151,22 +151,22 @@
         4,
         16
       ],
-      "steps": 2218,
+      "steps": 2217,
       "dx_nm": 96.875,
       "dt_fs": 0.046641272849953584,
-      "compile_seconds": 0.00432868767529726,
+      "compile_seconds": 0.004226057790219784,
       "seconds": [
-        0.014529000967741013,
-        0.014523711055517197,
-        0.014530351385474205
+        0.014591431245207787,
+        0.014579460956156254,
+        0.014578200876712799
       ],
-      "median_seconds": 0.014529000967741013,
-      "measured_frequency_ratio": 0.9937181852044346,
-      "continuum_relative_error": 0.0062818147955654435,
-      "temporal_relative_error": 0.00013218176154161654,
+      "median_seconds": 0.014579460956156254,
+      "measured_frequency_ratio": 0.9937181851905649,
+      "continuum_relative_error": 0.006281814809435127,
+      "temporal_relative_error": 0.0001321817475825604,
       "predicted_frequency_ratio": 0.9937182040870146,
-      "prediction_residual": 1.9001946349739285e-08,
-      "fit_relative_rms": 3.483808261960788e-07,
+      "prediction_residual": 1.9015903740537965e-08,
+      "fit_relative_rms": 3.4841183293646307e-07,
       "finite_fields": true
     },
     {
@@ -182,13 +182,13 @@
       "steps": 1120,
       "dx_nm": 48.4375,
       "dt_fs": 0.09234972024290808,
-      "compile_seconds": 0.003968417644500732,
+      "compile_seconds": 0.0038732485845685005,
       "seconds": [
-        0.007349085062742233,
-        0.007347916252911091,
-        0.007345125079154968
+        0.007381036877632141,
+        0.0073774345219135284,
+        0.00737510621547699
       ],
-      "median_seconds": 0.007347916252911091,
+      "median_seconds": 0.0073774345219135284,
       "measured_frequency_ratio": 0.9989174266824168,
       "continuum_relative_error": 0.001082573317583213,
       "temporal_relative_error": 0.0005238747837998936,
@@ -207,22 +207,22 @@
         4,
         32
       ],
-      "steps": 2218,
+      "steps": 2217,
       "dx_nm": 48.4375,
       "dt_fs": 0.046641272849953584,
-      "compile_seconds": 0.00433212798088789,
+      "compile_seconds": 0.004239487461745739,
       "seconds": [
-        0.014506720937788486,
-        0.014507530257105827,
-        0.014504331164062023
+        0.0145587008446455,
+        0.014565330930054188,
+        0.01455767173320055
       ],
-      "median_seconds": 0.014506720937788486,
-      "measured_frequency_ratio": 0.9985276430674931,
-      "continuum_relative_error": 0.001472356932506913,
-      "temporal_relative_error": 0.00013346432312166812,
+      "median_seconds": 0.0145587008446455,
+      "measured_frequency_ratio": 0.9985276430705956,
+      "continuum_relative_error": 0.0014723569294043948,
+      "temporal_relative_error": 0.00013346432622896032,
       "predicted_frequency_ratio": 0.998527662362645,
-      "prediction_residual": 1.9323602828968944e-08,
-      "fit_relative_rms": 4.878907926180391e-07,
+      "prediction_residual": 1.9320495647789926e-08,
+      "fit_relative_rms": 4.87670351712859e-07,
       "finite_fields": true
     },
     {
@@ -235,22 +235,22 @@
         4,
         32
       ],
-      "steps": 4435,
+      "steps": 4434,
       "dx_nm": 48.4375,
       "dt_fs": 0.023320636424976792,
-      "compile_seconds": 0.00358461681753397,
+      "compile_seconds": 0.0033393772318959236,
       "seconds": [
-        0.02900361269712448,
-        0.02902604267001152,
-        0.02900440152734518
+        0.029122892767190933,
+        0.02913604211062193,
+        0.029129542410373688
       ],
-      "median_seconds": 0.02900440152734518,
-      "measured_frequency_ratio": 0.998427684872271,
-      "continuum_relative_error": 0.0015723151277290404,
-      "temporal_relative_error": 3.3345376221127765e-05,
+      "median_seconds": 0.029129542410373688,
+      "measured_frequency_ratio": 0.9984276848773572,
+      "continuum_relative_error": 0.0015723151226427756,
+      "temporal_relative_error": 3.3345381315497136e-05,
       "predicted_frequency_ratio": 0.9984277013626787,
-      "prediction_residual": 1.6516376377673225e-08,
-      "fit_relative_rms": 7.888615959628027e-07,
+      "prediction_residual": 1.6511282119324733e-08,
+      "fit_relative_rms": 7.885049795604747e-07,
       "finite_fields": true
     },
     {
@@ -263,22 +263,22 @@
         4,
         64
       ],
-      "steps": 2240,
+      "steps": 2239,
       "dx_nm": 24.21875,
       "dt_fs": 0.04617486012145404,
-      "compile_seconds": 0.002714307978749275,
+      "compile_seconds": 0.005078345537185669,
       "seconds": [
-        0.014948231168091297,
-        0.014945700764656067,
-        0.014946180395781994
+        0.015014671720564365,
+        0.015005310997366905,
+        0.015007320791482925
       ],
-      "median_seconds": 0.014946180395781994,
-      "measured_frequency_ratio": 0.9997295568856315,
-      "continuum_relative_error": 0.00027044311436852375,
-      "temporal_relative_error": 0.00013115640139238494,
+      "median_seconds": 0.015007320791482925,
+      "measured_frequency_ratio": 0.9997295568855468,
+      "continuum_relative_error": 0.00027044311445323377,
+      "temporal_relative_error": 0.0001311564013075639,
       "predicted_frequency_ratio": 0.9997295427305174,
-      "prediction_residual": 1.4158943573150395e-08,
-      "fit_relative_rms": 6.411560653824423e-07,
+      "prediction_residual": 1.4158858752111314e-08,
+      "fit_relative_rms": 6.412053142935888e-07,
       "finite_fields": true
     },
     {
@@ -291,22 +291,22 @@
         4,
         64
       ],
-      "steps": 4435,
+      "steps": 4434,
       "dx_nm": 24.21875,
       "dt_fs": 0.023320636424976792,
-      "compile_seconds": 0.0034715384244918823,
+      "compile_seconds": 0.003395537845790386,
       "seconds": [
-        0.029595792293548584,
-        0.030408282764256,
-        0.029601871967315674
+        0.02969975210726261,
+        0.02969186194241047,
+        0.0296996021643281
       ],
-      "median_seconds": 0.029601871967315674,
-      "measured_frequency_ratio": 0.9996318632528455,
-      "continuum_relative_error": 0.0003681367471545238,
-      "temporal_relative_error": 3.342352427737616e-05,
+      "median_seconds": 0.0296996021643281,
+      "measured_frequency_ratio": 0.9996318632528447,
+      "continuum_relative_error": 0.000368136747155301,
+      "temporal_relative_error": 3.342352427648798e-05,
       "predicted_frequency_ratio": 0.999631882138574,
-      "prediction_residual": 1.889268330668159e-08,
-      "fit_relative_rms": 8.179831765537528e-07,
+      "prediction_residual": 1.8892684083837707e-08,
+      "fit_relative_rms": 8.181517799524043e-07,
       "finite_fields": true
     },
     {
@@ -319,22 +319,22 @@
         4,
         64
       ],
-      "steps": 8869,
+      "steps": 8868,
       "dx_nm": 24.21875,
       "dt_fs": 0.011660318212488396,
-      "compile_seconds": 0.004157716408371925,
+      "compile_seconds": 0.004072987474501133,
       "seconds": [
-        0.0592325534671545,
-        0.05925075523555279,
-        0.059241135604679585
+        0.05940214358270168,
+        0.059424374252557755,
+        0.0594177832826972
       ],
-      "median_seconds": 0.059241135604679585,
-      "measured_frequency_ratio": 0.9996067918953726,
-      "continuum_relative_error": 0.0003932081046273961,
-      "temporal_relative_error": 8.342095435764918e-06,
+      "median_seconds": 0.0594177832826972,
+      "measured_frequency_ratio": 0.9996067918956747,
+      "continuum_relative_error": 0.0003932081043253044,
+      "temporal_relative_error": 8.342095737967625e-06,
       "predicted_frequency_ratio": 0.9996068098309604,
-      "prediction_residual": 1.794264270493784e-08,
-      "fit_relative_rms": 1.1519438824327075e-06,
+      "prediction_residual": 1.7942340502230536e-08,
+      "fit_relative_rms": 1.1518170820337876e-06,
       "finite_fields": true
     },
     {
@@ -350,13 +350,13 @@
       "steps": 4479,
       "dx_nm": 12.109375,
       "dt_fs": 0.02308743006072702,
-      "compile_seconds": 0.005145217292010784,
+      "compile_seconds": 0.005200477316975594,
       "seconds": [
-        0.029938441701233387,
-        0.029941990971565247,
-        0.029941732063889503
+        0.030040742829442024,
+        0.030050781555473804,
+        0.030043200589716434
       ],
-      "median_seconds": 0.029941732063889503,
+      "median_seconds": 0.030043200589716434,
       "measured_frequency_ratio": 0.9999324116937611,
       "continuum_relative_error": 6.75883062388749e-05,
       "temporal_relative_error": 3.281077168271196e-05,
@@ -375,22 +375,22 @@
         4,
         128
       ],
-      "steps": 8869,
+      "steps": 8868,
       "dx_nm": 12.109375,
       "dt_fs": 0.011660318212488396,
-      "compile_seconds": 0.0042716870084404945,
+      "compile_seconds": 0.004062637686729431,
       "seconds": [
-        0.059224204160273075,
-        0.05922984518110752,
-        0.05918671377003193
+        0.05946693290024996,
+        0.05947870388627052,
+        0.059461934491992
       ],
-      "median_seconds": 0.059224204160273075,
-      "measured_frequency_ratio": 0.9999079525532997,
-      "continuum_relative_error": 9.204744670032738e-05,
-      "temporal_relative_error": 8.349175380173435e-06,
+      "median_seconds": 0.05946693290024996,
+      "measured_frequency_ratio": 0.9999079525536363,
+      "continuum_relative_error": 9.204744636370776e-05,
+      "temporal_relative_error": 8.349175716793056e-06,
       "predicted_frequency_ratio": 0.9999079684527157,
-      "prediction_residual": 1.5900879390962075e-08,
-      "fit_relative_rms": 1.0109850656062957e-06,
+      "prediction_residual": 1.590054277134101e-08,
+      "fit_relative_rms": 1.0110034205225512e-06,
       "finite_fields": true
     },
     {
@@ -403,22 +403,22 @@
         4,
         128
       ],
-      "steps": 17737,
+      "steps": 17736,
       "dx_nm": 12.109375,
       "dt_fs": 0.005830159106244198,
-      "compile_seconds": 0.003257998265326023,
+      "compile_seconds": 0.0030113188549876213,
       "seconds": [
-        0.11843670811504126,
-        0.11845225747674704,
-        0.11841570865362883
+        0.11886311788111925,
+        0.11889123823493719,
+        0.11891983821988106
       ],
-      "median_seconds": 0.11843670811504126,
-      "measured_frequency_ratio": 0.999901678252023,
-      "continuum_relative_error": 9.832174797697046e-05,
-      "temporal_relative_error": 2.0742441269039347e-06,
+      "median_seconds": 0.11889123823493719,
+      "measured_frequency_ratio": 0.9999016782519884,
+      "continuum_relative_error": 9.832174801160942e-05,
+      "temporal_relative_error": 2.0742440920429317e-06,
       "predicted_frequency_ratio": 0.9999016952398645,
-      "prediction_residual": 1.698951157536044e-08,
-      "fit_relative_rms": 1.41438395822886e-06,
+      "prediction_residual": 1.6989546214318807e-08,
+      "fit_relative_rms": 1.414407930552902e-06,
       "finite_fields": true
     },
     {
@@ -434,13 +434,13 @@
       "steps": 1584,
       "dx_nm": 48.4375,
       "dt_fs": 0.06529778198993502,
-      "compile_seconds": 0.004676506854593754,
+      "compile_seconds": 0.0045794276520609856,
       "seconds": [
-        0.010366263799369335,
-        0.010372073389589787,
-        0.010365893132984638
+        0.01041434332728386,
+        0.01040936354547739,
+        0.010421723127365112
       ],
-      "median_seconds": 0.010366263799369335,
+      "median_seconds": 0.01041434332728386,
       "measured_frequency_ratio": 0.9986556730920794,
       "continuum_relative_error": 0.0013443269079206344,
       "temporal_relative_error": 0.00026170024419580606,
@@ -459,22 +459,22 @@
         4,
         32
       ],
-      "steps": 3168,
+      "steps": 3167,
       "dx_nm": 48.4375,
       "dt_fs": 0.03264889099496751,
-      "compile_seconds": 0.004005287773907185,
+      "compile_seconds": 0.0038582580164074898,
       "seconds": [
-        0.020840966142714024,
-        0.020838018506765366,
-        0.02084500715136528
+        0.0209308173507452,
+        0.02092507667839527,
+        0.020929208025336266
       ],
-      "median_seconds": 0.020840966142714024,
-      "measured_frequency_ratio": 0.9984596692024771,
-      "continuum_relative_error": 0.0015403307975229152,
-      "temporal_relative_error": 6.538114327780953e-05,
+      "median_seconds": 0.020929208025336266,
+      "measured_frequency_ratio": 0.9984596692962335,
+      "continuum_relative_error": 0.0015403307037664682,
+      "temporal_relative_error": 6.538123718513589e-05,
       "predicted_frequency_ratio": 0.998459683003029,
-      "prediction_residual": 1.3821841893246756e-08,
-      "fit_relative_rms": 6.296807529838542e-07,
+      "prediction_residual": 1.3727940895158497e-08,
+      "fit_relative_rms": 6.309235021869012e-07,
       "finite_fields": true
     },
     {
@@ -487,22 +487,22 @@
         4,
         32
       ],
-      "steps": 8869,
+      "steps": 8868,
       "dx_nm": 48.4375,
       "dt_fs": 0.011660318212488396,
-      "compile_seconds": 0.004159587435424328,
+      "compile_seconds": 0.004166058264672756,
       "seconds": [
-        0.05842358432710171,
-        0.05841670371592045,
-        0.05839452426880598
+        0.05866288486868143,
+        0.058644164353609085,
+        0.058660044334828854
       ],
-      "median_seconds": 0.05841670371592045,
-      "measured_frequency_ratio": 0.9984027043281924,
-      "continuum_relative_error": 0.0015972956718075526,
-      "temporal_relative_error": 8.324658704150778e-06,
+      "median_seconds": 0.058660044334828854,
+      "measured_frequency_ratio": 0.9984027043328262,
+      "continuum_relative_error": 0.0015972956671738148,
+      "temporal_relative_error": 8.324663345549155e-06,
       "predicted_frequency_ratio": 0.9984027195548412,
-      "prediction_residual": 1.5251008900207808e-08,
-      "fit_relative_rms": 1.0993828960106714e-06,
+      "prediction_residual": 1.5246367723875665e-08,
+      "fit_relative_rms": 1.0989342827907542e-06,
       "finite_fields": true
     },
     {
@@ -518,13 +518,13 @@
       "steps": 280,
       "dx_nm": 193.75,
       "dt_fs": 0.3693988809716323,
-      "compile_seconds": 0.0050568971782922745,
+      "compile_seconds": 0.0049552470445632935,
       "seconds": [
-        0.0034348778426647186,
-        0.003430658020079136,
-        0.003430497832596302
+        0.003456207923591137,
+        0.003457128070294857,
+        0.003459007479250431
       ],
-      "median_seconds": 0.003430658020079136,
+      "median_seconds": 0.003457128070294857,
       "measured_frequency_ratio": 0.9979688304108673,
       "continuum_relative_error": 0.002031169589132742,
       "temporal_relative_error": 0.0003123218484731849,
@@ -534,7 +534,7 @@
       "finite_fields": true
     },
     {
-      "amplitude_loss_20_periods": 0.0005141142577063107,
+      "amplitude_loss_20_periods": 0.0005141197430784672,
       "method": "rk4",
       "cells_per_wavelength": 8,
       "courant_factor": 0.5,
@@ -543,22 +543,22 @@
         4,
         8
       ],
-      "steps": 555,
+      "steps": 554,
       "dx_nm": 193.75,
       "dt_fs": 0.18656509139981434,
-      "compile_seconds": 0.005933077074587345,
+      "compile_seconds": 0.005741686560213566,
       "seconds": [
-        0.006802394986152649,
-        0.006800046190619469,
-        0.006797135807573795
+        0.006835256703197956,
+        0.006830954924225807,
+        0.006828206591308117
       ],
-      "median_seconds": 0.006800046190619469,
-      "measured_frequency_ratio": 0.9982591626654167,
-      "continuum_relative_error": 0.0017408373345833006,
-      "temporal_relative_error": 2.1489541292218917e-05,
+      "median_seconds": 0.006830954924225807,
+      "measured_frequency_ratio": 0.9982591626642489,
+      "continuum_relative_error": 0.0017408373357511442,
+      "temporal_relative_error": 2.1489542461949895e-05,
       "predicted_frequency_ratio": 0.9982591820602273,
-      "prediction_residual": 1.9428632369589138e-08,
-      "fit_relative_rms": 4.0710934995749316e-07,
+      "prediction_residual": 1.9429802211590186e-08,
+      "fit_relative_rms": 4.075578455510534e-07,
       "finite_fields": true
     },
     {
@@ -574,13 +574,13 @@
       "steps": 1109,
       "dx_nm": 193.75,
       "dt_fs": 0.09328254569990717,
-      "compile_seconds": 0.004753557033836842,
+      "compile_seconds": 0.0047954171895980835,
       "seconds": [
-        0.013573131524026394,
-        0.013566642068326473,
-        0.013564062304794788
+        0.013665460981428623,
+        0.013656261377036572,
+        0.0136570418253541
       ],
-      "median_seconds": 0.013566642068326473,
+      "median_seconds": 0.0136570418253541,
       "measured_frequency_ratio": 0.9982792363411485,
       "continuum_relative_error": 0.001720763658851543,
       "temporal_relative_error": 1.3812917428746019e-06,
@@ -602,13 +602,13 @@
       "steps": 560,
       "dx_nm": 96.875,
       "dt_fs": 0.18469944048581616,
-      "compile_seconds": 0.006396105512976646,
+      "compile_seconds": 0.00610139686614275,
       "seconds": [
-        0.0069321757182478905,
-        0.0069262562319636345,
-        0.006929435767233372
+        0.006975475698709488,
+        0.006976655684411526,
+        0.006974136456847191
       ],
-      "median_seconds": 0.006929435767233372,
+      "median_seconds": 0.006975475698709488,
       "measured_frequency_ratio": 0.9998687939407928,
       "continuum_relative_error": 0.00013120605920724504,
       "temporal_relative_error": 2.0750795472923578e-05,
@@ -630,13 +630,13 @@
       "steps": 1109,
       "dx_nm": 96.875,
       "dt_fs": 0.09328254569990717,
-      "compile_seconds": 0.004773007705807686,
+      "compile_seconds": 0.004704557359218597,
       "seconds": [
-        0.013707920908927917,
-        0.013708031736314297,
-        0.013706411235034466
+        0.013790401630103588,
+        0.013792261481285095,
+        0.01379460096359253
       ],
-      "median_seconds": 0.013707920908927917,
+      "median_seconds": 0.013792261481285095,
       "measured_frequency_ratio": 0.9998881566910651,
       "continuum_relative_error": 0.00011184330893487804,
       "temporal_relative_error": 1.3859062021337465e-06,
@@ -646,7 +646,7 @@
       "finite_fields": true
     },
     {
-      "amplitude_loss_20_periods": 3.674416705345962e-07,
+      "amplitude_loss_20_periods": 3.6973200367995673e-07,
       "method": "rk4",
       "cells_per_wavelength": 16,
       "courant_factor": 0.25,
@@ -655,22 +655,22 @@
         4,
         16
       ],
-      "steps": 2218,
+      "steps": 2217,
       "dx_nm": 96.875,
       "dt_fs": 0.046641272849953584,
-      "compile_seconds": 0.005885615944862366,
+      "compile_seconds": 0.005722027271986008,
       "seconds": [
-        0.027305464260280132,
-        0.02731393277645111,
-        0.02730752434581518
+        0.027478362433612347,
+        0.027488263323903084,
+        0.02749368455260992
       ],
-      "median_seconds": 0.02730752434581518,
-      "measured_frequency_ratio": 0.999889439537433,
-      "continuum_relative_error": 0.0001105604625669665,
-      "temporal_relative_error": 1.0291811858298416e-07,
+      "median_seconds": 0.027488263323903084,
+      "measured_frequency_ratio": 0.9998894395386245,
+      "continuum_relative_error": 0.00011056046137547515,
+      "temporal_relative_error": 1.0291692698061183e-07,
       "predicted_frequency_ratio": 0.999889456574954,
-      "prediction_residual": 1.7039404553997883e-08,
-      "fit_relative_rms": 1.0872220737370225e-06,
+      "prediction_residual": 1.7038212951625553e-08,
+      "fit_relative_rms": 1.087636943193808e-06,
       "finite_fields": true
     },
     {
@@ -686,13 +686,13 @@
       "steps": 1120,
       "dx_nm": 48.4375,
       "dt_fs": 0.09234972024290808,
-      "compile_seconds": 0.0053336769342422485,
+      "compile_seconds": 0.0052713872864842415,
       "seconds": [
-        0.013823091983795166,
-        0.01382492110133171,
-        0.013822442851960659
+        0.01390022225677967,
+        0.013896451331675053,
+        0.0138956718146801
       ],
-      "median_seconds": 0.013823091983795166,
+      "median_seconds": 0.013896451331675053,
       "measured_frequency_ratio": 0.999991743902018,
       "continuum_relative_error": 8.25609798205118e-06,
       "temporal_relative_error": 1.3048351014122161e-06,
@@ -702,7 +702,7 @@
       "finite_fields": true
     },
     {
-      "amplitude_loss_20_periods": -1.5327364044637193e-07,
+      "amplitude_loss_20_periods": -1.5094289551598195e-07,
       "method": "rk4",
       "cells_per_wavelength": 32,
       "courant_factor": 0.5,
@@ -711,26 +711,26 @@
         4,
         32
       ],
-      "steps": 2218,
+      "steps": 2217,
       "dx_nm": 48.4375,
       "dt_fs": 0.046641272849953584,
-      "compile_seconds": 0.005878846161067486,
+      "compile_seconds": 0.0067594656720757484,
       "seconds": [
-        0.027383663691580296,
-        0.02739368285983801,
-        0.02738648373633623
+        0.027531293220818043,
+        0.027530292980372906,
+        0.027517512440681458
       ],
-      "median_seconds": 0.02738648373633623,
-      "measured_frequency_ratio": 0.9999929437920984,
-      "continuum_relative_error": 7.056207901645628e-06,
-      "temporal_relative_error": 1.049366802341467e-07,
+      "median_seconds": 0.027530292980372906,
+      "measured_frequency_ratio": 0.9999929437935539,
+      "continuum_relative_error": 7.056206446143243e-06,
+      "temporal_relative_error": 1.0493522450971682e-07,
       "predicted_frequency_ratio": 0.999992962814386,
-      "prediction_residual": 1.9022421526848632e-08,
-      "fit_relative_rms": 1.016890634798577e-06,
+      "prediction_residual": 1.9020966024463348e-08,
+      "fit_relative_rms": 1.0172650536253398e-06,
       "finite_fields": true
     },
     {
-      "amplitude_loss_20_periods": -4.70440358224522e-07,
+      "amplitude_loss_20_periods": -4.7379580392359344e-07,
       "method": "rk4",
       "cells_per_wavelength": 32,
       "courant_factor": 0.25,
@@ -739,26 +739,26 @@
         4,
         32
       ],
-      "steps": 4435,
+      "steps": 4434,
       "dx_nm": 48.4375,
       "dt_fs": 0.023320636424976792,
-      "compile_seconds": 0.0046875569969415665,
+      "compile_seconds": 0.004532206803560257,
       "seconds": [
-        0.05474196746945381,
-        0.05474289692938328,
-        0.0547398766502738
+        0.055044776760041714,
+        0.05504740588366985,
+        0.055047047324478626
       ],
-      "median_seconds": 0.05474196746945381,
-      "measured_frequency_ratio": 0.9999930245977733,
-      "continuum_relative_error": 6.975402226716554e-06,
-      "temporal_relative_error": 2.4130443421199743e-08,
+      "median_seconds": 0.055047047324478626,
+      "measured_frequency_ratio": 0.9999930245964379,
+      "continuum_relative_error": 6.975403562092808e-06,
+      "temporal_relative_error": 2.4131778908476065e-08,
       "predicted_frequency_ratio": 0.9999930433538202,
-      "prediction_residual": 1.875617738900104e-08,
-      "fit_relative_rms": 1.5907858870623052e-06,
+      "prediction_residual": 1.8757512765255058e-08,
+      "fit_relative_rms": 1.5909258476626624e-06,
       "finite_fields": true
     },
     {
-      "amplitude_loss_20_periods": 1.1011324109189147e-06,
+      "amplitude_loss_20_periods": 1.0919448261148545e-06,
       "method": "rk4",
       "cells_per_wavelength": 64,
       "courant_factor": 0.99,
@@ -767,26 +767,26 @@
         4,
         64
       ],
-      "steps": 2240,
+      "steps": 2239,
       "dx_nm": 24.21875,
       "dt_fs": 0.04617486012145404,
-      "compile_seconds": 0.0037690075114369392,
+      "compile_seconds": 0.006881865672767162,
       "seconds": [
-        0.027535732835531235,
-        0.027540982700884342,
-        0.02755043376237154
+        0.027668152935802937,
+        0.027664633467793465,
+        0.02765645459294319
       ],
-      "median_seconds": 0.027540982700884342,
-      "measured_frequency_ratio": 0.9999994955201793,
-      "continuum_relative_error": 5.044798206954582e-07,
-      "temporal_relative_error": 6.927702689285553e-08,
+      "median_seconds": 0.027664633467793465,
+      "measured_frequency_ratio": 0.9999994955160489,
+      "continuum_relative_error": 5.044839510581767e-07,
+      "temporal_relative_error": 6.928115725557404e-08,
       "predicted_frequency_ratio": 0.9999994822642806,
-      "prediction_residual": 1.3255905484399477e-08,
-      "fit_relative_rms": 7.258005034301317e-07,
+      "prediction_residual": 1.3251775232703267e-08,
+      "fit_relative_rms": 7.243076864318594e-07,
       "finite_fields": true
     },
     {
-      "amplitude_loss_20_periods": -8.826505546455365e-07,
+      "amplitude_loss_20_periods": -8.811536329478287e-07,
       "method": "rk4",
       "cells_per_wavelength": 64,
       "courant_factor": 0.5,
@@ -795,26 +795,26 @@
         4,
         64
       ],
-      "steps": 4435,
+      "steps": 4434,
       "dx_nm": 24.21875,
       "dt_fs": 0.023320636424976792,
-      "compile_seconds": 0.004702417179942131,
+      "compile_seconds": 0.0052293771877884865,
       "seconds": [
-        0.05466415733098984,
-        0.0546433562412858,
-        0.05464428663253784
+        0.05491254758089781,
+        0.05490496568381786,
+        0.05493605695664883
       ],
-      "median_seconds": 0.05464428663253784,
-      "measured_frequency_ratio": 0.999999542482198,
-      "continuum_relative_error": 4.5751780197722525e-07,
-      "temporal_relative_error": 2.231498785754127e-08,
+      "median_seconds": 0.05491254758089781,
+      "measured_frequency_ratio": 0.9999995424828038,
+      "continuum_relative_error": 4.57517196239543e-07,
+      "temporal_relative_error": 2.231438200883673e-08,
       "predicted_frequency_ratio": 0.9999995594227721,
-      "prediction_residual": 1.694058149315225e-08,
-      "fit_relative_rms": 1.3229933251775058e-06,
+      "prediction_residual": 1.6939975755470016e-08,
+      "fit_relative_rms": 1.3232391338929513e-06,
       "finite_fields": true
     },
     {
-      "amplitude_loss_20_periods": -1.1577534442253068e-07,
+      "amplitude_loss_20_periods": -1.116981498405778e-07,
       "method": "rk4",
       "cells_per_wavelength": 64,
       "courant_factor": 0.25,
@@ -823,22 +823,22 @@
         4,
         64
       ],
-      "steps": 8869,
+      "steps": 8868,
       "dx_nm": 24.21875,
       "dt_fs": 0.011660318212488396,
-      "compile_seconds": 0.005643516778945923,
+      "compile_seconds": 0.005521527491509914,
       "seconds": [
-        0.1091805025935173,
-        0.1091497540473938,
-        0.10917700361460447
+        0.10966089274734259,
+        0.10964197386056185,
+        0.10967006348073483
       ],
-      "median_seconds": 0.10917700361460447,
-      "measured_frequency_ratio": 0.9999995519862761,
-      "continuum_relative_error": 4.480137238971338e-07,
-      "temporal_relative_error": 1.2810905558602315e-08,
+      "median_seconds": 0.10966089274734259,
+      "measured_frequency_ratio": 0.9999995519874648,
+      "continuum_relative_error": 4.480125351813413e-07,
+      "temporal_relative_error": 1.2809716953832151e-08,
       "predicted_frequency_ratio": 0.9999995644612037,
-      "prediction_residual": 1.2474933086537021e-08,
-      "fit_relative_rms": 2.436084614188336e-06,
+      "prediction_residual": 1.2473744370744555e-08,
+      "fit_relative_rms": 2.435938428254052e-06,
       "finite_fields": true
     },
     {
@@ -854,13 +854,13 @@
       "steps": 4479,
       "dx_nm": 12.109375,
       "dt_fs": 0.02308743006072702,
-      "compile_seconds": 0.006979175843298435,
+      "compile_seconds": 0.0068915365263819695,
       "seconds": [
-        0.06504655070602894,
-        0.06528280023485422,
-        0.06538858078420162
+        0.06536681018769741,
+        0.06538347993046045,
+        0.06538058072328568
       ],
-      "median_seconds": 0.06528280023485422,
+      "median_seconds": 0.06538058072328568,
       "measured_frequency_ratio": 0.9999999785681353,
       "continuum_relative_error": 2.143186472736147e-08,
       "temporal_relative_error": 5.7800180197631335e-09,
@@ -870,7 +870,7 @@
       "finite_fields": true
     },
     {
-      "amplitude_loss_20_periods": -2.0939312639356444e-07,
+      "amplitude_loss_20_periods": -2.1068989375372382e-07,
       "method": "rk4",
       "cells_per_wavelength": 128,
       "courant_factor": 0.5,
@@ -879,26 +879,26 @@
         4,
         128
       ],
-      "steps": 8869,
+      "steps": 8868,
       "dx_nm": 12.109375,
       "dt_fs": 0.011660318212488396,
-      "compile_seconds": 0.005644546821713448,
+      "compile_seconds": 0.005555787123739719,
       "seconds": [
-        0.12937754206359386,
-        0.12937250081449747,
-        0.1293799914419651
+        0.12944187130779028,
+        0.12944589089602232,
+        0.12941856123507023
       ],
-      "median_seconds": 0.12937754206359386,
-      "measured_frequency_ratio": 0.9999999540811385,
-      "continuum_relative_error": 4.59188614909678e-08,
-      "temporal_relative_error": 1.8706979520999312e-08,
+      "median_seconds": 0.12944187130779028,
+      "measured_frequency_ratio": 0.99999995408076,
+      "continuum_relative_error": 4.5919239965996894e-08,
+      "temporal_relative_error": 1.87073577739838e-08,
       "predicted_frequency_ratio": 0.9999999724521442,
-      "prediction_residual": 1.83710062717779e-08,
-      "fit_relative_rms": 2.1112813115272688e-06,
+      "prediction_residual": 1.8371384746806996e-08,
+      "fit_relative_rms": 2.1114702235260144e-06,
       "finite_fields": true
     },
     {
-      "amplitude_loss_20_periods": -6.136659114197585e-08,
+      "amplitude_loss_20_periods": -6.37129295988359e-08,
       "method": "rk4",
       "cells_per_wavelength": 128,
       "courant_factor": 0.25,
@@ -907,22 +907,22 @@
         4,
         128
       ],
-      "steps": 17737,
+      "steps": 17736,
       "dx_nm": 12.109375,
       "dt_fs": 0.005830159106244198,
-      "compile_seconds": 0.004186978563666344,
+      "compile_seconds": 0.004062396474182606,
       "seconds": [
-        0.25926198344677687,
-        0.2592665432021022,
-        0.25927659310400486
+        0.25893837213516235,
+        0.2589190127328038,
+        0.258997293189168
       ],
-      "median_seconds": 0.2592665432021022,
-      "measured_frequency_ratio": 0.9999999590925326,
-      "continuum_relative_error": 4.090746741347573e-08,
-      "temporal_relative_error": 1.3695585221462636e-08,
+      "median_seconds": 0.25893837213516235,
+      "measured_frequency_ratio": 0.99999995909198,
+      "continuum_relative_error": 4.0908019971475085e-08,
+      "temporal_relative_error": 1.3696137779461992e-08,
       "predicted_frequency_ratio": 0.999999972767118,
-      "prediction_residual": 1.3674585797041061e-08,
-      "fit_relative_rms": 3.426333192320485e-06,
+      "prediction_residual": 1.3675138355040417e-08,
+      "fit_relative_rms": 3.4263283134637914e-06,
       "finite_fields": true
     },
     {
@@ -938,13 +938,13 @@
       "steps": 1584,
       "dx_nm": 48.4375,
       "dt_fs": 0.06529778198993502,
-      "compile_seconds": 0.0062566762790083885,
+      "compile_seconds": 0.006277715787291527,
       "seconds": [
-        0.019651588052511215,
-        0.01964360848069191,
-        0.019643178209662437
+        0.019641597755253315,
+        0.019633207470178604,
+        0.01963498815894127
       ],
-      "median_seconds": 0.01964360848069191,
+      "median_seconds": 0.01963498815894127,
       "measured_frequency_ratio": 0.9999927011402947,
       "continuum_relative_error": 7.298859705295868e-06,
       "temporal_relative_error": 3.475901705352058e-07,
@@ -954,7 +954,7 @@
       "finite_fields": true
     },
     {
-      "amplitude_loss_20_periods": -1.641627638271359e-07,
+      "amplitude_loss_20_periods": -1.5986028212289227e-07,
       "method": "rk4",
       "cells_per_wavelength": 32,
       "courant_factor": 0.35,
@@ -963,26 +963,26 @@
         4,
         32
       ],
-      "steps": 3168,
+      "steps": 3167,
       "dx_nm": 48.4375,
       "dt_fs": 0.03264889099496751,
-      "compile_seconds": 0.005416985601186752,
+      "compile_seconds": 0.005296677350997925,
       "seconds": [
-        0.03932767640799284,
-        0.0393181461840868,
-        0.03933348599821329
+        0.0392775759100914,
+        0.039270625449717045,
+        0.03928576596081257
       ],
-      "median_seconds": 0.03932767640799284,
-      "measured_frequency_ratio": 0.9999930120770673,
-      "continuum_relative_error": 6.987922932744084e-06,
-      "temporal_relative_error": 3.665123660123726e-08,
+      "median_seconds": 0.0392775759100914,
+      "measured_frequency_ratio": 0.9999930120789742,
+      "continuum_relative_error": 6.987921025825017e-06,
+      "temporal_relative_error": 3.664932957114786e-08,
       "predicted_frequency_ratio": 0.9999930280880976,
-      "prediction_residual": 1.601114196780884e-08,
-      "fit_relative_rms": 1.1636977588424997e-06,
+      "prediction_residual": 1.6009235048741743e-08,
+      "fit_relative_rms": 1.16371371962996e-06,
       "finite_fields": true
     },
     {
-      "amplitude_loss_20_periods": 1.9249373806040637e-07,
+      "amplitude_loss_20_periods": 1.9335592593705542e-07,
       "method": "rk4",
       "cells_per_wavelength": 32,
       "courant_factor": 0.125,
@@ -991,22 +991,22 @@
         4,
         32
       ],
-      "steps": 8869,
+      "steps": 8868,
       "dx_nm": 48.4375,
       "dt_fs": 0.011660318212488396,
-      "compile_seconds": 0.005692176520824432,
+      "compile_seconds": 0.00551039632409811,
       "seconds": [
-        0.11002630274742842,
-        0.11002901382744312,
-        0.11002585291862488
+        0.10984271392226219,
+        0.10986400302499533,
+        0.10984248295426369
       ],
-      "median_seconds": 0.11002630274742842,
-      "measured_frequency_ratio": 0.9999930330471936,
-      "continuum_relative_error": 6.966952806441995e-06,
-      "temporal_relative_error": 1.5680964526865182e-08,
+      "median_seconds": 0.10984271392226219,
+      "measured_frequency_ratio": 0.9999930330474391,
+      "continuum_relative_error": 6.966952560860662e-06,
+      "temporal_relative_error": 1.5680718945532135e-08,
       "predicted_frequency_ratio": 0.9999930483920872,
-      "prediction_residual": 1.5345000381472573e-08,
-      "fit_relative_rms": 2.1023764244264243e-06,
+      "prediction_residual": 1.5344754800139526e-08,
+      "fit_relative_rms": 2.1025916535202287e-06,
       "finite_fields": true
     }
   ],

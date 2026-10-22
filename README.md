@@ -7,7 +7,7 @@ components, CPML, an injected mode, and Hann-window modal detectors.
 **Status:** forward correctness gates pass on the saved cases. On the tested
 RTX PRO 6000 Blackwell **MIG 1g.24gb** (46 SMs), matched forward runs are
 **2.30–4.05× faster**. Fine-grid bend transmission is **93.1919%**.
-The smooth periodic test measures order **3.97** with Warp’s optional fourth-order propagator versus **2.01** with Yee. This higher-order path is not yet validated for dielectric interfaces or CPML.
+The smooth periodic test measures order **3.97** with Warp’s optional fourth-order propagator versus **2.01** with Yee. This higher-order path is not yet validated for dielectric interfaces or CPML. At 32 cells/λ versus FDTDX’s 64, it is **1.34× faster** with **32.8× lower frequency error** on that test.
 
 | Matched workload | FDTDX | Warp | Speedup |
 |---|---:|---:|---:|

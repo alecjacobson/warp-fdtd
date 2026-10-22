@@ -1,0 +1,10 @@
+{
+  "fdtdx_cells_per_wavelength": 64,
+  "warp_cells_per_wavelength": 32,
+  "fdtdx_seconds": 0.01857047714293003,
+  "warp_seconds": 0.013896451331675053,
+  "speedup": 1.3363467190074043,
+  "frequency_error_reduction": 32.75687175025013,
+  "warp_amplitude_loss_20_periods": 1.5258640982396265e-05,
+  "scope": "Periodic smooth vacuum mode; one interior example from complete plotted mesh sweeps, not a bend/interface result"
+}

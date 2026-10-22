@@ -97,8 +97,8 @@ mistaking damping for frequency error. At CFL 0.99, measured amplitude loss over
 20 periods is 1.52% at 8 cells/wavelength, 0.0493% at 16, and 0.00153% at 32.
 The observed coarse-grid frequency convergence order is 3.97; the Yee order is
 2.01. These are frequency-error results, not a claim of zero dissipation. The
-error-versus-runtime panel compares the two Warp methods; archived FDTDX mode
-execution timing included first execution and is deliberately not used there.
+error-versus-runtime panel uses a separate warm FDTDX benchmark with the same
+point probe; the original first-execution timings are deliberately excluded.
 
 ## Exact material adjoint
 
@@ -176,3 +176,33 @@ for method in exact adjoint; do
 done
 JAX_DEFAULT_MATMUL_PRECISION=highest bash scripts/export_references.sh gradient20_highest_exact
 ```
+
+
+## Direct periodic accuracy per runtime
+
+The latest cost panel includes `baseline.periodic_benchmark`: identical 4×4×N
+initial states, all six components, 20 nominal optical periods, float32, periodic
+boundaries, and the same E_x point probe each step. Both solvers round the target
+duration to the nearest step; this fixed a one-step ceil/round difference at
+64 cells/wavelength. The report checks matching shapes, counts and time steps
+(up to float32 grid-coordinate rounding). Compilation and the first execution
+are separate from three synchronized warm repetitions.
+
+For an interior example in the complete plotted sweep, Warp fourth order at
+32 cells/wavelength takes **13.896 ms**, versus **18.570 ms** for FDTDX Yee at 64:
+**1.34× faster with 32.8× lower frequency error**. RK4 loses 0.00153% amplitude
+over 20 periods in this case. This is a smooth, effectively one-dimensional
+mode on a 3D grid; it does not transfer the higher-order accuracy claim to the
+3D bend's discontinuous material interfaces.
+
+Regenerate the FDTDX timing fixture with the pinned baseline environment:
+
+```bash
+JAX_PLATFORMS=cuda,cpu OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=4 \
+  XLA_PYTHON_CLIENT_PREALLOCATE=false taskset -c 0-3 \
+  .venv/bin/python -m baseline.periodic_benchmark
+```
+
+Then run `warp_fdtd.convergence` and `warp_fdtd.report` as above. Raw FDTDX
+repetitions are in `results/periodic_performance/result.json` and the plotted
+example is summarized in `results/warp/periodic_cost_comparison.json`.
