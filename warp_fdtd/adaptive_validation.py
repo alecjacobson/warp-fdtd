@@ -91,12 +91,46 @@ def main():
     p.add_argument("--output", default="results/warp/adaptive_validation")
     p.add_argument("--precision", choices=("float32", "float64"), default="float32")
     p.add_argument("--compensated", action="store_true")
+    p.add_argument(
+        "--flux",
+        action="store_true",
+        help="Experimental shared-edge two-float flux storage",
+    )
+    p.add_argument(
+        "--flux-plain",
+        action="store_true",
+        help="Ablate the two-float accumulator; requires --flux",
+    )
+    p.add_argument("--device", default="cuda:0")
     p.add_argument("--long-steps", type=int, default=1000000)
     args = p.parse_args()
+    if args.flux_plain and not args.flux:
+        p.error("--flux-plain requires --flux")
+    if args.flux and (args.precision != "float32" or args.compensated):
+        p.error("--flux is a separate float32 control")
     if args.long_steps < 1:
         p.error("--long-steps must be positive")
     out = Path(args.output)
     out.mkdir(parents=True, exist_ok=True)
+
+    def solver(edges, cfl):
+        if args.flux:
+            from .flux_rectilinear import FluxRectilinearPeriodic
+
+            return FluxRectilinearPeriodic(
+                edges,
+                cfl=cfl,
+                device=args.device,
+                accumulation="plain" if args.flux_plain else "two_sum",
+            )
+        return RectilinearPeriodic(
+            edges,
+            cfl=cfl,
+            precision=args.precision,
+            compensated=args.compensated,
+            device=args.device,
+        )
+
     rows = []
     for graded in (False, True):
         for n in (8, 16, 32, 64):
@@ -105,9 +139,7 @@ def main():
                 u + 0.45 / (2 * np.pi) * np.sin(2 * np.pi * u) if graded else u
                 for _ in range(3)
             ]
-            s = RectilinearPeriodic(
-                edges, cfl=0.5, precision=args.precision, compensated=args.compensated
-            )
+            s = solver(edges, cfl=0.5)
             initial = analytic(s, 0)
             s.set_fields(*initial)
             duration = 1.75 / np.sqrt(3)
@@ -160,9 +192,7 @@ def main():
     n = 8
     u = np.linspace(0, 1, n + 1)
     edges = [u + 0.45 / (2 * np.pi) * np.sin(2 * np.pi * u)] * 3
-    s = RectilinearPeriodic(
-        edges, cfl=0.9, precision=args.precision, compensated=args.compensated
-    )
+    s = solver(edges, cfl=0.9)
     rng = np.random.default_rng(51)
     e = curl_numpy(rng.normal(size=(3, n, n, n)), s.dual, False)
     h = curl_numpy(rng.normal(size=(3, n, n, n)), s.primal, True)
@@ -208,6 +238,8 @@ def main():
         device=s.device.name,
         precision=args.precision,
         compensated=args.compensated,
+        flux=args.flux,
+        flux_plain=args.flux_plain,
         gauss_normalization="Unit domain length; analytic change divided by initial combined E/H norm to avoid standing-wave nodes; broadband absolute residual divided by each instantaneous field norm",
         seed=51,
         configuration={
@@ -224,7 +256,11 @@ def main():
         },
         code_sha256={
             name: hashlib.sha256(Path("warp_fdtd", name).read_bytes()).hexdigest()
-            for name in ("rectilinear.py", "adaptive_validation.py")
+            for name in (
+                "rectilinear.py",
+                "adaptive_validation.py",
+                "flux_rectilinear.py",
+            )
         },
         warp_version=wp.__version__,
         rows=rows,

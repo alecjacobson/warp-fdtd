@@ -1,0 +1,199 @@
+{
+  "status": "complete",
+  "passed": true,
+  "backend": "flux",
+  "device": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+  "warp_version": "1.18.0",
+  "scope": "Gaussian-spectrum integrated normal-incidence slab scattering; not a resolved frequency sweep, oblique test, CPML or Mie validation.",
+  "domain_lengths": [
+    3,
+    0.08,
+    0.08
+  ],
+  "slab_bounds": [
+    1.2,
+    1.22
+  ],
+  "pulse_center": 0.5,
+  "pulse_sigma": 0.06,
+  "carrier_wavelength": 0.05,
+  "target_observation_time": 1.6,
+  "cfl": 0.7,
+  "acceptance": {
+    "minimum_fine_three_level_order": 1.8,
+    "maximum_energy_drift": 0.0001,
+    "maximum_boundary_energy_fraction": 1e-06,
+    "maximum_remaining_slab_energy_fraction": 1e-05
+  },
+  "code_sha256": {
+    "rectilinear.py": "a96c4a60bf5dc378abe3241347a19dcf4b77ba13dbdf90b62869d1df2c46865f",
+    "flux_rectilinear.py": "a406358d0706c157731c92fc8917f4f207a30e937fc6c388b47691e31c5abd08",
+    "slab_validation.py": "8dfd385e1020cbf3dfd6165f075a07cc029126efafa09a9b83f5fa5116073fcf"
+  },
+  "orders": {
+    "2.25": 2.0080818338652557,
+    "12.25": 1.9816604322990032
+  },
+  "rows": [
+    {
+      "n": 1500,
+      "shape": [
+        1500,
+        4,
+        4
+      ],
+      "steps": 1154,
+      "dt": 0.0013862065601671944,
+      "contrast": 2.25,
+      "reflection": 0.05820563854131524,
+      "transmission": 0.9417943378251177,
+      "analytic_transmission": 0.939959762508088,
+      "analytic_series_tail_bound": 2.617556668622637e-91,
+      "reflection_absolute_error": 0.0018345989505967678,
+      "transmission_absolute_error": 0.0018345753170296852,
+      "remaining_slab_energy_fraction": 3.671956064759669e-15,
+      "boundary_energy_fraction": 3.884634922540114e-11,
+      "energy_relative_drift": 2.3633563994707174e-08
+    },
+    {
+      "n": 3000,
+      "shape": [
+        3000,
+        4,
+        4
+      ],
+      "steps": 2291,
+      "dt": 0.0006982565352752665,
+      "contrast": 2.25,
+      "reflection": 0.05959733527295648,
+      "transmission": 0.9404026470603204,
+      "analytic_transmission": 0.939959762508088,
+      "analytic_series_tail_bound": 2.617556668622637e-91,
+      "reflection_absolute_error": 0.0004429022189555293,
+      "transmission_absolute_error": 0.0004428845522324032,
+      "remaining_slab_energy_fraction": 5.159720758040514e-15,
+      "boundary_energy_fraction": 7.29572886993807e-11,
+      "energy_relative_drift": 1.7666718310493934e-08
+    },
+    {
+      "n": 6000,
+      "shape": [
+        6000,
+        4,
+        4
+      ],
+      "steps": 4574,
+      "dt": 0.0003497814548645417,
+      "contrast": 2.25,
+      "reflection": 0.05993048097705701,
+      "transmission": 0.9400695106258368,
+      "analytic_transmission": 0.939959762508088,
+      "analytic_series_tail_bound": 2.617556668622637e-91,
+      "reflection_absolute_error": 0.00010975651485499449,
+      "transmission_absolute_error": 0.0001097481177487758,
+      "remaining_slab_energy_fraction": 9.029962516763667e-15,
+      "boundary_energy_fraction": 8.841650273472055e-11,
+      "energy_relative_drift": 8.397097905898931e-09
+    },
+    {
+      "n": 12000,
+      "shape": [
+        12000,
+        4,
+        4
+      ],
+      "steps": 9144,
+      "dt": 0.00017497266265692599,
+      "contrast": 2.25,
+      "reflection": 0.06001286450910458,
+      "transmission": 0.9399871357979033,
+      "analytic_transmission": 0.939959762508088,
+      "analytic_series_tail_bound": 2.617556668622637e-91,
+      "reflection_absolute_error": 2.737298280743039e-05,
+      "transmission_absolute_error": 2.737328981528009e-05,
+      "remaining_slab_energy_fraction": 1.767757815045461e-14,
+      "boundary_energy_fraction": 9.297187266407552e-11,
+      "energy_relative_drift": 3.0702507203272944e-10
+    },
+    {
+      "n": 1500,
+      "shape": [
+        1500,
+        4,
+        4
+      ],
+      "steps": 1154,
+      "dt": 0.0013862065601671944,
+      "contrast": 12.25,
+      "reflection": 0.3820955886760172,
+      "transmission": 0.6179037935852678,
+      "analytic_transmission": 0.5537860440291426,
+      "analytic_series_tail_bound": 9.972027921450578e-34,
+      "reflection_absolute_error": 0.06411836729484027,
+      "transmission_absolute_error": 0.06411774955612526,
+      "remaining_slab_energy_fraction": 6.038615554734001e-07,
+      "boundary_energy_fraction": 3.033364992568873e-10,
+      "energy_relative_drift": 1.3877159643627124e-08
+    },
+    {
+      "n": 3000,
+      "shape": [
+        3000,
+        4,
+        4
+      ],
+      "steps": 2291,
+      "dt": 0.0006982565352752665,
+      "contrast": 12.25,
+      "reflection": 0.4286684168346553,
+      "transmission": 0.5713310520368324,
+      "analytic_transmission": 0.5537860440291426,
+      "analytic_series_tail_bound": 9.972027921450578e-34,
+      "reflection_absolute_error": 0.01754553913620216,
+      "transmission_absolute_error": 0.017545008007689877,
+      "remaining_slab_energy_fraction": 5.375930691315211e-07,
+      "boundary_energy_fraction": 5.603152580454715e-10,
+      "energy_relative_drift": 6.456681855837587e-09
+    },
+    {
+      "n": 6000,
+      "shape": [
+        6000,
+        4,
+        4
+      ],
+      "steps": 4574,
+      "dt": 0.0003497814548645417,
+      "contrast": 12.25,
+      "reflection": 0.44173710038593034,
+      "transmission": 0.5582623712947042,
+      "analytic_transmission": 0.5537860440291426,
+      "analytic_series_tail_bound": 9.972027921450578e-34,
+      "reflection_absolute_error": 0.0044768555849271086,
+      "transmission_absolute_error": 0.004476327265561686,
+      "remaining_slab_energy_fraction": 5.229473957519373e-07,
+      "boundary_energy_fraction": 6.823608998155119e-10,
+      "energy_relative_drift": 5.386927570683042e-09
+    },
+    {
+      "n": 12000,
+      "shape": [
+        12000,
+        4,
+        4
+      ],
+      "steps": 9144,
+      "dt": 0.00017497266265692599,
+      "contrast": 12.25,
+      "reflection": 0.44508912243747756,
+      "transmission": 0.5549103466197411,
+      "analytic_transmission": 0.5537860440291426,
+      "analytic_series_tail_bound": 9.972027921450578e-34,
+      "reflection_absolute_error": 0.0011248335333798876,
+      "transmission_absolute_error": 0.0011243025905985915,
+      "remaining_slab_energy_fraction": 5.266173016853486e-07,
+      "boundary_energy_fraction": 7.154866499737469e-10,
+      "energy_relative_drift": 4.327421088134997e-09
+    }
+  ]
+}

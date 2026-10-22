@@ -130,9 +130,10 @@ OPENBLAS_NUM_THREADS=1 .venv/bin/python -m unittest discover -s tests -v
 OPENBLAS_NUM_THREADS=1 .venv/bin/python -m warp_fdtd.adaptive_validation
 ```
 
-These tests do not certify block boundaries or dielectric scattering. Slab,
-sphere, artificial-interface reflection and fixed-geometry bend uncertainty
-remain open under #13–#15.
+These initial tests do not certify block boundaries or dielectric scattering.
+The new [flux control](flux-control.md) adds normal-incidence Fresnel and
+Gaussian-spectrum finite-slab checks. Oblique incidence, sphere/Mie, artificial
+interfaces and fine bend uncertainty remain open under #13–#15 and #30.
 
 Measured convergence is second order: uniform **2.004**, graded **1.995**.
 The tiny independent operator's weighted-transpose residual is **1.20e-16**,
@@ -143,12 +144,15 @@ and all 12 tested CFL values pass the matrix checks. Long-time results:
 | float32 | 3.55e-6 | 9.02e-4 | **Fail** (Gauss) |
 | Compensated float32 | 2.18e-6 | 7.73e-4 | **Fail** (Gauss) |
 | float64 | 6.77e-15 | 1.62e-12 | Pass for this restricted control |
+| Shared flux, plain float32 accumulation | 1.73e-6 | 7.30e-4 | **Fail** (Gauss) |
+| Shared flux, two-float accumulation | 8.17e-7 | 6.98e-7 | Pass for this restricted control |
 
 The limit is 1e-4 for both quantities. Compensation stores two additional
 three-component arrays and does not solve this failure. Float64 is a correctness
 control, not a demonstrated competitive production policy. [#27](https://github.com/alecjacobson/warp-fdtd/issues/27)
-tracks metric-consistent flux storage, mixed precision and further robustness
-sweeps. The failing float32 commands intentionally exit nonzero after writing
+is addressed by shared-edge two-float flux accumulation, with twelve passing
+million-step material/CFL cases on CPU and GPU. Its additional memory/runtime
+cost remains open in [#32](https://github.com/alecjacobson/warp-fdtd/issues/32). The failing float32 commands intentionally exit nonzero after writing
 their result files. The initial failed run is also retained, with its overly
 sensitive smooth-wave normalization superseded: smooth-wave Gauss changes now
 use the initial combined E/H norm instead of E at a standing-wave temporal node.
@@ -163,9 +167,10 @@ OPENBLAS_NUM_THREADS=1 .venv/bin/python -m warp_fdtd.adaptive_validation \
   --precision float64 --output results/warp/adaptive_validation_float64
 ```
 
-The regression suite passes **13 tests**, including unequal-axis/material
-NumPy comparisons, all three arithmetic modes, and preservation of compensation
-state across graph compilation and reset/replay.
+The combined regression suite passes **22 tests**, including unequal-axis/material
+NumPy comparisons, arithmetic ablations, exact state preservation across graph
+compilation/reset, physical reference contracts and independent slab quadrature.
+See [the flux-control report](flux-control.md) for cost measurements and scope.
 
 ## Reference audit (#25)
 
@@ -189,7 +194,7 @@ reference uncertainty remains unresolved under
 ## Next dependencies
 
 1. #30: qualify the fine bend reference against the full accuracy budget; #25 fixed-coordinate generation is complete.
-2. #27 and #13: resolve long-time float32 constraints and add slab/sphere scattering.
+2. #13: extend passing normal-incidence material controls to oblique/sphere scattering; #32 tracks the passing flux control’s cost.
 3. #14: extend nonuniform controls to materials, sources, ports and CPML.
 4. #15: implement and audit the 3D 3:1 block interface, including face/edge/corner power and divergence tests.
 5. #16: add local time stepping only after the spatial interface passes.

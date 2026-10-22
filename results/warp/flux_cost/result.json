@@ -1,0 +1,116 @@
+{
+  "status": "complete",
+  "backend": "flux",
+  "device": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+  "warp_version": "1.18.0",
+  "cost_only": true,
+  "scope": "Periodic rectilinear control; no flagship, CPML, interface, source or adjoint acceptance.",
+  "precision": "Two-float flux accumulators; float32 metric coefficients and edge impulses",
+  "memory_scope": "Owned device arrays, excluding graph/driver/allocator overhead; not peak memory.",
+  "long_steps": 1000000,
+  "threshold": 0.0001,
+  "passed": null,
+  "code_sha256": {
+    "rectilinear.py": "a96c4a60bf5dc378abe3241347a19dcf4b77ba13dbdf90b62869d1df2c46865f",
+    "flux_rectilinear.py": "6bd5e81df0036678158f3c7a7d3663df04f1a337ee7b7aded2fba2605d43c3ab",
+    "flux_validation.py": "7ce668e800a0c2c253964e3b42188ba2ba80fbf7f04f1fc17e96bbb9ef5f8ca1"
+  },
+  "rows": [
+    {
+      "backend": "float32",
+      "n": 64,
+      "cells": 262144,
+      "steps": 1024,
+      "owned_device_array_bytes": 9438728,
+      "compile_seconds": 0.016408399678766727,
+      "warm_seconds": [
+        0.024008195847272873,
+        0.024028275161981583,
+        0.024144615046679974,
+        0.024145315401256084,
+        0.024148425087332726
+      ],
+      "median_seconds": 0.024144615046679974
+    },
+    {
+      "backend": "float64",
+      "n": 64,
+      "cells": 262144,
+      "steps": 1024,
+      "owned_device_array_bytes": 18877456,
+      "compile_seconds": 0.009243565611541271,
+      "warm_seconds": [
+        0.20639170426875353,
+        0.20634377375245094,
+        0.2063714936375618,
+        0.20638171397149563,
+        0.2064214637503028
+      ],
+      "median_seconds": 0.20638171397149563
+    },
+    {
+      "backend": "flux",
+      "n": 64,
+      "cells": 262144,
+      "steps": 1024,
+      "owned_device_array_bytes": 22021632,
+      "compile_seconds": 0.012804381549358368,
+      "warm_seconds": [
+        0.07108196709305048,
+        0.0710813868790865,
+        0.07107972726225853,
+        0.0710801063105464,
+        0.07108611613512039
+      ],
+      "median_seconds": 0.0710813868790865
+    },
+    {
+      "backend": "float32",
+      "n": 128,
+      "cells": 2097152,
+      "steps": 1024,
+      "owned_device_array_bytes": 75500552,
+      "compile_seconds": 0.029497932642698288,
+      "warm_seconds": [
+        0.48367296531796455,
+        0.483695475384593,
+        0.48367733508348465,
+        0.48369269631803036,
+        0.4836656451225281
+      ],
+      "median_seconds": 0.48367733508348465
+    },
+    {
+      "backend": "float64",
+      "n": 128,
+      "cells": 2097152,
+      "steps": 1024,
+      "owned_device_array_bytes": 151001104,
+      "compile_seconds": 0.06034177355468273,
+      "warm_seconds": [
+        1.5969573957845569,
+        1.596870576031506,
+        1.5964765856042504,
+        1.5957154678180814,
+        1.5963792074471712
+      ],
+      "median_seconds": 1.5964765856042504
+    },
+    {
+      "backend": "flux",
+      "n": 128,
+      "cells": 2097152,
+      "steps": 1024,
+      "owned_device_array_bytes": 176163840,
+      "compile_seconds": 0.03954089526087046,
+      "warm_seconds": [
+        1.1541583565995097,
+        1.1539811957627535,
+        1.1539587462320924,
+        1.1538872364908457,
+        1.154001036658883
+      ],
+      "median_seconds": 1.1539811957627535
+    }
+  ]
+}
