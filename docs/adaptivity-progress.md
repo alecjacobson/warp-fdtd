@@ -244,3 +244,73 @@ Raw topology results: [result.json](../results/warp/geometry_mesh/result.json).
 The small-domain mesh is saved as JSON; `arrays_topology.npz` is regenerable
 and ignored, with its checksum retained. Main README stays limited to reviewed
 flagship wave results.
+
+## Planar 3D coarse–fine evolution (#15, #37)
+
+`warp_fdtd.planar_interface` now evolves all six Maxwell components across a
+ratio-3 planar interface in pure Warp. Transverse x/z directions are periodic;
+the outer y faces are PEC. SciPy assembles a sparse correctness operator on the
+host. This does not yet consume the forest, close patch edges/corners, inject
+sources, provide ports/CPML, or implement the final dense-block GPU kernels.
+
+The first trace rule follows the constant-along-edge and transverse averaging
+constraints of [the selected paper](https://arxiv.org/abs/1705.02274), equations
+38–54. With full-region electric mass `M`, coupling `K` and electric trace map
+`P`, elimination gives `M_reduced = P.T M P` and `K_reduced = K P`. Magnetic
+mass stays diagonal; electric mass is diagonal except for independent 3×3
+interface groups. Those groups are inverted at setup, with no global solve at
+each timestep. This construction makes the two curls weighted transposes.
+
+An explicitly experimental `--trace area` variant averages independent fine
+trace values over each coarse trace tile. Its mass groups are 9×9. It is our
+Galerkin variant, not the paper's rule; energy compatibility is not a proof of
+composite Gauss preservation or low interface reflection.
+
+Independent tests compare Warp with a dense constrained-system solve, check the
+actual trace equations, recover a single uniform region when the ratio is one,
+and verify short-time energy/local magnetic divergence. Four interface tests
+and four mesh tests pass on CPU. Full 3D analytic standing waves vary in x, y
+and z. On coarse resolutions 4/8/16:
+
+| Trace | Electric relative L2 at finest | Last measured order | >=1.8 order gate |
+|---|---:|---:|---|
+| Uniform ratio 1 control | 0.008538 | 2.018 | Pass |
+| Published-style ratio 3 | 0.019603 | 1.754 | **Fail** |
+| Experimental area ratio 3 | 0.008733 | 2.000 | Pass for this test |
+
+The error uses physical staggered samples with volume/material weights and a
+fixed initial-field normalization; it includes interface projection error.
+It is not normalized by a field at a temporal node or fitted in phase.
+The published-style failure is retained under #37, without lowering the gate.
+
+The area trace passes three **million-step float64 CPU** tests at CFL 0.3/0.9/0.99
+and material contrasts 1/12.25/100. Maximum modified-energy drift is 2.76e-13;
+maximum change in local block magnetic divergence is 2.40e-12. Ordinary float32
+fails the same local-divergence threshold in the 100,000-step material tests:
+maximum 3.89e-4 versus the 1e-4 gate, despite small energy drift (5.03e-6).
+This failure is retained; float64 is a control, not a competitive precision choice.
+
+**Composite interface Gauss constraints remain uncertified.** The normal-B
+comparison in the artifact compares a coarse point value with an average of
+fine point values, so even exact smooth samples have a quadrature mismatch.
+It must not be interpreted as a derived composite divergence residual. A proper
+composite constraint/flux test and isolated scattering tests are next under #37.
+The current tests do not qualify a local patch or a waveguide result, and sparse
+CPU trajectory times are not claimed as GPU speedups. The GPU remains occupied
+by the independent fine-reference replay while these CPU controls run.
+
+```bash
+python -m unittest tests.test_planar_interface tests.test_block_mesh -v
+# Retained convergence failure:
+python -m warp_fdtd.planar_validation
+# Restricted passing double-precision control:
+python -m warp_fdtd.planar_validation --trace area --steps 1000000 \
+  --output results/warp/planar_area_long_cpu
+# Retained float32 long-time constraint failure:
+python -m warp_fdtd.planar_validation --trace area --precision float32 \
+  --steps 100000 --output results/warp/planar_area_float32_cpu
+```
+
+Regenerate the figure with `python -m warp_fdtd.planar_report`.
+
+![Planar-interface convergence](../results/warp/planar_area_long_cpu/convergence.png)

@@ -2,6 +2,9 @@
 
 Constraint assembly of the lossless tangential trace rule in Bekmambetova,
 Zhang & Triverio, https://arxiv.org/abs/1705.02274, equations (38)-(54).
+The optional area trace is an experimental Galerkin constraint: coarse E is
+the average of unconstrained fine E over its trace tile. It is NOT the cited
+published rule and has no established composite Gauss or scattering guarantee.
 No octree edge/corner closure, CPML, source or waveguide integration yet.
 SciPy constructs a reference operator; all time stepping is in pure Warp.
 The sparse kernels are a correctness prototype, not the intended dense-block
@@ -98,9 +101,13 @@ class PlanarOperator:
         ratio=3,
         epsilon_coarse=1.0,
         epsilon_fine=1.0,
+        trace="published",
     ):
         if ratio not in (1, 3, 5) or min(nx, ny_coarse, nz) < 1 or h <= 0:
             raise ValueError("Positive dimensions and ratio 1,3,5 required")
+        if trace not in ("published", "area"):
+            raise ValueError("trace must be published or area")
+        self.trace = trace
         self.ratio = r = ratio
         self.coarse = c = region((nx, ny_coarse, nz), h, 0.0, epsilon_coarse)
         self.fine = f = region(
@@ -131,15 +138,17 @@ class PlanarOperator:
         groups = []
         for component in (0, 2):
             for i, k in product(range(nx), range(nz)):
-                group = list(range(count, count + r))
-                count += r
+                group_size = r if trace == "published" else r * r
+                group = list(range(count, count + group_size))
+                count += group_size
                 groups.append(group)
                 crow = int(c.eids[component][i, ny_coarse, k])
-                constraints[crow] = [(col, 1.0 / r) for col in group]
+                constraints[crow] = [(col, 1.0 / group_size) for col in group]
                 # Tangential E constant along its own edge direction; varying
                 # across the odd-ratio dual-width group around coarse vertex.
-                for q, col in enumerate(group):
+                for q in range(r):
                     for along in range(r):
+                        col = group[q] if trace == "published" else group[q * r + along]
                         fi = (
                             (i * r + along)
                             if component == 0
@@ -165,7 +174,7 @@ class PlanarOperator:
         self.p = sp.coo_matrix((vals, (rows, cols)), shape=(ne, count)).tocsr()
         self.me = (self.p.T @ sp.diags(self.me_full) @ self.p).tocsr()
         self.k = (self.k_full @ self.p).tocsr()
-        # Me is scalar for interior DOFs and r-by-r for each independent trace.
+        # Me is scalar for interior DOFs and r-by-r (published) or r²-by-r² (area) for each independent trace.
         inv = sp.diags(1 / self.me.diagonal(), format="lil")
         for group in groups:
             block = self.me[group, :][:, group].toarray()
@@ -230,6 +239,18 @@ class PlanarOperator:
             "magnetic_dofs": len(self.mh),
             "interface_groups": len(self.groups),
         }
+
+    def normal_magnetic_jump(self, h):
+        """Physical coarse-face B_n minus mean fine-face B_n at the interface.
+
+        This is a diagnostic, not a derived composite Gauss operator. Local
+        div B invariance alone does not certify this normal-flux continuity.
+        """
+        c, f, r = self.coarse, self.fine, self.ratio
+        coarse = h[c.hids[1][:, -1, :]]
+        fine = h[len(c.mh) + f.hids[1][:, 0, :]]
+        averaged = fine.reshape(c.shape[0], r, c.shape[2], r).mean(axis=(1, 3))
+        return coarse - averaged
 
     def magnetic_divergence(self, h):
         result = []

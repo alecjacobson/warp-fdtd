@@ -38,8 +38,8 @@ def mode(coords, components, lengths, t, electric):
     return fields[components, np.arange(len(coords))]
 
 
-def convergence(n, ratio, device, precision):
-    op = PlanarOperator(nx=n, ny_coarse=n // 2, nz=n, h=1 / n, ratio=ratio)
+def convergence(n, ratio, device, precision, trace="published"):
+    op = PlanarOperator(nx=n, ny_coarse=n // 2, nz=n, h=1 / n, ratio=ratio, trace=trace)
     s = PlanarStepper(op, cfl=0.7, device=device, precision=precision)
     e0 = mode(op.ecoords, op.e_components, op.lengths, 0, True)
     h0 = mode(op.hcoords, op.h_components, op.lengths, -s.dt / 2, False)
@@ -77,11 +77,15 @@ def convergence(n, ratio, device, precision):
             norm(h - expected_h, op.mh) / denom
         ),
         "energy_relative_change": float(op.energy(e, h, s.dt) / initial_energy - 1),
+        "normal_B_jump_rms_over_initial_E_rms": float(
+            np.sqrt(np.mean(op.normal_magnetic_jump(h) ** 2))
+            / (denom / np.sqrt(np.sum(op.me_full)))
+        ),
         "operator_audit": op.audit(),
     }
 
 
-def stability(steps, cfl, device, precision, contrast):
+def stability(steps, cfl, device, precision, contrast, trace="published"):
     op = PlanarOperator(
         nx=2,
         ny_coarse=1,
@@ -89,6 +93,7 @@ def stability(steps, cfl, device, precision, contrast):
         h=0.5,
         ratio=3,
         epsilon_coarse=contrast,
+        trace=trace,
         epsilon_fine=lambda p: np.where(p[:, 0] < 0.5, contrast, 1.0),
     )
     s = PlanarStepper(op, cfl=cfl, device=device, precision=precision)
@@ -139,6 +144,7 @@ def main():
     p.add_argument("--device", default="cpu")
     p.add_argument("--precision", choices=("float32", "float64"), default="float64")
     p.add_argument("--steps", type=int, default=10000)
+    p.add_argument("--trace", choices=("published", "area"), default="published")
     a = p.parse_args()
     a.output.mkdir(parents=True, exist_ok=True)
     start = time.perf_counter()
@@ -146,7 +152,7 @@ def main():
     for ratio in (1, 3):
         rows = []
         for n in (4, 8, 16):
-            row = convergence(n, ratio, a.device, a.precision)
+            row = convergence(n, ratio, a.device, a.precision, a.trace)
             rows.append(row)
             print(json.dumps(row), flush=True)
         for previous, row in zip(rows, rows[1:]):
@@ -157,7 +163,7 @@ def main():
         waves.extend(rows)
     stability_rows = []
     for cfl, contrast in ((0.3, 1.0), (0.9, 12.25), (0.99, 100.0)):
-        row = stability(a.steps, cfl, a.device, a.precision, contrast)
+        row = stability(a.steps, cfl, a.device, a.precision, contrast, a.trace)
         stability_rows.append(row)
         print(json.dumps(row), flush=True)
     sources = {
@@ -169,6 +175,7 @@ def main():
     result = {
         "status": "complete",
         "scope": "Planar 3D interface prototype; no local patch edges/corners, ports or CPML",
+        "trace": a.trace,
         "device": a.device,
         "precision": a.precision,
         "wave_convergence": waves,

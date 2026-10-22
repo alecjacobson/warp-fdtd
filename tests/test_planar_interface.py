@@ -61,6 +61,27 @@ class PlanarInterfaceTests(unittest.TestCase):
                     samples.append(along[0])
                 self.assertAlmostEqual(coarse[i, k], np.mean(samples), places=14)
 
+    def test_area_trace_dense_mass_solve_and_exact_constant_field(self):
+        op = PlanarOperator(
+            nx=2,
+            ny_coarse=1,
+            nz=2,
+            h=0.5,
+            trace="area",
+            epsilon_coarse=12.25,
+            epsilon_fine=2.25,
+        )
+        rng = np.random.default_rng(117)
+        h = rng.normal(size=len(op.mh))
+        expected = la.solve(op.me.toarray(), op.k.T @ h, assume_a="pos")
+        np.testing.assert_allclose(op.e_update @ h, expected, atol=1e-12)
+        self.assertEqual(op.audit()["largest_electric_mass_block"], 9)
+        # Uniform normal E satisfies PEC and every trace; zero curl exactly.
+        physical = (op.e_components == 1).astype(float)
+        e = op.project_e(physical)
+        np.testing.assert_allclose(op.p @ e, physical, atol=1e-15)
+        np.testing.assert_allclose(op.k @ e, 0, atol=1e-15)
+
     def test_ratio_one_recovers_single_uniform_region(self):
         op = PlanarOperator(nx=3, ny_coarse=2, nz=3, h=0.2, ratio=1)
         g = region((3, 4, 3), 0.2, 0.0)
