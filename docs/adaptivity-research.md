@@ -5,6 +5,16 @@ the dependency order below. The initial verification and measurement work is
 recorded in [adaptivity progress](adaptivity-progress.md); no adaptive flagship
 speedup has yet been demonstrated. Main README results are flagship-only.
 
+## Execution revision after user feedback
+
+The active sequence is geometry-driven 3D block meshes (#34), spatial interface
+implementation (#15), and measured straight-guide then bend comparisons (#35).
+Implement and verify these together; neither completion of every #13 benchmark
+nor fine bend-reference certification (#30) blocks starting them. Compare both
+uniform finest spacing and the best accuracy-matched uniform solver. #17, #20
+and #21 are deferred/closed research options. The literature and gates below
+remain the evidence contract, not a mandatory serial research backlog.
+
 ## Recommendation
 
 Start with a common verification suite and fixed, locally refined Cartesian

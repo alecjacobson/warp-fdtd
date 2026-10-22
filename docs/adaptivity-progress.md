@@ -191,14 +191,56 @@ PML and domain controls. Transmission is 92.8943%, 93.1852% and 93.2438% at
 reference uncertainty remains unresolved under
 [#30](https://github.com/alecjacobson/warp-fdtd/issues/30).
 
-## Next dependencies
+## Current execution order
 
-1. #30: qualify the fine bend reference against the full accuracy budget; #25 fixed-coordinate generation is complete.
-2. #13: extend passing normal-incidence material controls to oblique/sphere scattering; #32 tracks the passing flux control’s cost.
-3. #14: extend nonuniform controls to materials, sources, ports and CPML.
-4. #15: implement and audit the 3D 3:1 block interface, including face/edge/corner power and divergence tests.
-5. #16: add local time stepping only after the spatial interface passes.
+The user-directed revision prioritizes a working locally refined waveguide.
+Fine bend-reference qualification is an independent track, not a prerequisite.
 
-#26 is an independent uniform-throughput control. #18 consumes the localization
-diagnostic but still needs a calibrated propagation-error estimator. Main README
-figures remain measured flagship results; no adaptive speedup is advertised.
+1. [#34](https://github.com/alecjacobson/warp-fdtd/issues/34): geometry-driven balanced block forests; topology counts and overhead first.
+2. [#15](https://github.com/alecjacobson/warp-fdtd/issues/15): 3D coarse–fine coupling, starting with planar interfaces and a global fine timestep. Verify each stage against analytic/operator tests as it is built.
+3. [#35](https://github.com/alecjacobson/warp-fdtd/issues/35): straight-guide propagation, then bend; measure error, runtime and memory against both uniform finest spacing and the best accuracy-matched uniform configuration.
+4. #16: local time stepping after the spatial comparison. #18: measured-error refinement after the geometry policy works. #19: adjoint after forward benefit.
+
+#13 retains the acceptance gates. #14 and #32 provide supporting controls as
+needed; neither is an implementation prerequisite. #30 continues separately.
+#17, #20 and #21 are closed as deferred research options (binary SBP-SAT,
+hp-DG and dynamic remeshing); reopen only when evidence motivates them.
+
+## Procedural mesh implementation (#34)
+
+`warp_fdtd.block_mesh` builds forests of dense Cartesian blocks with ratio 2
+(octrees) or ratio 3 (27 children). A conservative box-distance policy resolves
+material boundaries, guide interiors and configurable buffers. A maximum far
+cell size caps coarsening. Primitive-box unions conservatively retain internal
+primitive surfaces; arbitrary curved/voxel bend geometry is not implemented yet.
+All face/edge/corner neighbors differ by at most one level. Integer block
+coordinates avoid a dense finest-grid owner array. Covered parents do not own
+field storage. Level-sorted leaves and face-overlap tiles are exported.
+
+Independent small dense-oracle tests check coverage, nonoverlap, full face
+partition and diagonal balance for both ratios. Thin features that miss block
+centers still trigger refinement. The six-case straight-guide study records
+mesh setup/audit cost, active cells, a one-cell padded-block model, binary
+metadata sizes and reproducible topology/source hashes. These are topology
+counts, not Maxwell performance, solver allocations or peak GPU memory.
+
+```bash
+OPENBLAS_NUM_THREADS=1 python -m unittest tests.test_block_mesh -v
+OPENBLAS_NUM_THREADS=1 python -m warp_fdtd.mesh_study
+```
+
+The 9.6 × 6.4 × 6.4 µm domain with a 400 × 400 nm straight guide uses
+12.5 nm finest cells and at most 100 nm coarse cells. The balanced binary
+hierarchy has 5,210,112 active cells versus 201,326,592 uniform fine cells:
+**38.64× fewer cells**, or **19.78× fewer cell slots** after padding each 8³
+block with a one-cell halo on every side. Source/port/CPML buffers, actual
+staggered storage and propagation accuracy remain to be included. No solver
+speedup follows from these counts alone. Ratio-3 topology also passes its
+audits; its finest spacing differs and is reported explicitly.
+
+![Geometry-driven straight-guide mesh](../results/warp/geometry_mesh/mesh.png)
+
+Raw topology results: [result.json](../results/warp/geometry_mesh/result.json).
+The small-domain mesh is saved as JSON; `arrays_topology.npz` is regenerable
+and ignored, with its checksum retained. Main README stays limited to reviewed
+flagship wave results.
