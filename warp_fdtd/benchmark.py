@@ -27,6 +27,8 @@ def main():
     start = time.perf_counter()
     s = Solver(args.case, cpml_storage=args.cpml_storage)
     setup = time.perf_counter() - start
+    if s.meta["baseline_median_seconds"] is None:
+        raise ValueError("This bundle is a reference-only trajectory, not a warmed timing baseline; use warp_fdtd.volume for convergence")
     if s.meta["settings"].get("gradient", "none") != "none":
         raise ValueError("Forward benchmarks require forward-only reference timing")
     attach(s)

@@ -15,6 +15,7 @@ import numpy as np
 import warp as wp
 
 from .detectors import attach, measurements
+from .reference_fields import incident_normalization
 from .solver import Solver, owned_array_bytes
 
 wp.set_module_options({"enable_backward": False, "fast_math": False})
@@ -187,6 +188,15 @@ def main():
     if not np.isfinite(phasors).all():
         raise FloatingPointError("Nonfinite volume phasors")
     measured = measurements(s)
+    incoming = next(m for m in s.monitors if m.name == "mode_in")
+    normalization = incident_normalization(
+        incoming.phasors(),
+        s.data["mode_in/_mode_E"][0],
+        s.data["mode_in/_mode_H"][0],
+        incoming.axis,
+        incoming.area_numpy,
+        s.meta["settings"]["spacing_nm"] * 1e-9,
+    )
     delta_t = abs(
         measured["modal_transmission"]
         - s.meta["reference_measurements"]["modal_transmission"]
@@ -221,6 +231,8 @@ def main():
         diagnostic_only=True,
         case=args.case,
         inputs_sha256=s.meta["inputs_sha256"],
+        physical_contract=s.meta.get("physical_contract"),
+        incident_normalization=normalization,
         solver_shape=s.shape,
         sample_shape=counts,
         sample_nm=args.sample_nm,
@@ -241,7 +253,13 @@ def main():
         ).hexdigest(),
         code_sha256={
             name: hashlib.sha256(Path("warp_fdtd", name).read_bytes()).hexdigest()
-            for name in ("solver.py", "kernels.py", "detectors.py", "volume.py")
+            for name in (
+                "solver.py",
+                "kernels.py",
+                "detectors.py",
+                "volume.py",
+                "reference_fields.py",
+            )
         },
         files=files,
     )
