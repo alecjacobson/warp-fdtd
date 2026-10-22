@@ -117,7 +117,8 @@ still disabled. It is a capacity/accuracy experiment, not a default workload or
 a promised passing reference. Its environment and peak allocation are recorded.
 
 ```bash
-OPENBLAS_NUM_THREADS=1 taskset -c 0-3 .venv/bin/python -m baseline.reference_study \
+XLA_PYTHON_CLIENT_ALLOCATOR=cuda_async OPENBLAS_NUM_THREADS=1 \
+  taskset -c 0-3 .venv/bin/python -m baseline.reference_study \
   --cases mesh5 --jax-memory-fraction 0.9
 # After completion, compare the three finest levels:
 OPENBLAS_NUM_THREADS=1 .venv/bin/python -m warp_fdtd.reference_report \
@@ -127,3 +128,10 @@ OPENBLAS_NUM_THREADS=1 .venv/bin/python -m warp_fdtd.reference_report \
 The existing 20/10/6.67 nm report remains the published result until the finer
 run completes and is reviewed. A three-fine-level report still requires the
 uncertainty and observation-quadrature checks in #30.
+
+The first 192M-cell attempt with the default BFC allocator and fraction 0.9
+failed while allocating a 6.46 GiB temporary buffer. Its record is preserved in
+`results/physical_reference/rejected_mesh5_bfc90/result.json`. The supported
+`cuda_async` allocator above is a controlled retry; it does not change numerical
+settings. Finer-reference success and peak memory remain unconfirmed until the
+trajectory completes.
