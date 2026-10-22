@@ -26,7 +26,14 @@ def performance():
     ]
     rows = [read(OUT / case / "result.json") for label, case in cases]
     assert all(r["passed"] for r in rows)
-    fig, axes = plt.subplots(1, 2, figsize=(10.5, 3.8), layout="constrained")
+    gradient_path = OUT / "gradient20/result.json"
+    gradient = read(gradient_path) if gradient_path.exists() else None
+    if gradient and (gradient["status"] != "complete" or not gradient["passed"]):
+        gradient = None
+    count = 3 if gradient else 2
+    fig, axes = plt.subplots(
+        1, count, figsize=(5.25 * count, 3.8), layout="constrained"
+    )
     x = np.arange(len(rows))
     axes[0].bar(
         x - 0.18,
@@ -62,7 +69,26 @@ def performance():
     axes[1].set_ylabel("Relative field L2 difference")
     axes[1].set_title("Full 3D at 192k; mid-z slices at larger grids")
     axes[1].legend()
-    fig.suptitle("RTX PRO 6000 Blackwell MIG 1g.24gb • float32 • median of 3 warm runs")
+    if gradient:
+        axes[2].bar(
+            [0, 1, 2],
+            [
+                gradient["exact_fdtdx_seconds"],
+                gradient["fast_fdtdx_seconds"],
+                gradient["median_seconds"],
+            ],
+            color=["#dd8750", "#efbd83", "#188b93"],
+        )
+        axes[2].set_xticks(
+            [0, 1, 2], ["FDTDX exact", "FDTDX fast", "Warp exact"], rotation=15
+        )
+        axes[2].set_ylabel("Gradient evaluation (seconds)")
+        axes[2].set_title(
+            f"3M gradient • {gradient['speedup_vs_fast']:.2f}× vs fast adjoint"
+        )
+    fig.suptitle(
+        "RTX PRO 6000 Blackwell MIG 1g.24gb • float32 • synchronized warm runs"
+    )
     for ax in axes:
         ax.grid(axis="y", alpha=0.2)
     for ext in ("png", "pdf"):
@@ -233,6 +259,11 @@ def main():
         if conv
         else "A fourth-order periodic accuracy study is in progress; the flagship currently uses matched Yee discretization."
     )
+    gradient_path = OUT / "gradient20/result.json"
+    gradient = read(gradient_path) if gradient_path.exists() else None
+    gradient_status = ""
+    if gradient and gradient["status"] == "complete" and gradient["passed"]:
+        gradient_status = f"\nThe validated 3M-cell material gradient is **{gradient['speedup_vs_fast']:.2f}× faster** than FDTDX’s fast adjoint, with **{gradient['relative_l2']:.2e}** relative gradient error. It uses **{gradient['history_bytes'] / 1e9:.2f} GB** of history, a memory tradeoff.\n"
     fine = rows[-1]["measurements"]["modal_transmission"]
     text = f"""# Warp FDTD
 
@@ -248,7 +279,7 @@ RTX PRO 6000 Blackwell **MIG 1g.24gb** (46 SMs), matched forward runs are
 | Matched workload | FDTDX | Warp | Speedup |
 |---|---:|---:|---:|
 {table}
-
+{gradient_status}
 ![Latest performance and field agreement](results/warp/performance.png)
 
 """
@@ -263,7 +294,7 @@ compilation and host postprocessing; raw repeats and limitations are in
 untested geometries, hardware, boundaries or gradients.
 
 ```bash
-uv venv .venv-warp
+uv venv --python 3.12 .venv-warp
 uv pip install --python .venv-warp/bin/python -r requirements-warp.txt
 .venv-warp/bin/python -m unittest discover -s tests -v
 .venv-warp/bin/python -m warp_fdtd.benchmark

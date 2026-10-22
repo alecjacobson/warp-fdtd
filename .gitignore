@@ -11,3 +11,5 @@ results/**/arrays*.npz
 results/**/checkpoint*.pkl
 results/**/profiler/**/*.pb
 *.log
+
+!results/gradient20_highest_*/arrays.npz

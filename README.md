@@ -16,6 +16,8 @@ The smooth periodic test measures order **3.97** with Warp’s optional fourth-o
 | 24M cells, flux | 132.144 s | 57.471 s | 2.30× |
 | 24M cells, modal | 316.138 s | 106.640 s | 2.96× |
 
+The validated 3M-cell material gradient is **1.98× faster** than FDTDX’s fast adjoint, with **1.85e-06** relative gradient error. It uses **8.06 GB** of history, a memory tradeoff.
+
 ![Latest performance and field agreement](results/warp/performance.png)
 
 ![Latest measured accuracy trends](results/warp/accuracy.png)
@@ -29,7 +31,7 @@ compilation and host postprocessing; raw repeats and limitations are in
 untested geometries, hardware, boundaries or gradients.
 
 ```bash
-uv venv .venv-warp
+uv venv --python 3.12 .venv-warp
 uv pip install --python .venv-warp/bin/python -r requirements-warp.txt
 .venv-warp/bin/python -m unittest discover -s tests -v
 .venv-warp/bin/python -m warp_fdtd.benchmark

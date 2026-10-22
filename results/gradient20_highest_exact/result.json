@@ -1,0 +1,186 @@
+{
+  "settings": {
+    "spacing_nm": 20,
+    "time_fs": 200,
+    "seed": 0,
+    "backend": "gpu",
+    "gradient": "exact",
+    "parameterization": "smooth",
+    "exact_interpolation": true,
+    "pml_cells": 10,
+    "domain_um": 4,
+    "voxel_nm": 20,
+    "quality_monitors": true,
+    "precision": "float32",
+    "scene": "bend",
+    "source_profile": "current",
+    "pad_domain": false,
+    "modal_window": "hann",
+    "poynting_plane": false
+  },
+  "environment": {
+    "started_utc": "2026-10-22T01:18:04.776335+00:00",
+    "upstream_sha": "2cab8dbb2af9a43ec6443712f011f50ecf58790b",
+    "harness_sha256": {
+      "baseline/__init__.py": "145f00e0ee56a09a754d58ed87669d62088433670e013623a12ae880505ef7fe",
+      "baseline/common.py": "8a0837fd7ba4c40b6e785871643560664e14230dfb5166125dfb45c436a840b6",
+      "baseline/compare.py": "61e07dc701800a13a44e5b9174c013069c1ccb6589c8337056797c574c6eb0be",
+      "baseline/convergence.py": "d0c30276bb08a4aeed3be6435a79db9fb4c34bf44e3d285fdd0e1cca8957a46d",
+      "baseline/export_case.py": "5c69a0fbbdbb3febdc00ede4e7ac6f4c9d3fc674900a308019760d05626756cb",
+      "baseline/physics.py": "ad4ed758d6b1dcdd46f3eed58234e6bcce85a18dbe9f47a82ae24d5f9e05e4b6",
+      "baseline/protocol_checks.py": "10126e71cce9f1dd42dae41ff5c69fbc88a4e804977bbb491f6024616be642f3",
+      "baseline/quality_checks.py": "296be4fbba666fccec6084ed20bcd1cec63d9d85b58e452ebcea2c767f3c728c",
+      "baseline/report.py": "7851bd1d052922a9c2494c7fce1bcbc045fe5d29b110a822aa8c5c20c5868745",
+      "baseline/run.py": "e567b3a9786ee0b7a70878403eeb26d7597b5d73d29402f313596b2ffa3888f4",
+      "baseline/scene.py": "e7e939a1db6b6670b0a04bccf8b52101ef31a73a86c404cd3d51cca92a1f4b17",
+      "baseline/visualize_flow.py": "a6e6f13d82c01d88cd0541040fb583b960ca9541d53092bc8a1aa5cfa40b7718"
+    },
+    "python": "3.12.15",
+    "jax": "0.12.0",
+    "jax_default_matmul_precision": "highest",
+    "jax_enable_x64": false,
+    "requirements_sha256": "80d4daccc80308750433ea45e45a0d32217feda6f978158680cda26f789420db",
+    "cpu_model": "AMD EPYC 9B45",
+    "devices": [
+      {
+        "kind": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+        "platform": "gpu"
+      }
+    ],
+    "nvidia_smi": "GPU 0: NVIDIA RTX PRO 6000 Blackwell Server Edition (UUID: GPU-822536da-f2f9-2caf-83b8-9b1974483e63)\n  MIG 1g.24gb     Device  0: (UUID: MIG-5d3bb68b-2d20-590e-92a3-a0ff8bc701ed)",
+    "driver": "595.58.03",
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "cpu_quota": "400000 100000",
+    "host_memory_limit": "17179869184",
+    "environment": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+      "JAX_DEFAULT_MATMUL_PRECISION": "highest",
+      "JAX_PLATFORMS": "cuda,cpu",
+      "OMP_NUM_THREADS": "4"
+    }
+  },
+  "mode": "gradient",
+  "status": "complete",
+  "arguments": {
+    "mode": "gradient",
+    "output": "results/gradient20_highest_exact",
+    "spacing_nm": 20,
+    "voxel_nm": 20,
+    "time_fs": 200,
+    "seed": 0,
+    "backend": "gpu",
+    "gradient": "exact",
+    "parameterization": "smooth",
+    "exact_interpolation": true,
+    "pml_cells": 10,
+    "domain_um": 4,
+    "reps": 2,
+    "epochs": 250,
+    "beta": 50.0,
+    "load": "results/ring20_optimized/best_params.npz",
+    "resume": null,
+    "finite_difference": false,
+    "quality_monitors": true,
+    "poynting_plane": false,
+    "modal_window": "hann",
+    "objective": "modal",
+    "init": "random",
+    "fixed_beta": false,
+    "precision": "float32",
+    "max_steps": null,
+    "scene": "bend",
+    "save_full_fields": false,
+    "source_profile": "current",
+    "trace": false,
+    "pad_domain": false
+  },
+  "setup_seconds": 4.546156065538526,
+  "shape": [
+    200,
+    200,
+    75
+  ],
+  "time_steps": 5245,
+  "configured_time_steps": 5245,
+  "physical_evaluation": true,
+  "parameters": 6400,
+  "dtypes": {
+    "E": "float32",
+    "H": "float32",
+    "inverse_permittivity": "float32",
+    "detectors": {
+      "input": {
+        "poynting_flux": "float32"
+      },
+      "output": {
+        "poynting_flux": "float32"
+      },
+      "mode_in": {
+        "phasor": "complex64"
+      },
+      "mode_reflected": {
+        "phasor": "complex64"
+      },
+      "mode_out": {
+        "phasor": "complex64"
+      }
+    }
+  },
+  "loaded_params_sha256": "034c4aa0e3b933dd617dcc09824c11d535e7cc6d349cd7e1d3349108ec420ade",
+  "resolved_reversible_checkpoints": 18,
+  "compile_seconds": 4.673882967792451,
+  "executable_memory": {
+    "argument_size_in_bytes": 944907784,
+    "output_size_in_bytes": 1039308256,
+    "alias_size_in_bytes": 944882180,
+    "temp_size_in_bytes": 3061238072
+  },
+  "gradient_norm": 0.01575109362602234,
+  "warmup_seconds": 55.62768898624927,
+  "run_seconds": [
+    55.563003906048834,
+    55.207482990808785
+  ],
+  "median_seconds": 55.38524344842881,
+  "measurements": [
+    {
+      "input_flux": 2.8395956346554806e-16,
+      "modal_reflection": 9.745529496285599e-06,
+      "modal_transmission": 0.9289764165878296,
+      "mode_in": 0.994325578212738,
+      "mode_out": 0.9237050414085388,
+      "mode_reflected": 9.6902294899337e-06,
+      "output_flux": 3.520358926039518e-16,
+      "transmission": 1.2397395372390747
+    },
+    {
+      "input_flux": 2.8395956346554806e-16,
+      "modal_reflection": 9.745529496285599e-06,
+      "modal_transmission": 0.9289764165878296,
+      "mode_in": 0.994325578212738,
+      "mode_out": 0.9237050414085388,
+      "mode_reflected": 9.6902294899337e-06,
+      "output_flux": 3.520358926039518e-16,
+      "transmission": 1.2397395372390747
+    }
+  ],
+  "gcups": 0.28410094495028126,
+  "memory_stats": {
+    "num_allocs": 4099,
+    "bytes_in_use": 1146082560,
+    "peak_bytes_in_use": 4334981376,
+    "largest_alloc_size": 3061238272,
+    "bytes_limit": 19025362944,
+    "bytes_reserved": 0,
+    "peak_bytes_reserved": 0,
+    "largest_free_block_bytes": 4294967296,
+    "pool_bytes": 6444548096,
+    "peak_pool_bytes": 6444548096
+  }
+}
