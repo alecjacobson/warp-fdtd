@@ -80,3 +80,30 @@ budget still requires reference uncertainty below one third of each tolerance:
 |ΔT|≤1e-3, |ΔR|≤1e-4, electric-field L2≤1%, Poynting L2≤2%. Fine-grid nuisance
 controls and any further refinement needed to establish that uncertainty remain
 under [#13](https://github.com/alecjacobson/warp-fdtd/issues/13).
+
+## Measured fixed-geometry results
+
+| Mesh | Cells | Modal T | Electric-field L2 vs 6.67 nm | Poynting L2 vs 6.67 nm |
+|---|---:|---:|---:|---:|
+| 20 nm | 3,000,000 | 92.8943% | 7.488% | 6.478% |
+| 10 nm | 24,000,000 | 93.1852% | 1.468% | 1.623% |
+| 6.67 nm | 81,000,000 | 93.2438% | 0.000% | 0.000% |
+
+The finest row is zero by definition, not an error-free reference. The remaining
+uncertainty, finer sampling quadrature and fine-grid nuisance controls are tracked
+in [#30](https://github.com/alecjacobson/warp-fdtd/issues/30).
+
+| 20 nm control | Absolute change in T | Electric-field relative L2 | Poynting relative L2 |
+|---|---:|---:|---:|
+| time20_450 | 2.366e-05 | 2.241e-05 | 2.042e-05 |
+| cfl20_half | 4.774e-05 | 3.222e-03 | 7.623e-05 |
+| pml20_400 | 2.474e-05 | 1.134e-03 | 7.280e-04 |
+| domain20_4p4 | 6.557e-07 | 9.815e-05 | 3.186e-05 |
+
+The timestep control illustrates why modal power alone is insufficient: its
+complex-field difference is larger than its power difference. These controls
+are measured at 20 nm and do not certify the fine-grid uncertainty.
+
+![Mesh and control trends](../results/physical_reference/comparison/convergence.png)
+
+![Common-scale power flow](../results/physical_reference/comparison/power_flow.png)

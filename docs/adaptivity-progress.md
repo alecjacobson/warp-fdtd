@@ -179,12 +179,16 @@ an isolated spatial truncation error.
 physical-plane audit. `--require-matched-planes` rejects this archived pair.
 A passing plane audit alone would not certify geometry, material mapping,
 source normalization, time windows, PML/domain convergence or reference accuracy.
-A separate fixed-physical-geometry reference protocol and at least three mesh
-levels remain prerequisites for accepting an adaptive flagship result.
+The new fixed-physical protocol and three mesh levels are complete in
+[the controlled reference study](physical-reference.md), with physical time,
+PML and domain controls. Transmission is 92.8943%, 93.1852% and 93.2438% at
+20, 10 and 6.67 nm. The last full-volume electric-field difference is 1.47%;
+reference uncertainty remains unresolved under
+[#30](https://github.com/alecjacobson/warp-fdtd/issues/30).
 
 ## Next dependencies
 
-1. #25: create fixed-physical-geometry bend references and quantify their uncertainty.
+1. #30: qualify the fine bend reference against the full accuracy budget; #25 fixed-coordinate generation is complete.
 2. #27 and #13: resolve long-time float32 constraints and add slab/sphere scattering.
 3. #14: extend nonuniform controls to materials, sources, ports and CPML.
 4. #15: implement and audit the 3D 3:1 block interface, including face/edge/corner power and divergence tests.
