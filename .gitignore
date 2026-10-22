@@ -13,3 +13,8 @@ results/**/profiler/**/*.pb
 *.log
 
 !results/gradient20_highest_*/arrays.npz
+
+# Regenerable full-volume diagnostic fields (checksums in result.json).
+results/**/volume-cache/
+# Duplicate control fields are regenerable; parity hashes are published separately.
+results/warp/packed_control*/*.npz

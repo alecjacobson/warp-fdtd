@@ -1,0 +1,53 @@
+{
+  "measurements": {
+    "mode_in": 0.9985476136207581,
+    "mode_reflected": 2.6535082724876702e-05,
+    "mode_out": 0.9305655360221863,
+    "modal_transmission": 0.9319190425461364,
+    "modal_reflection": 2.6573677972810774e-05
+  },
+  "field_reference_scope": "mid_z_cross_section",
+  "code_sha256": "825ece3cc3cd7f469d21fb40d7b4af81fdce031b76ae6f3d1cbf9ca2a33fd4d4",
+  "python": "3.12.15",
+  "numpy": "2.4.6",
+  "timing_scope": "Synchronized complete trajectory, source and all exported detectors; reset/compilation/host postprocessing excluded",
+  "status": "complete",
+  "cpml_storage": "packed",
+  "owned_device_array_bytes": 1264043392,
+  "memory_scope": "Live solver and detector array allocations; excludes graph/allocator/driver overhead; not measured peak memory",
+  "case": "results/warp_reference/hann_10nm",
+  "inputs_sha256": "26cd7eefc168fb129cf9971db3e37b9a9376ccb343c7dd51e28da2aa5ec8621e",
+  "shape": [
+    400,
+    400,
+    150
+  ],
+  "steps": 15735,
+  "dt_s": 1.906553897207441e-17,
+  "warp_version": "1.18.0",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+  "git_commit": "e37094fed9de6d9f24f8c838c57bb2998199babb",
+  "setup_seconds": 0.38388409093022346,
+  "compile_graph_seconds": 0.0342389103025198,
+  "warmup_seconds": 139.68221297021955,
+  "seconds": [
+    139.68525299802423,
+    139.68521355837584,
+    139.67925438378006,
+    139.6848964728415,
+    139.68010139558464
+  ],
+  "median_seconds": 139.6848964728415,
+  "gcups": 2.7035134759427866,
+  "reference_seconds": 316.1380313783884,
+  "speedup": 2.263222720287831,
+  "relative_l2": {
+    "E": 7.067864414153125e-06,
+    "H": 5.732290461651359e-06,
+    "modal_transmission_absolute": 4.2503905950397325e-09,
+    "input_flux": 7.417900178552372e-07,
+    "output_flux": 4.693270966527052e-06
+  },
+  "finite_fields": true,
+  "passed": true
+}

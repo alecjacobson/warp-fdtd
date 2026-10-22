@@ -19,10 +19,8 @@ def read(path):
 
 def performance():
     cases = [
-        ("192k / flux", "forward50_gpu"),
-        ("3M / modal", "hann20"),
-        ("24M / flux", "forward10_gpu"),
-        ("24M / modal", "hann10"),
+        ("3M / 200 fs", "packed_control20_full"),
+        ("24M / 300 fs", "packed_control10_full"),
     ]
     rows = [read(OUT / case / "result.json") for label, case in cases]
     assert all(r["passed"] for r in rows)
@@ -50,6 +48,7 @@ def performance():
         color="#188b93",
     )
     axes[0].set_yscale("log")
+    axes[0].set_ylim(top=max(r["reference_seconds"] for r in rows) * 1.8)
     axes[0].set_xticks(x, [a for a, b in cases])
     axes[0].set_ylabel("Full trajectory, seconds (log scale)")
     axes[0].legend()
@@ -67,7 +66,7 @@ def performance():
     axes[1].axhline(1e-3, color="gray", ls="--", label="Acceptance limit")
     axes[1].set_xticks(x, [a for a, b in cases])
     axes[1].set_ylabel("Relative field L2 difference")
-    axes[1].set_title("Full 3D at 192k; mid-z slices at larger grids")
+    axes[1].set_title("Mid-z field agreement on the 3D bend")
     axes[1].legend()
     if gradient:
         axes[2].bar(
@@ -279,72 +278,47 @@ def main():
     plt.rcParams.update({"axes.spines.top": False, "axes.spines.right": False})
     rows = performance()
     err = flow()
-    has_accuracy = (OUT / "convergence/result.json").exists()
-    conv = accuracy() if has_accuracy else None
     table = "\n".join(
         f"| {label} | {r['reference_seconds']:.3f} s | {r['median_seconds']:.3f} s | {r['speedup']:.2f}× |"
         for label, r in zip(
-            (
-                "192k cells, flux",
-                "3M cells, modal",
-                "24M cells, flux",
-                "24M cells, modal",
-            ),
-            rows,
+            ("20 nm · 3M cells · 200 fs", "10 nm · 24M cells · 300 fs"), rows
         )
     )
-    acc_status = (
-        f"The smooth periodic test measures order **{conv['orders']['rk4']:.2f}** with Warp’s optional fourth-order propagator versus **{conv['orders']['yee']:.2f}** with Yee. This higher-order path is not yet validated for dielectric interfaces or CPML."
-        if conv
-        else "A fourth-order periodic accuracy study is in progress; the flagship currently uses matched Yee discretization."
-    )
-    if conv:
-        cost = read(OUT / "periodic_cost_comparison.json")
-        acc_status += f" At 32 cells/λ versus FDTDX’s 64, it is **{cost['speedup']:.2f}× faster** with **{cost['frequency_error_reduction']:.1f}× lower frequency error** on that test."
-    gradient_path = OUT / "gradient20/result.json"
-    gradient = read(gradient_path) if gradient_path.exists() else None
-    gradient_status = ""
-    if gradient and gradient["status"] == "complete" and gradient["passed"]:
-        gradient_status = f"\nThe validated 3M-cell material gradient is **{gradient['speedup_vs_fast']:.2f}× faster** than FDTDX’s fast adjoint, with **{gradient['relative_l2']:.2e}** relative gradient error. It uses **{gradient['history_bytes'] / 1e9:.2f} GB** of history, a memory tradeoff.\n"
+    gradient = read(OUT / "gradient20/result.json")
+    assert gradient["status"] == "complete" and gradient["passed"]
     fine = rows[-1]["measurements"]["modal_transmission"]
     text = f"""# Warp FDTD
 
-Pure NVIDIA Warp 3D electromagnetic solver, compared against pinned, unmodified
-FDTDX. The implemented flagship is a silicon 90° waveguide bend with all six E/H
-components, CPML, an injected mode, and Hann-window modal detectors.
+Pure NVIDIA Warp 3D electromagnetic solver, compared with pinned, unmodified
+FDTDX on an optimized silicon 90° waveguide bend. The flagship uses explicit
+Yee updates, a uniform grid, CPML, injected modes and Hann-window modal detectors.
 
-**Status:** forward correctness gates pass on the saved cases. On the tested
-RTX PRO 6000 Blackwell **MIG 1g.24gb** (46 SMs), matched forward runs are
-**{min(r["speedup"] for r in rows):.2f}–{max(r["speedup"] for r in rows):.2f}× faster**. Fine-grid bend transmission is **{100 * fine:.4f}%**.
-{acc_status}
+**Measured status:** **{min(r["speedup"] for r in rows):.2f}–{max(r["speedup"] for r in rows):.2f}× faster** matched forward runs;
+**{100 * fine:.4f}%** fine-grid transmission. Adaptive flagship results are pending.
 
-| Matched workload | FDTDX | Warp | Speedup |
+| Same-input flagship workload | FDTDX | Warp | Speedup |
 |---|---:|---:|---:|
 {table}
-{gradient_status}
-![Latest performance and field agreement](results/warp/performance.png)
 
-"""
-    if conv:
-        text += "![Latest measured accuracy trends](results/warp/accuracy.png)\n\n"
-    text += f"""![Flagship power-flow comparison](results/warp/flagship_flow.png)
+![Flagship performance and numerical agreement](results/warp/performance.png)
 
-The flow panels use one common scale; vector-field relative L2 difference is
-**{err:.2e}**. These are slices of full 3D simulations. Timing excludes setup,
-compilation and host postprocessing; raw repeats and limitations are in
-[measurement details](docs/warp.md). No general superiority claim is made for
-untested geometries, hardware, boundaries or gradients.
+Field agreement is against FDTDX, not continuum ground truth. These archived
+mesh levels have slightly different source/output positions; controlled physical
+convergence is tracked in [#25](https://github.com/alecjacobson/warp-fdtd/issues/25).
+The 3M-cell material gradient is **{gradient["speedup_vs_fast"]:.2f}× faster** than
+FDTDX's fast adjoint, with **{gradient["relative_l2"]:.2e}** relative gradient error
+and **{gradient["history_bytes"] / 1e9:.2f} GB** of stored history.
 
-```bash
-uv venv --python 3.12 .venv-warp
-uv pip install --python .venv-warp/bin/python -r requirements-warp.txt
-.venv-warp/bin/python -m unittest discover -s tests -v
-.venv-warp/bin/python -m warp_fdtd.benchmark
-```
+![Flagship time-averaged power flow](results/warp/flagship_flow.png)
 
+Common-scale central slices of the full 3D bend, 20 nm / 300 fs. Poynting-vector
+relative L2 difference: **{err:.2e}**. Measurements use an RTX PRO 6000 Blackwell
+**MIG 1g.24gb**, float32, synchronized warm runs; timings exclude compilation,
+setup and host postprocessing.
+
+[Reproduction and limitations](docs/warp.md) ·
+[Adaptivity progress](docs/adaptivity-progress.md) ·
 [Prioritized issues](https://github.com/alecjacobson/warp-fdtd/issues) ·
-[Solver and reproduction](docs/warp.md) ·
-[FDTDX baseline methodology](docs/fdtdx-baseline.md) ·
 [Raw results](results/warp)
 """
     (ROOT / "README.md").write_text(text)

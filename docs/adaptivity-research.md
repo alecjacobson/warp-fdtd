@@ -1,8 +1,9 @@
 # Spatial and temporal adaptivity: research proposal
 
-Research date: 2026-10-22. **Proposal only; implementation awaits the user's
-check-in.** No adaptive solver, new accuracy result, or speedup is claimed here.
-Existing measured results remain in the main README and `docs/warp.md`.
+Research date: 2026-10-22. **Implementation authorized by the user.** Work follows
+the dependency order below. The initial verification and measurement work is
+recorded in [adaptivity progress](adaptivity-progress.md); no adaptive flagship
+speedup has yet been demonstrated. Main README results are flagship-only.
 
 ## Recommendation
 
@@ -225,7 +226,7 @@ A failed experiment should publish its failure and can close with a no-go decisi
 | Constraints | Source-free composite-grid Gauss residuals, including refinement interfaces; require normalized residual <=1e-4 on compatible smooth tests, using L times divergence norm / field norm and a stated fixed physical L; inspect localized spikes separately |
 | Flagship | Same continuous geometry, wavelength, physical duration, source normalization and detector windows; absolute T error <=1e-3 (0.1 percentage point), absolute R error <=1e-4; volume-weighted full 3D complex-field relative L2 <=1%; averaged Poynting-vector relative L2 <=2% on fixed physical comparison planes |
 | Reference adequacy | Finest uniform result is a reference, not truth. Three spatial levels plus independent time/PML/domain refinements; estimated reference uncertainty <=1/3 of each claimed tolerance; otherwise mark the comparison unresolved |
-| GPU benefit | >=1.5x faster and >=2x lower peak device memory than the best passing uniform Warp configuration on a predeclared localized-detail 3D case; also report flagship and FDTDX curves even if they lose |
+| GPU benefit | Target >=10x faster and >=10x lower forward memory than the best accuracy-matched uniform Warp configuration; explore 30–100x on larger sparse domains. The original >=1.5x / >=2x thresholds are early prototype gates, not the project objective. Report measured peak device memory separately from owned-array accounting and publish losses too. |
 | Incremental LTS benefit | >=1.25x faster than the SAME refined mesh with global fine stepping at the SAME error budget, including exchange and scheduling; publish fine-volume/patch-size break-even curves |
 | Adjoint readiness | Fixed-hierarchy transpose tests; at least five independent random directional finite differences over three step sizes, best resolved errors <1e-3; full-gradient comparison where affordable; changed-design replay |
 
@@ -258,7 +259,7 @@ not expected speedups. Measure f after geometry and error buffers are included.
 ## Proposed issue sequence
 
 The linked issues carry dependencies, experiment boundaries, citations and
-pass/no-go tests. All are awaiting the user's check-in.
+pass/no-go tests. All are authorized; implementation proceeds in dependency order.
 
 | Issue | Proposed experiment |
 | --- | --- |

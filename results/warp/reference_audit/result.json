@@ -1,0 +1,96 @@
+{
+  "scope": "Necessary plane-placement audit only; not a full reference certification",
+  "matched_planes": false,
+  "rows": [
+    {
+      "case": "results/warp_reference/hann_200fs",
+      "manifest_sha256": "b63467b914ad4faad82f86be6106aa14ce2dfc98f4d8f923414a9d9d014740a5",
+      "spacing_nm": 20,
+      "domain_nm": [
+        3999.999989900971,
+        3999.999989900971,
+        1499.9999393694452
+      ],
+      "pml_thickness_nm": 200,
+      "duration_fs": 199.99990381350628,
+      "parameter_sha256": "034c4aa0e3b933dd617dcc09824c11d535e7cc6d349cd7e1d3349108ec420ade",
+      "beta": 50.0,
+      "planes": {
+        "source": {
+          "axis": 0,
+          "anchor_nm": -1740.000016070553
+        },
+        "mode_in": {
+          "axis": 0,
+          "anchor_nm": -1600.0000186977559
+        },
+        "mode_reflected": {
+          "axis": 0,
+          "anchor_nm": -1600.0000186977559
+        },
+        "mode_out": {
+          "axis": 1,
+          "anchor_nm": 1679.9999684735667
+        }
+      }
+    },
+    {
+      "case": "results/warp_reference/hann_10nm",
+      "manifest_sha256": "ef37eeed852a810ad2f8604920dde163984914d9de5af961f20b82f1f65be7f5",
+      "spacing_nm": 10.0,
+      "domain_nm": [
+        3999.999989900971,
+        3999.999989900971,
+        1499.9999393694452
+      ],
+      "pml_thickness_nm": 200.0,
+      "duration_fs": 299.9962557255908,
+      "parameter_sha256": "034c4aa0e3b933dd617dcc09824c11d535e7cc6d349cd7e1d3349108ec420ade",
+      "beta": 50.0,
+      "planes": {
+        "source": {
+          "axis": 0,
+          "anchor_nm": -1770.0000398690463
+        },
+        "mode_in": {
+          "axis": 0,
+          "anchor_nm": -1600.0000186977559
+        },
+        "mode_reflected": {
+          "axis": 0,
+          "anchor_nm": -1600.0000186977559
+        },
+        "mode_out": {
+          "axis": 1,
+          "anchor_nm": 1740.000016070553
+        }
+      }
+    }
+  ],
+  "differences": [
+    {
+      "case": "results/warp_reference/hann_10nm",
+      "plane": "mode_out",
+      "first": {
+        "axis": 1,
+        "anchor_nm": 1679.9999684735667
+      },
+      "other": {
+        "axis": 1,
+        "anchor_nm": 1740.000016070553
+      }
+    },
+    {
+      "case": "results/warp_reference/hann_10nm",
+      "plane": "source",
+      "first": {
+        "axis": 0,
+        "anchor_nm": -1740.000016070553
+      },
+      "other": {
+        "axis": 0,
+        "anchor_nm": -1770.0000398690463
+      }
+    }
+  ]
+}

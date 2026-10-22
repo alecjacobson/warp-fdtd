@@ -1,0 +1,35 @@
+{
+  "status": "complete",
+  "regression_tests_passed": 13,
+  "command": "OPENBLAS_NUM_THREADS=1 taskset -c 0-3 .venv/bin/python -m unittest discover -s tests -v",
+  "checks": {
+    "regression_suite": "passed",
+    "basic_python_lint": "passed",
+    "git_diff_check": "passed",
+    "packed_flagship_controls": "passed parity; measured runtime regression",
+    "volume_sampler": "passed affine, legacy-plane and actual-bend calibration",
+    "rectilinear_float64": "passed restricted periodic validation",
+    "rectilinear_float32": "expected scientific rejection: million-step Gauss residual exceeds 1e-4",
+    "rectilinear_compensated_float32": "expected scientific rejection: million-step Gauss residual exceeds 1e-4"
+  },
+  "runtime_source_sha256": {
+    "warp_fdtd/__init__.py": "7bd62cd70bc13e4de34b506b940fa616fe18517e1e6b0b218cede6616a88cb42",
+    "warp_fdtd/adaptive_validation.py": "5f1add49e6dd31fbb01cb5b8a56888e551e3eefdf0a6361c0368e2f039c5d217",
+    "warp_fdtd/adjoint.py": "62e32b2b12ad8c753da8ce64900142192e34579f01870cb969456e9cfbfec498",
+    "warp_fdtd/benchmark.py": "736ed0670b1eb7b988d6c9370011c8a775010e9eef5bb85f05aadf6c049f3433",
+    "warp_fdtd/convergence.py": "8b6b4be5ce9a3a9da35774b7c762eabf6a385a534c3ce9e02a0c7040efdad539",
+    "warp_fdtd/detectors.py": "a21f969342d7a529e1aa5e30416b74803032c5902910cdf5f05d846a10bbdae3",
+    "warp_fdtd/gradient_benchmark.py": "ca7dd568f2c320e93eb93bea4e35c7574350d96107dbda6c947d930b0ee3f6bf",
+    "warp_fdtd/kernels.py": "62fa691b63d82c0ade93028107880d268784d51fa0586a85da3ea45e054ab5d7",
+    "warp_fdtd/material.py": "bedcaf2b2adefa029eb01b5747930ecb7c82919bc0a858997e783152da929cc3",
+    "warp_fdtd/opportunity.py": "122d2b278ff836f1c5ab954691c55d79ec6c406829bad797bc9c47512a5d62ee",
+    "warp_fdtd/periodic.py": "bb497fd1dd3d6dfd90ed976f40b1fc488160853340a8f23956a12803abece782",
+    "warp_fdtd/rectilinear.py": "a96c4a60bf5dc378abe3241347a19dcf4b77ba13dbdf90b62869d1df2c46865f",
+    "warp_fdtd/reference_contract.py": "11fd1f62bfd03dad22beb2937ac3e541daa0e79cbb8b4570fffd6172fa90c22b",
+    "warp_fdtd/report.py": "565fd8f09c70cc37194c364cafd065ec55d919df17bd924a8aa166cf4fa00352",
+    "warp_fdtd/solver.py": "9268a7379c7630acfa836b2e97a675b2c4fd1352e0683571c208fff9ef4429ee",
+    "warp_fdtd/storage_control.py": "e2355d5206e0349642d08163685781945ccffee2e054e3c3d06d26eb02f27189",
+    "warp_fdtd/volume.py": "0c67293cdd0f31e5db9c9f2c532c325aca07621ae75fd73f9b244c6c9e9132fb"
+  },
+  "scope": "Evidence summary, not certification of an adaptive flagship or untested boundaries. Runtime-source hashes collected when summarizing; raw benchmark package hashes include development-time diagnostics."
+}

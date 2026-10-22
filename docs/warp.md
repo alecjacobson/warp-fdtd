@@ -1,8 +1,8 @@
 # Warp solver measurements
 
-Spatial and temporal adaptivity are proposed next experiments, not current
-solver features. See the [literature review and proposed acceptance tests](adaptivity-research.md)
-and its linked issues, which await the user's check-in before implementation.
+Spatial and temporal adaptivity are authorized work in progress. The flagship
+remains uniform-grid Yee. See [measured adaptivity progress](adaptivity-progress.md)
+and the [literature review and acceptance tests](adaptivity-research.md).
 
 The runtime imports Warp and NumPy, not JAX or FDTDX. NumPy reads immutable
 reference bundles and prepares temporal source and detector coefficients on the
@@ -24,8 +24,10 @@ source correction. The H correction samples the incident E profile at n+1/2.
 A missed half-step caused the initial field comparison to fail; its fix has a
 one-step regression test. CUDA graphs capture 64 steps, with a distinct tail graph
 so no time steps are skipped or repeated. Reset/replay is tested for identical
-full E/H fields. PML memory is currently full-volume allocated but accessed only
-inside its slabs; compact storage is a future capacity optimization.
+full E/H fields. The default PML history is full-volume allocated but accessed only inside its
+slabs. Optional `--cpml-storage packed` stores only active planes, reducing owned
+array storage but currently slowing the update; see the measured control in
+[adaptivity progress](adaptivity-progress.md). The default remains the faster path.
 
 Modal and flow detectors spatially colocate at the E_z Yee location. H is centered
 in time using (H_previous + H_current)/2. Phasors use the exported final-eight-
