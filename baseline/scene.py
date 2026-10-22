@@ -16,6 +16,8 @@ from fdtdx.core.jax.pytrees import autoinit
 from fdtdx.core.jax.ste import straight_through_estimator
 from fdtdx.materials import compute_allowed_permittivities
 
+from .reference_protocol import layout, modal_steps
+
 
 @autoinit
 class PaperCWProfile(f.TemporalProfile):
@@ -79,9 +81,20 @@ class Settings:
     pad_domain: bool = False
     modal_window: str = "rectangular"
     poynting_plane: bool = False
+    reference_protocol: str = "legacy"
+    courant_factor: float = 0.99
+    modal_window_fs: float = 40.0
 
 
 def modal_apodization(s, config, steps, period):
+    if s.reference_protocol != "legacy":
+        if s.modal_window != "hann":
+            raise ValueError("Fixed physical references require a Hann window")
+        return f.TukeyWindow(
+            start_time=(s.time_fs - s.modal_window_fs) * 1e-15,
+            end_time=s.time_fs * 1e-15,
+            alpha=1.0,
+        )
     if len(steps) < 8 * period:
         raise ValueError(
             "Modal quality evaluation requires at least eight optical periods"
@@ -96,6 +109,7 @@ def modal_apodization(s, config, steps, period):
 
 
 def build(s: Settings):
+    contract = layout(s)
     if s.scene == "straight":
         return build_straight(s)
     for extent_nm in (s.domain_um * 1000, 1500, 600, 400, 1600):
@@ -109,7 +123,7 @@ def build(s: Settings):
         time=s.time_fs * 1e-15,
         grid=f.UniformGrid(spacing=s.spacing_nm * 1e-9),
         dtype=getattr(jnp, s.precision),
-        courant_factor=0.99,
+        courant_factor=s.courant_factor,
         backend=s.backend,
     )
     if s.gradient != "none":
@@ -219,7 +233,11 @@ def build(s: Settings):
         partial_voxel_real_shape=(s.voxel_nm * 1e-9, s.voxel_nm * 1e-9, 0.4e-6),
     )
     constraints.append(
-        device.place_relative_to(
+        device.set_grid_coordinates(
+            axes=(0, 1, 2), sides=("-", "-", "-"), coordinates=contract["device_start"]
+        )
+        if contract is not None
+        else device.place_relative_to(
             substrate,
             axes=(0, 1, 2),
             own_positions=(1, -1, -1),
@@ -260,7 +278,13 @@ def build(s: Settings):
         else f.SingleFrequencyProfile(),
     )
     constraints.append(
-        source.place_relative_to(
+        source.set_grid_coordinates(
+            axes=(0,),
+            sides=("-",),
+            coordinates=(contract["planes"]["source"]["grid_index"],),
+        )
+        if contract is not None
+        else source.place_relative_to(
             wi,
             axes=(0,),
             other_positions=(-1,),
@@ -283,27 +307,42 @@ def build(s: Settings):
         exact_interpolation=s.exact_interpolation,
         switch=f.OnOffSwitch(fixed_on_time_steps=steps[-2 * period :]),
     )
-    constraints.extend(
-        [
-            di.place_relative_to(
-                wi,
-                axes=(0, 1, 2),
-                own_positions=(-1, 0, 0),
-                other_positions=(-1, 0, 0),
-                grid_margins=(s.pml_cells, 0, 0),
-                margins=(0.2e-6, 0, 0),
-            ),
-            di.size_relative_to(wi, axes=(1, 2)),
-            do.place_relative_to(
-                wo,
-                axes=(0, 1, 2),
-                own_positions=(0, 1, 0),
-                other_positions=(0, 1, 0),
-                grid_margins=(0, -s.pml_cells - 5, 0),
-            ),
-            do.size_relative_to(wo, axes=(0, 2)),
-        ]
-    )
+    if contract is not None:
+        for detector, guide, axis in ((di, wi, 0), (do, wo, 1)):
+            transverse = tuple(a for a in range(3) if a != axis)
+            constraints.extend(
+                [
+                    detector.set_grid_coordinates(
+                        axes=(axis,),
+                        sides=("-",),
+                        coordinates=(contract["planes"][detector.name]["grid_index"],),
+                    ),
+                    detector.place_at_center(guide, axes=transverse),
+                    detector.size_relative_to(guide, axes=transverse),
+                ]
+            )
+    else:
+        constraints.extend(
+            [
+                di.place_relative_to(
+                    wi,
+                    axes=(0, 1, 2),
+                    own_positions=(-1, 0, 0),
+                    other_positions=(-1, 0, 0),
+                    grid_margins=(s.pml_cells, 0, 0),
+                    margins=(0.2e-6, 0, 0),
+                ),
+                di.size_relative_to(wi, axes=(1, 2)),
+                do.place_relative_to(
+                    wo,
+                    axes=(0, 1, 2),
+                    own_positions=(0, 1, 0),
+                    other_positions=(0, 1, 0),
+                    grid_margins=(0, -s.pml_cells - 5, 0),
+                ),
+                do.size_relative_to(wo, axes=(0, 2)),
+            ]
+        )
     objects.extend([di, do])
     if s.quality_monitors:
         for name, guide, axis, direction, anchor, margin in (
@@ -321,10 +360,20 @@ def build(s: Settings):
                 mode_index=0,
                 exact_interpolation=True,
                 apodization=modal_apodization(s, config, steps, period),
-                switch=f.OnOffSwitch(fixed_on_time_steps=steps[-8 * period :]),
+                switch=f.OnOffSwitch(
+                    fixed_on_time_steps=modal_steps(
+                        s, config.time_step_duration, config.time_steps_total
+                    )
+                ),
             )
             constraints.append(
-                det.place_relative_to(
+                det.set_grid_coordinates(
+                    axes=(axis,),
+                    sides=("-",),
+                    coordinates=(contract["planes"][name]["grid_index"],),
+                )
+                if contract is not None
+                else det.place_relative_to(
                     guide,
                     axes=axis,
                     own_positions=anchor,
@@ -347,7 +396,11 @@ def build(s: Settings):
             wave_characters=(f.WaveCharacter(wavelength=1.55e-6),),
             exact_interpolation=True,
             apodization=modal_apodization(s, config, steps, period),
-            switch=f.OnOffSwitch(fixed_on_time_steps=steps[-8 * period :]),
+            switch=f.OnOffSwitch(
+                fixed_on_time_steps=modal_steps(
+                    s, config.time_step_duration, config.time_steps_total
+                )
+            ),
         )
         objects.append(flow)
         constraints.extend(
@@ -364,7 +417,7 @@ def build_straight(s):
         time=s.time_fs * 1e-15,
         grid=f.UniformGrid(spacing=s.spacing_nm * 1e-9),
         dtype=getattr(jnp, s.precision),
-        courant_factor=0.99,
+        courant_factor=s.courant_factor,
         backend=s.backend,
     )
     volume = f.SimulationVolume(
@@ -445,7 +498,11 @@ def build_straight(s):
             wave_characters=(f.WaveCharacter(wavelength=1.55e-6),),
             exact_interpolation=True,
             apodization=modal_apodization(s, config, steps, period),
-            switch=f.OnOffSwitch(fixed_on_time_steps=steps[-8 * period :]),
+            switch=f.OnOffSwitch(
+                fixed_on_time_steps=modal_steps(
+                    s, config.time_step_duration, config.time_steps_total
+                )
+            ),
         )
         constraints.append(
             d.set_grid_coordinates(axes=(0,), sides=("-",), coordinates=(x,))

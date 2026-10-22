@@ -12,6 +12,7 @@ import numpy as np
 
 from .common import ROOT, environment, write_json
 from .scene import Settings, build
+from .reference_protocol import audit_placed
 
 
 def main():
@@ -33,7 +34,12 @@ def main():
         "reference_arrays_sha256": hashlib.sha256(
             (args.run / "arrays.npz").read_bytes()
         ).hexdigest(),
-        "baseline_median_seconds": record["median_seconds"],
+        "baseline_median_seconds": None
+        if record["arguments"].get("reference_only")
+        else record["median_seconds"],
+        "baseline_timing_scope": record.get(
+            "timing_scope", "warm synchronized evaluations"
+        ),
         "reference_measurements": record["measurements"][0],
         "convention": "FDTDX normalized fields, Yee staggering and CPML; use the pinned source/update conventions.",
     }
@@ -44,6 +50,7 @@ def main():
             gradient_path.read_bytes()
         ).hexdigest()
     objects, arrays, params, config, _ = build(settings)
+    manifest["physical_contract"] = audit_placed(settings, objects, config)
     if record["arguments"].get("load"):
         param_path = Path(record["arguments"]["load"])
         assert (

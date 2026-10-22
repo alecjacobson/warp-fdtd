@@ -21,6 +21,7 @@ from fdtdx.fdtd.fdtd import custom_fdtd_forward
 
 from .common import environment, finite_tree, memory, timed, write_json
 from .scene import Settings, build, fluxes
+from .reference_protocol import audit_placed
 
 
 def main():
@@ -29,6 +30,13 @@ def main():
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--spacing-nm", type=float, default=20)
     p.add_argument("--voxel-nm", type=float, default=20)
+    p.add_argument(
+        "--reference-protocol",
+        choices=("legacy", "fixed_physical_v1"),
+        default="legacy",
+    )
+    p.add_argument("--courant-factor", type=float, default=0.99)
+    p.add_argument("--modal-window-fs", type=float, default=40.0)
     p.add_argument("--time-fs", type=float, default=200)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--backend", choices=["gpu", "cpu"], default="gpu")
@@ -44,6 +52,11 @@ def main():
     p.add_argument("--pml-cells", type=int, default=10)
     p.add_argument("--domain-um", type=float, default=4)
     p.add_argument("--reps", type=int, default=3)
+    p.add_argument(
+        "--reference-only",
+        action="store_true",
+        help="One field evaluation for convergence; no warmed throughput claim",
+    )
     p.add_argument("--epochs", type=int, default=250)
     p.add_argument("--beta", type=float, default=1.0)
     p.add_argument("--load", type=Path)
@@ -85,6 +98,10 @@ def main():
         help="Extend outer domain when thickening PML, preserving active geometry",
     )
     args = p.parse_args()
+    if args.reference_only and (
+        args.mode != "forward" or args.max_steps is not None or args.trace
+    ):
+        p.error("--reference-only requires an untraced full forward trajectory")
     if args.reps < 1 or args.epochs < 1:
         p.error("reps and epochs must be positive")
     if args.poynting_plane and (args.scene != "bend" or args.mode != "forward"):
@@ -116,6 +133,9 @@ def main():
         "environment": env,
         "mode": args.mode,
         "status": "setting_up",
+        "timing_scope": "single reference evaluation; not warmed throughput"
+        if args.reference_only
+        else "warm synchronized evaluations after one warmup",
         "arguments": {
             k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()
         },
@@ -123,6 +143,7 @@ def main():
     write_json(args.output / "result.json", result)
     start = time.perf_counter()
     objects, arrays, params, config, _ = build(s)
+    result["physical_contract"] = audit_placed(s, objects, config)
     jax.block_until_ready((arrays, params))
     result.update(
         setup_seconds=time.perf_counter() - start,
@@ -331,7 +352,7 @@ def main():
         )
     else:
         times, values = [], []
-        for rep in range(args.reps + 1):
+        for rep in range(1 if args.reference_only else args.reps + 1):
             trace_context = (
                 jax.profiler.trace(
                     str(args.output / "profiler"), create_perfetto_link=False
@@ -354,7 +375,7 @@ def main():
                 raise ValueError("Nonpositive input flux")
             row = {k: float(v) for k, v in info.items()}
             print(json.dumps({"rep": rep, "seconds": seconds, **row}), flush=True)
-            if rep == 0:
+            if rep == 0 and not args.reference_only:
                 result["warmup_seconds"] = seconds
             else:
                 times.append(seconds)

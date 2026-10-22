@@ -1,0 +1,339 @@
+{
+  "settings": {
+    "spacing_nm": 6.666666666666667,
+    "time_fs": 300.0,
+    "seed": 0,
+    "backend": "gpu",
+    "gradient": "none",
+    "parameterization": "smooth",
+    "exact_interpolation": true,
+    "pml_cells": 30,
+    "domain_um": 4.0,
+    "voxel_nm": 20,
+    "quality_monitors": true,
+    "precision": "float32",
+    "scene": "bend",
+    "source_profile": "current",
+    "pad_domain": false,
+    "modal_window": "hann",
+    "poynting_plane": false,
+    "reference_protocol": "fixed_physical_v1",
+    "courant_factor": 0.99,
+    "modal_window_fs": 40.0
+  },
+  "environment": {
+    "started_utc": "2026-10-22T18:19:01.497233+00:00",
+    "upstream_sha": "2cab8dbb2af9a43ec6443712f011f50ecf58790b",
+    "harness_sha256": {
+      "baseline/__init__.py": "145f00e0ee56a09a754d58ed87669d62088433670e013623a12ae880505ef7fe",
+      "baseline/common.py": "8a0837fd7ba4c40b6e785871643560664e14230dfb5166125dfb45c436a840b6",
+      "baseline/compare.py": "61e07dc701800a13a44e5b9174c013069c1ccb6589c8337056797c574c6eb0be",
+      "baseline/convergence.py": "d0c30276bb08a4aeed3be6435a79db9fb4c34bf44e3d285fdd0e1cca8957a46d",
+      "baseline/export_case.py": "424b7fc2b2b0a93899958317db9e2cd2e69e37bb5f10b71b3db8039168e4ad79",
+      "baseline/periodic_benchmark.py": "8720e627b33efb1c42c782a4cc58dfa0aeb0077eb0ec9aa1422b7e3323a50201",
+      "baseline/physics.py": "ad4ed758d6b1dcdd46f3eed58234e6bcce85a18dbe9f47a82ae24d5f9e05e4b6",
+      "baseline/protocol_checks.py": "10126e71cce9f1dd42dae41ff5c69fbc88a4e804977bbb491f6024616be642f3",
+      "baseline/quality_checks.py": "296be4fbba666fccec6084ed20bcd1cec63d9d85b58e452ebcea2c767f3c728c",
+      "baseline/reference_protocol.py": "65ed198da4db50f4ef1e54a34024b826da07b21b54857211b91ca0c36d07e4e9",
+      "baseline/reference_study.py": "306f2e12a88553da22f60ffb613beee3e598a0bdae88e6a49671e108d5ea140b",
+      "baseline/report.py": "7851bd1d052922a9c2494c7fce1bcbc045fe5d29b110a822aa8c5c20c5868745",
+      "baseline/run.py": "4f462060934d43493af9ae9bc5581422f5e6a82344683644768a598afb04ea81",
+      "baseline/scene.py": "ea34d783f0e14011a0f1ba56ff3a6281afc7202df06ba60507761f849ea6f96c",
+      "baseline/visualize_flow.py": "a6e6f13d82c01d88cd0541040fb583b960ca9541d53092bc8a1aa5cfa40b7718"
+    },
+    "python": "3.12.15",
+    "jax": "0.12.0",
+    "jax_default_matmul_precision": "highest",
+    "jax_enable_x64": false,
+    "requirements_sha256": "80d4daccc80308750433ea45e45a0d32217feda6f978158680cda26f789420db",
+    "cpu_model": "AMD EPYC 9B45",
+    "devices": [
+      {
+        "kind": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+        "platform": "gpu"
+      }
+    ],
+    "nvidia_smi": "GPU 0: NVIDIA RTX PRO 6000 Blackwell Server Edition (UUID: GPU-822536da-f2f9-2caf-83b8-9b1974483e63)\n  MIG 1g.24gb     Device  0: (UUID: MIG-5d3bb68b-2d20-590e-92a3-a0ff8bc701ed)",
+    "driver": "595.58.03",
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "cpu_quota": "400000 100000",
+    "host_memory_limit": "17179869184",
+    "environment": {
+      "OMP_NUM_THREADS": "4",
+      "JAX_PLATFORMS": "cuda,cpu",
+      "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+      "JAX_DEFAULT_MATMUL_PRECISION": "highest",
+      "OPENBLAS_NUM_THREADS": "1"
+    }
+  },
+  "mode": "forward",
+  "status": "complete",
+  "timing_scope": "single reference evaluation; not warmed throughput",
+  "arguments": {
+    "mode": "forward",
+    "output": "results/physical_reference/mesh6p67",
+    "spacing_nm": 6.666666666666667,
+    "voxel_nm": 20,
+    "reference_protocol": "fixed_physical_v1",
+    "courant_factor": 0.99,
+    "modal_window_fs": 40.0,
+    "time_fs": 300.0,
+    "seed": 0,
+    "backend": "gpu",
+    "gradient": "none",
+    "parameterization": "smooth",
+    "exact_interpolation": true,
+    "pml_cells": 30,
+    "domain_um": 4.0,
+    "reps": 3,
+    "reference_only": true,
+    "epochs": 250,
+    "beta": 50.0,
+    "load": "results/ring20_optimized/best_params.npz",
+    "resume": null,
+    "finite_difference": false,
+    "quality_monitors": true,
+    "poynting_plane": false,
+    "modal_window": "hann",
+    "objective": "flux",
+    "init": "random",
+    "fixed_beta": false,
+    "precision": "float32",
+    "max_steps": null,
+    "scene": "bend",
+    "save_full_fields": false,
+    "source_profile": "current",
+    "trace": false,
+    "pad_domain": false
+  },
+  "physical_contract": {
+    "name": "fixed_physical_v1",
+    "origin_nm": [
+      0.0,
+      0.0,
+      0
+    ],
+    "planes": {
+      "source": {
+        "axis": 0,
+        "design_anchor_nm": 300.0,
+        "grid_index": 45
+      },
+      "input": {
+        "axis": 0,
+        "design_anchor_nm": 400.0,
+        "grid_index": 60
+      },
+      "output": {
+        "axis": 1,
+        "design_anchor_nm": 3600.0,
+        "grid_index": 540
+      },
+      "mode_in": {
+        "axis": 0,
+        "design_anchor_nm": 400.0,
+        "grid_index": 60
+      },
+      "mode_reflected": {
+        "axis": 0,
+        "design_anchor_nm": 400.0,
+        "grid_index": 60
+      },
+      "mode_out": {
+        "axis": 1,
+        "design_anchor_nm": 3600.0,
+        "grid_index": 540
+      }
+    },
+    "device_start": [
+      300,
+      60,
+      90
+    ],
+    "device_design_bounds_nm": [
+      [
+        2000,
+        3600
+      ],
+      [
+        400,
+        2000
+      ],
+      [
+        600,
+        1000
+      ]
+    ],
+    "pml_thickness_nm": 200.0,
+    "pml_padding_nm": 0,
+    "modal_window_fs": [
+      260.0,
+      300.0
+    ],
+    "source_phase_origin": "Yee grid anchor; TFSF cut is staggered within the source cell",
+    "material_policy": "Fixed latent voxel grid and filter; upstream projection is reevaluated at each field resolution",
+    "geometry_design_bounds_nm": {
+      "substrate": [
+        [
+          0.0,
+          4000.0
+        ],
+        [
+          0.0,
+          4000.0
+        ],
+        [
+          0.0,
+          600.0
+        ]
+      ],
+      "Device": [
+        [
+          2000.0,
+          3600.0
+        ],
+        [
+          400.0,
+          2000.0
+        ],
+        [
+          600.0,
+          1000.0
+        ]
+      ],
+      "input_guide": [
+        [
+          0.0,
+          2000.0
+        ],
+        [
+          1000.0,
+          1400.0
+        ],
+        [
+          600.0,
+          1000.0
+        ]
+      ],
+      "output_guide": [
+        [
+          2600.0,
+          3000.0
+        ],
+        [
+          2000.0,
+          4000.0
+        ],
+        [
+          600.0,
+          1000.0
+        ]
+      ]
+    },
+    "resolved_planes": {
+      "source": {
+        "axis": 0,
+        "design_anchor_nm": 300.0
+      },
+      "input": {
+        "axis": 0,
+        "design_anchor_nm": 400.0
+      },
+      "output": {
+        "axis": 1,
+        "design_anchor_nm": 3600.0
+      },
+      "mode_in": {
+        "axis": 0,
+        "design_anchor_nm": 400.0
+      },
+      "mode_reflected": {
+        "axis": 0,
+        "design_anchor_nm": 400.0
+      },
+      "mode_out": {
+        "axis": 1,
+        "design_anchor_nm": 3600.0
+      }
+    },
+    "actual_duration_fs": 300.0029109111592,
+    "actual_modal_sample_range_fs": [
+      260.00337014780627,
+      299.9902005391339
+    ]
+  },
+  "setup_seconds": 4.420391671359539,
+  "shape": [
+    600,
+    600,
+    225
+  ],
+  "time_steps": 23603,
+  "configured_time_steps": 23603,
+  "physical_evaluation": true,
+  "parameters": 6400,
+  "dtypes": {
+    "E": "float32",
+    "H": "float32",
+    "inverse_permittivity": "float32",
+    "detectors": {
+      "input": {
+        "poynting_flux": "float32"
+      },
+      "output": {
+        "poynting_flux": "float32"
+      },
+      "mode_in": {
+        "phasor": "complex64"
+      },
+      "mode_reflected": {
+        "phasor": "complex64"
+      },
+      "mode_out": {
+        "phasor": "complex64"
+      }
+    }
+  },
+  "loaded_params_sha256": "034c4aa0e3b933dd617dcc09824c11d535e7cc6d349cd7e1d3349108ec420ade",
+  "compile_seconds": 1.6904402039945126,
+  "executable_memory": {
+    "argument_size_in_bytes": 343472120,
+    "output_size_in_bytes": 2892246888,
+    "alias_size_in_bytes": 343446516,
+    "temp_size_in_bytes": 2931671600
+  },
+  "run_seconds": [
+    1560.3564336551353
+  ],
+  "median_seconds": 1560.3564336551353,
+  "measurements": [
+    {
+      "input_flux": 3.2499886562539055e-17,
+      "modal_reflection": 3.03465985780349e-05,
+      "modal_transmission": 0.9324383735656738,
+      "mode_in": 0.9995157122612,
+      "mode_out": 0.9319867491722107,
+      "mode_reflected": 3.0331899324664846e-05,
+      "output_flux": 3.950458764725855e-17,
+      "transmission": 1.2155300378799438
+    }
+  ],
+  "gcups": 1.225260433298248,
+  "memory_stats": {
+    "num_allocs": 3786,
+    "bytes_in_use": 2909793536,
+    "peak_bytes_in_use": 8654428928,
+    "largest_alloc_size": 2977364224,
+    "bytes_limit": 19025362944,
+    "bytes_reserved": 0,
+    "peak_bytes_reserved": 0,
+    "largest_free_block_bytes": 2977364224,
+    "pool_bytes": 8659140608,
+    "peak_pool_bytes": 8659140608
+  }
+}
