@@ -314,3 +314,25 @@ python -m warp_fdtd.planar_validation --trace area --precision float32 \
 Regenerate the figure with `python -m warp_fdtd.planar_report`.
 
 ![Planar-interface convergence](../results/warp/planar_area_long_cpu/convergence.png)
+
+### Direct interface scattering
+
+`python -m warp_fdtd.planar_scattering` launches a Gaussian carrier pulse through
+vacuum, where physical reflection is zero. The full 3D operator has planar
+symmetry in this test. E/H characteristic separation uses both spatial and
+temporal centering; uniform controls provide the numerical floor. The pulse
+and measurement window keep the main outgoing pulse away from the PEC ends.
+Both trace variants give the same normal-incidence result to roundoff:
+
+| Coarse cells per carrier wavelength | Reflected energy fraction | <=1e-5 gate |
+|---|---:|---|
+| 20 | 5.55e-05 | **Fail** |
+| 40 | 3.48e-6 | Pass |
+| 80 | 2.17e-7 | Pass |
+
+Uniform-control floors are below 3e-10. The failure at 20 cells/wavelength is
+retained, not hidden by promoting the passing finer cases. This finite-bandwidth
+pulse is not a full frequency/angle sweep. Oblique incidence, material traversal
+and composite constraints remain #37. These results demonstrate a real
+interface error and motivate explicit far-cell-size/buffer sweeps in #35;
+topology counts alone cannot select the production mesh.
