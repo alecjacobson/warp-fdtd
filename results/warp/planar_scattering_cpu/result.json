@@ -1,0 +1,120 @@
+{
+  "status": "complete",
+  "device": "cpu",
+  "cases": [
+    {
+      "coarse_cells_per_wavelength": 20,
+      "ratio": 1,
+      "trace": "published",
+      "time": 2.707772762499345,
+      "steps": 134,
+      "reflected_energy_fraction": 1.78994514115379e-11,
+      "reflection_gate_1e_5_passed": true,
+      "exact_reflection": 0.0,
+      "scope": "Normal incidence, planar symmetry, vacuum, float64",
+      "uniform_control_reflection_floor": 1.78994514115379e-11
+    },
+    {
+      "coarse_cells_per_wavelength": 20,
+      "ratio": 3,
+      "trace": "published",
+      "time": 2.701037009358799,
+      "steps": 401,
+      "reflected_energy_fraction": 5.549727801279189e-05,
+      "reflection_gate_1e_5_passed": false,
+      "exact_reflection": 0.0,
+      "scope": "Normal incidence, planar symmetry, vacuum, float64",
+      "uniform_control_reflection_floor": 1.78994514115379e-11
+    },
+    {
+      "coarse_cells_per_wavelength": 20,
+      "ratio": 3,
+      "trace": "area",
+      "time": 2.701037009358799,
+      "steps": 401,
+      "reflected_energy_fraction": 5.549727801279003e-05,
+      "reflection_gate_1e_5_passed": false,
+      "exact_reflection": 0.0,
+      "scope": "Normal incidence, planar symmetry, vacuum, float64",
+      "uniform_control_reflection_floor": 1.78994514115379e-11
+    },
+    {
+      "coarse_cells_per_wavelength": 40,
+      "ratio": 1,
+      "trace": "published",
+      "time": 2.6976691327885263,
+      "steps": 267,
+      "reflected_energy_fraction": 2.3296802580236167e-14,
+      "reflection_gate_1e_5_passed": true,
+      "exact_reflection": 0.0,
+      "scope": "Normal incidence, planar symmetry, vacuum, float64",
+      "uniform_control_reflection_floor": 2.3296802580236167e-14
+    },
+    {
+      "coarse_cells_per_wavelength": 40,
+      "ratio": 3,
+      "trace": "published",
+      "time": 2.701037009358799,
+      "steps": 802,
+      "reflected_energy_fraction": 3.4777150628984127e-06,
+      "reflection_gate_1e_5_passed": true,
+      "exact_reflection": 0.0,
+      "scope": "Normal incidence, planar symmetry, vacuum, float64",
+      "uniform_control_reflection_floor": 2.3296802580236167e-14
+    },
+    {
+      "coarse_cells_per_wavelength": 40,
+      "ratio": 3,
+      "trace": "area",
+      "time": 2.701037009358799,
+      "steps": 802,
+      "reflected_energy_fraction": 3.477715062897677e-06,
+      "reflection_gate_1e_5_passed": true,
+      "exact_reflection": 0.0,
+      "scope": "Normal incidence, planar symmetry, vacuum, float64",
+      "uniform_control_reflection_floor": 2.3296802580236167e-14
+    },
+    {
+      "coarse_cells_per_wavelength": 80,
+      "ratio": 1,
+      "trace": "published",
+      "time": 2.6976691327885263,
+      "steps": 534,
+      "reflected_energy_fraction": 2.5708949745087062e-15,
+      "reflection_gate_1e_5_passed": true,
+      "exact_reflection": 0.0,
+      "scope": "Normal incidence, planar symmetry, vacuum, float64",
+      "uniform_control_reflection_floor": 2.5708949745087062e-15
+    },
+    {
+      "coarse_cells_per_wavelength": 80,
+      "ratio": 3,
+      "trace": "published",
+      "time": 2.699353071073663,
+      "steps": 1603,
+      "reflected_energy_fraction": 2.1749617430396937e-07,
+      "reflection_gate_1e_5_passed": true,
+      "exact_reflection": 0.0,
+      "scope": "Normal incidence, planar symmetry, vacuum, float64",
+      "uniform_control_reflection_floor": 2.5708949745087062e-15
+    },
+    {
+      "coarse_cells_per_wavelength": 80,
+      "ratio": 3,
+      "trace": "area",
+      "time": 2.699353071073663,
+      "steps": 1603,
+      "reflected_energy_fraction": 2.17496174303839e-07,
+      "reflection_gate_1e_5_passed": true,
+      "exact_reflection": 0.0,
+      "scope": "Normal incidence, planar symmetry, vacuum, float64",
+      "uniform_control_reflection_floor": 2.5708949745087062e-15
+    }
+  ],
+  "source_sha256": {
+    "warp_fdtd/planar_scattering.py": "fc5afb453e0923ac6a3df5c21b272496c06788f6facaec91febb68b2ab6ad77e",
+    "warp_fdtd/planar_interface.py": "004603fa3d1a01ecab4b229916dc4c28bf0eb1d914ebecf901d395c2fde523c7"
+  },
+  "all_reflection_gates_passed": false,
+  "scope": "Isolated normal-incidence interface test only; no production certification"
+}

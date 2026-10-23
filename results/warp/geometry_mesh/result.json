@@ -1,0 +1,423 @@
+{
+  "status": "complete",
+  "scope": "Topology study only; no Maxwell evolution or measured speedup",
+  "source_sha256": {
+    "warp_fdtd/mesh_study.py": "0903a3e867b9ec2c38b0b707635ab41b5f88c4256d93b26c64422f734028a9f2",
+    "warp_fdtd/block_mesh.py": "15fcb6c793e9091379099531d58718b7f184fd63035f0814e7e26348393749cf"
+  },
+  "cases": [
+    {
+      "ratio": 2,
+      "block_cells": 4,
+      "guide_buffer_um": 0.15,
+      "domain_scale": 1,
+      "finest_cell_um": 0.0125,
+      "domain_um": [
+        4.800000000000001,
+        3.2,
+        3.2
+      ],
+      "policy": {
+        "boxes": [
+          {
+            "lower": [
+              0.0,
+              1.4000000000000001,
+              1.4000000000000001
+            ],
+            "upper": [
+              4.800000000000001,
+              1.8,
+              1.8
+            ]
+          }
+        ],
+        "boundary_cell": 0.0125,
+        "core_cell": 0.05,
+        "far_cell": 0.1,
+        "boundary_band": 0.0125,
+        "guide_buffer": 0.15,
+        "growth": 0.5
+      },
+      "audit": {
+        "coverage": true,
+        "nonoverlap": true,
+        "strong_balance": true,
+        "face_partition": true,
+        "internal_face_tiles": 49520
+      },
+      "leaf_blocks": 15608,
+      "blocks_by_level": {
+        "0": 576,
+        "1": 1152,
+        "2": 1528,
+        "3": 12352
+      },
+      "volume_fraction_by_level": {
+        "0": 0.75,
+        "1": 0.1875,
+        "2": 0.031087239583333332,
+        "3": 0.031412760416666664
+      },
+      "active_cells": 998912,
+      "uniform_finest_cells": 25165824,
+      "ideal_cell_ratio": 25.193234238851872,
+      "halo_width_cells": 1,
+      "padded_cell_slots": 3371328,
+      "padded_cell_ratio": 7.464661996696851,
+      "geometry_leaf_count": 15272,
+      "balance_split_count": 48,
+      "balance_added_leaf_count": 336,
+      "covered_parent_field_cells": 0,
+      "scope": "Topology cell counts; no solver allocation, runtime, accuracy, or peak-memory claim",
+      "generation_balance_seconds": 3.0728091495111585,
+      "audit_seconds": 2.2101959912106395,
+      "exported_int64_topology_bytes": 2084096,
+      "topology_sha256": "e90f91ededc955fba637902f258e4bb0c1690034185d7f2cc643464f7760be77"
+    },
+    {
+      "ratio": 2,
+      "block_cells": 8,
+      "guide_buffer_um": 0.05,
+      "domain_scale": 1,
+      "finest_cell_um": 0.0125,
+      "domain_um": [
+        4.800000000000001,
+        3.2,
+        3.2
+      ],
+      "policy": {
+        "boxes": [
+          {
+            "lower": [
+              0.0,
+              1.4000000000000001,
+              1.4000000000000001
+            ],
+            "upper": [
+              4.800000000000001,
+              1.8,
+              1.8
+            ]
+          }
+        ],
+        "boundary_cell": 0.0125,
+        "core_cell": 0.05,
+        "far_cell": 0.1,
+        "boundary_band": 0.0125,
+        "guide_buffer": 0.05,
+        "growth": 0.5
+      },
+      "audit": {
+        "coverage": true,
+        "nonoverlap": true,
+        "strong_balance": true,
+        "face_partition": true,
+        "internal_face_tiles": 14912
+      },
+      "leaf_blocks": 4800,
+      "blocks_by_level": {
+        "0": 0,
+        "1": 576,
+        "2": 1152,
+        "3": 3072
+      },
+      "volume_fraction_by_level": {
+        "0": 0.0,
+        "1": 0.75,
+        "2": 0.1875,
+        "3": 0.0625
+      },
+      "active_cells": 2457600,
+      "uniform_finest_cells": 25165824,
+      "ideal_cell_ratio": 10.24,
+      "halo_width_cells": 1,
+      "padded_cell_slots": 4800000,
+      "padded_cell_ratio": 5.24288,
+      "geometry_leaf_count": 3288,
+      "balance_split_count": 216,
+      "balance_added_leaf_count": 1512,
+      "covered_parent_field_cells": 0,
+      "scope": "Topology cell counts; no solver allocation, runtime, accuracy, or peak-memory claim",
+      "generation_balance_seconds": 1.1894594402983785,
+      "audit_seconds": 0.644347058609128,
+      "exported_int64_topology_bytes": 630784,
+      "topology_sha256": "68c88fc471ee29ffce7116084904259c11f56c860a2d9d473e3560ceb15422bc"
+    },
+    {
+      "ratio": 2,
+      "block_cells": 8,
+      "guide_buffer_um": 0.15,
+      "domain_scale": 1,
+      "finest_cell_um": 0.0125,
+      "domain_um": [
+        4.800000000000001,
+        3.2,
+        3.2
+      ],
+      "policy": {
+        "boxes": [
+          {
+            "lower": [
+              0.0,
+              1.4000000000000001,
+              1.4000000000000001
+            ],
+            "upper": [
+              4.800000000000001,
+              1.8,
+              1.8
+            ]
+          }
+        ],
+        "boundary_cell": 0.0125,
+        "core_cell": 0.05,
+        "far_cell": 0.1,
+        "boundary_band": 0.0125,
+        "guide_buffer": 0.15,
+        "growth": 0.5
+      },
+      "audit": {
+        "coverage": true,
+        "nonoverlap": true,
+        "strong_balance": true,
+        "face_partition": true,
+        "internal_face_tiles": 14912
+      },
+      "leaf_blocks": 4800,
+      "blocks_by_level": {
+        "0": 0,
+        "1": 576,
+        "2": 1152,
+        "3": 3072
+      },
+      "volume_fraction_by_level": {
+        "0": 0.0,
+        "1": 0.75,
+        "2": 0.1875,
+        "3": 0.0625
+      },
+      "active_cells": 2457600,
+      "uniform_finest_cells": 25165824,
+      "ideal_cell_ratio": 10.24,
+      "halo_width_cells": 1,
+      "padded_cell_slots": 4800000,
+      "padded_cell_ratio": 5.24288,
+      "geometry_leaf_count": 3288,
+      "balance_split_count": 216,
+      "balance_added_leaf_count": 1512,
+      "covered_parent_field_cells": 0,
+      "scope": "Topology cell counts; no solver allocation, runtime, accuracy, or peak-memory claim",
+      "generation_balance_seconds": 1.1993379844352603,
+      "audit_seconds": 0.6490149153396487,
+      "exported_int64_topology_bytes": 630784,
+      "topology_sha256": "68c88fc471ee29ffce7116084904259c11f56c860a2d9d473e3560ceb15422bc",
+      "topology_npz_sha256": "033592f3b5bfec5f63850362f70575a738b2df5a0b7580b45feffb02be6d634b"
+    },
+    {
+      "ratio": 2,
+      "block_cells": 16,
+      "guide_buffer_um": 0.15,
+      "domain_scale": 1,
+      "finest_cell_um": 0.0125,
+      "domain_um": [
+        4.800000000000001,
+        3.2,
+        3.2
+      ],
+      "policy": {
+        "boxes": [
+          {
+            "lower": [
+              0.0,
+              1.4000000000000001,
+              1.4000000000000001
+            ],
+            "upper": [
+              4.800000000000001,
+              1.8,
+              1.8
+            ]
+          }
+        ],
+        "boundary_cell": 0.0125,
+        "core_cell": 0.05,
+        "far_cell": 0.1,
+        "boundary_band": 0.0125,
+        "guide_buffer": 0.15,
+        "growth": 0.5
+      },
+      "audit": {
+        "coverage": true,
+        "nonoverlap": true,
+        "strong_balance": true,
+        "face_partition": true,
+        "internal_face_tiles": 1928
+      },
+      "leaf_blocks": 600,
+      "blocks_by_level": {
+        "0": 0,
+        "1": 72,
+        "2": 144,
+        "3": 384
+      },
+      "volume_fraction_by_level": {
+        "0": 0.0,
+        "1": 0.75,
+        "2": 0.1875,
+        "3": 0.0625
+      },
+      "active_cells": 2457600,
+      "uniform_finest_cells": 25165824,
+      "ideal_cell_ratio": 10.24,
+      "halo_width_cells": 1,
+      "padded_cell_slots": 3499200,
+      "padded_cell_ratio": 7.1918792866941015,
+      "geometry_leaf_count": 600,
+      "balance_split_count": 0,
+      "balance_added_leaf_count": 0,
+      "covered_parent_field_cells": 0,
+      "scope": "Topology cell counts; no solver allocation, runtime, accuracy, or peak-memory claim",
+      "generation_balance_seconds": 0.08886806573718786,
+      "audit_seconds": 0.0767988646402955,
+      "exported_int64_topology_bytes": 80896,
+      "topology_sha256": "f3157d9ecc134e64e6265baaaae4ec5f1e0dd2a1100aa9f9614695f1673795cf"
+    },
+    {
+      "ratio": 2,
+      "block_cells": 8,
+      "guide_buffer_um": 0.15,
+      "domain_scale": 2,
+      "finest_cell_um": 0.0125,
+      "domain_um": [
+        9.600000000000001,
+        6.4,
+        6.4
+      ],
+      "policy": {
+        "boxes": [
+          {
+            "lower": [
+              0.0,
+              3.0,
+              3.0
+            ],
+            "upper": [
+              9.600000000000001,
+              3.4000000000000004,
+              3.4000000000000004
+            ]
+          }
+        ],
+        "boundary_cell": 0.0125,
+        "core_cell": 0.05,
+        "far_cell": 0.1,
+        "boundary_band": 0.0125,
+        "guide_buffer": 0.15,
+        "growth": 0.5
+      },
+      "audit": {
+        "coverage": true,
+        "nonoverlap": true,
+        "strong_balance": true,
+        "face_partition": true,
+        "internal_face_tiles": 32144
+      },
+      "leaf_blocks": 10176,
+      "blocks_by_level": {
+        "0": 576,
+        "1": 1152,
+        "2": 2304,
+        "3": 6144
+      },
+      "volume_fraction_by_level": {
+        "0": 0.75,
+        "1": 0.1875,
+        "2": 0.046875,
+        "3": 0.015625
+      },
+      "active_cells": 5210112,
+      "uniform_finest_cells": 201326592,
+      "ideal_cell_ratio": 38.64150943396226,
+      "halo_width_cells": 1,
+      "padded_cell_slots": 10176000,
+      "padded_cell_ratio": 19.78445283018868,
+      "geometry_leaf_count": 7152,
+      "balance_split_count": 432,
+      "balance_added_leaf_count": 3024,
+      "covered_parent_field_cells": 0,
+      "scope": "Topology cell counts; no solver allocation, runtime, accuracy, or peak-memory claim",
+      "generation_balance_seconds": 2.511340749450028,
+      "audit_seconds": 1.3715432491153479,
+      "exported_int64_topology_bytes": 1354240,
+      "topology_sha256": "c27f4057207f9ced7a491b6fdfe4a2fcc045f9efed155b5b4bdabd256e7bb1ae"
+    },
+    {
+      "ratio": 3,
+      "block_cells": 8,
+      "guide_buffer_um": 0.15,
+      "domain_scale": 1,
+      "finest_cell_um": 0.011111111111111112,
+      "domain_um": [
+        4.800000000000001,
+        3.2,
+        3.2
+      ],
+      "policy": {
+        "boxes": [
+          {
+            "lower": [
+              0.0,
+              1.4000000000000001,
+              1.4000000000000001
+            ],
+            "upper": [
+              4.800000000000001,
+              1.8,
+              1.8
+            ]
+          }
+        ],
+        "boundary_cell": 0.011111111111111112,
+        "core_cell": 0.05,
+        "far_cell": 0.1,
+        "boundary_band": 0.011111111111111112,
+        "guide_buffer": 0.15,
+        "growth": 0.5
+      },
+      "audit": {
+        "coverage": true,
+        "nonoverlap": true,
+        "strong_balance": true,
+        "face_partition": true,
+        "internal_face_tiles": 8416
+      },
+      "leaf_blocks": 2592,
+      "blocks_by_level": {
+        "0": 72,
+        "1": 576,
+        "2": 1944
+      },
+      "volume_fraction_by_level": {
+        "0": 0.75,
+        "1": 0.2222222222222222,
+        "2": 0.027777777777777776
+      },
+      "active_cells": 1327104,
+      "uniform_finest_cells": 35831808,
+      "ideal_cell_ratio": 27.0,
+      "halo_width_cells": 1,
+      "padded_cell_slots": 2592000,
+      "padded_cell_ratio": 13.824,
+      "geometry_leaf_count": 2592,
+      "balance_split_count": 0,
+      "balance_added_leaf_count": 0,
+      "covered_parent_field_cells": 0,
+      "scope": "Topology cell counts; no solver allocation, runtime, accuracy, or peak-memory claim",
+      "generation_balance_seconds": 0.2129668314009905,
+      "audit_seconds": 0.3018720569089055,
+      "exported_int64_topology_bytes": 352256,
+      "topology_sha256": "6ccdfe299deb9c8976cdfa1480e2c7438d2684be633cee885e2d50f0c1268ba6"
+    }
+  ]
+}

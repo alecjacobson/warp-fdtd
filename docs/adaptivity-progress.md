@@ -191,14 +191,148 @@ PML and domain controls. Transmission is 92.8943%, 93.1852% and 93.2438% at
 reference uncertainty remains unresolved under
 [#30](https://github.com/alecjacobson/warp-fdtd/issues/30).
 
-## Next dependencies
+## Current execution order
 
-1. #30: qualify the fine bend reference against the full accuracy budget; #25 fixed-coordinate generation is complete.
-2. #13: extend passing normal-incidence material controls to oblique/sphere scattering; #32 tracks the passing flux control’s cost.
-3. #14: extend nonuniform controls to materials, sources, ports and CPML.
-4. #15: implement and audit the 3D 3:1 block interface, including face/edge/corner power and divergence tests.
-5. #16: add local time stepping only after the spatial interface passes.
+The user-directed revision prioritizes a working locally refined waveguide.
+Fine bend-reference qualification is an independent track, not a prerequisite.
 
-#26 is an independent uniform-throughput control. #18 consumes the localization
-diagnostic but still needs a calibrated propagation-error estimator. Main README
-figures remain measured flagship results; no adaptive speedup is advertised.
+1. [#34](https://github.com/alecjacobson/warp-fdtd/issues/34): geometry-driven balanced block forests; topology counts and overhead first.
+2. [#15](https://github.com/alecjacobson/warp-fdtd/issues/15): 3D coarse–fine coupling, starting with planar interfaces and a global fine timestep. Verify each stage against analytic/operator tests as it is built.
+3. [#35](https://github.com/alecjacobson/warp-fdtd/issues/35): straight-guide propagation, then bend; measure error, runtime and memory against both uniform finest spacing and the best accuracy-matched uniform configuration.
+4. #16: local time stepping after the spatial comparison. #18: measured-error refinement after the geometry policy works. #19: adjoint after forward benefit.
+
+#13 retains the acceptance gates. #14 and #32 provide supporting controls as
+needed; neither is an implementation prerequisite. #30 continues separately.
+#17, #20 and #21 are closed as deferred research options (binary SBP-SAT,
+hp-DG and dynamic remeshing); reopen only when evidence motivates them.
+
+## Procedural mesh implementation (#34)
+
+`warp_fdtd.block_mesh` builds forests of dense Cartesian blocks with ratio 2
+(octrees) or ratio 3 (27 children). A conservative box-distance policy resolves
+material boundaries, guide interiors and configurable buffers. A maximum far
+cell size caps coarsening. Primitive-box unions conservatively retain internal
+primitive surfaces; arbitrary curved/voxel bend geometry is not implemented yet.
+All face/edge/corner neighbors differ by at most one level. Integer block
+coordinates avoid a dense finest-grid owner array. Covered parents do not own
+field storage. Level-sorted leaves and face-overlap tiles are exported.
+
+Independent small dense-oracle tests check coverage, nonoverlap, full face
+partition and diagonal balance for both ratios. Thin features that miss block
+centers still trigger refinement. The six-case straight-guide study records
+mesh setup/audit cost, active cells, a one-cell padded-block model, binary
+metadata sizes and reproducible topology/source hashes. These are topology
+counts, not Maxwell performance, solver allocations or peak GPU memory.
+
+```bash
+OPENBLAS_NUM_THREADS=1 python -m unittest tests.test_block_mesh -v
+OPENBLAS_NUM_THREADS=1 python -m warp_fdtd.mesh_study
+```
+
+The 9.6 × 6.4 × 6.4 µm domain with a 400 × 400 nm straight guide uses
+12.5 nm finest cells and at most 100 nm coarse cells. The balanced binary
+hierarchy has 5,210,112 active cells versus 201,326,592 uniform fine cells:
+**38.64× fewer cells**, or **19.78× fewer cell slots** after padding each 8³
+block with a one-cell halo on every side. Source/port/CPML buffers, actual
+staggered storage and propagation accuracy remain to be included. No solver
+speedup follows from these counts alone. Ratio-3 topology also passes its
+audits; its finest spacing differs and is reported explicitly.
+
+![Geometry-driven straight-guide mesh](../results/warp/geometry_mesh/mesh.png)
+
+Raw topology results: [result.json](../results/warp/geometry_mesh/result.json).
+The small-domain mesh is saved as JSON; `arrays_topology.npz` is regenerable
+and ignored, with its checksum retained. Main README stays limited to reviewed
+flagship wave results.
+
+## Planar 3D coarse–fine evolution (#15, #37)
+
+`warp_fdtd.planar_interface` now evolves all six Maxwell components across a
+ratio-3 planar interface in pure Warp. Transverse x/z directions are periodic;
+the outer y faces are PEC. SciPy assembles a sparse correctness operator on the
+host. This does not yet consume the forest, close patch edges/corners, inject
+sources, provide ports/CPML, or implement the final dense-block GPU kernels.
+
+The first trace rule follows the constant-along-edge and transverse averaging
+constraints of [the selected paper](https://arxiv.org/abs/1705.02274), equations
+38–54. With full-region electric mass `M`, coupling `K` and electric trace map
+`P`, elimination gives `M_reduced = P.T M P` and `K_reduced = K P`. Magnetic
+mass stays diagonal; electric mass is diagonal except for independent 3×3
+interface groups. Those groups are inverted at setup, with no global solve at
+each timestep. This construction makes the two curls weighted transposes.
+
+An explicitly experimental `--trace area` variant averages independent fine
+trace values over each coarse trace tile. Its mass groups are 9×9. It is our
+Galerkin variant, not the paper's rule; energy compatibility is not a proof of
+composite Gauss preservation or low interface reflection.
+
+Independent tests compare Warp with a dense constrained-system solve, check the
+actual trace equations, recover a single uniform region when the ratio is one,
+and verify short-time energy/local magnetic divergence. Four interface tests
+and four mesh tests pass on CPU. Full 3D analytic standing waves vary in x, y
+and z. On coarse resolutions 4/8/16:
+
+| Trace | Electric relative L2 at finest | Last measured order | >=1.8 order gate |
+|---|---:|---:|---|
+| Uniform ratio 1 control | 0.008538 | 2.018 | Pass |
+| Published-style ratio 3 | 0.019603 | 1.754 | **Fail** |
+| Experimental area ratio 3 | 0.008733 | 2.000 | Pass for this test |
+
+The error uses physical staggered samples with volume/material weights and a
+fixed initial-field normalization; it includes interface projection error.
+It is not normalized by a field at a temporal node or fitted in phase.
+The published-style failure is retained under #37, without lowering the gate.
+
+The area trace passes three **million-step float64 CPU** tests at CFL 0.3/0.9/0.99
+and material contrasts 1/12.25/100. Maximum modified-energy drift is 2.76e-13;
+maximum change in local block magnetic divergence is 2.40e-12. Ordinary float32
+fails the same local-divergence threshold in the 100,000-step material tests:
+maximum 3.89e-4 versus the 1e-4 gate, despite small energy drift (5.03e-6).
+This failure is retained; float64 is a control, not a competitive precision choice.
+
+**Composite interface Gauss constraints remain uncertified.** The normal-B
+comparison in the artifact compares a coarse point value with an average of
+fine point values, so even exact smooth samples have a quadrature mismatch.
+It must not be interpreted as a derived composite divergence residual. A proper
+composite constraint/flux test and isolated scattering tests are next under #37.
+The current tests do not qualify a local patch or a waveguide result, and sparse
+CPU trajectory times are not claimed as GPU speedups. The GPU remains occupied
+by the independent fine-reference replay while these CPU controls run.
+
+```bash
+python -m unittest tests.test_planar_interface tests.test_block_mesh -v
+# Retained convergence failure:
+python -m warp_fdtd.planar_validation
+# Restricted passing double-precision control:
+python -m warp_fdtd.planar_validation --trace area --steps 1000000 \
+  --output results/warp/planar_area_long_cpu
+# Retained float32 long-time constraint failure:
+python -m warp_fdtd.planar_validation --trace area --precision float32 \
+  --steps 100000 --output results/warp/planar_area_float32_cpu
+```
+
+Regenerate the figure with `python -m warp_fdtd.planar_report`.
+
+![Planar-interface convergence](../results/warp/planar_area_long_cpu/convergence.png)
+
+### Direct interface scattering
+
+`python -m warp_fdtd.planar_scattering` launches a Gaussian carrier pulse through
+vacuum, where physical reflection is zero. The full 3D operator has planar
+symmetry in this test. E/H characteristic separation uses both spatial and
+temporal centering; uniform controls provide the numerical floor. The pulse
+and measurement window keep the main outgoing pulse away from the PEC ends.
+Both trace variants give the same normal-incidence result to roundoff:
+
+| Coarse cells per carrier wavelength | Reflected energy fraction | <=1e-5 gate |
+|---|---:|---|
+| 20 | 5.55e-05 | **Fail** |
+| 40 | 3.48e-6 | Pass |
+| 80 | 2.17e-7 | Pass |
+
+Uniform-control floors are below 3e-10. The failure at 20 cells/wavelength is
+retained, not hidden by promoting the passing finer cases. This finite-bandwidth
+pulse is not a full frequency/angle sweep. Oblique incidence, material traversal
+and composite constraints remain #37. These results demonstrate a real
+interface error and motivate explicit far-cell-size/buffer sweeps in #35;
+topology counts alone cannot select the production mesh.
