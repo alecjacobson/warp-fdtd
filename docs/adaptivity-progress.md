@@ -336,3 +336,76 @@ pulse is not a full frequency/angle sweep. Oblique incidence, material traversal
 and composite constraints remain #37. These results demonstrate a real
 interface error and motivate explicit far-cell-size/buffer sweeps in #35;
 topology counts alone cannot select the production mesh.
+
+## Composite constraints and closed 3D patches (2026-10-23)
+
+The completed 192M-cell reference no longer occupies the GPU. The earlier
+planar area-trace test was repeated on GPU, preserving its limited scope.
+The new `planar_constraints` diagnostics integrate electric displacement over
+an actual coarse/fine dual pillbox and compare coarse magnetic face flux with
+the sum over matching fine faces. Affine-field tests independently verify both
+quadratures. Material jumps of 1/12.25/100 and ratios 1/3/5 are covered.
+
+The area trace preserves aggregate electric charge but fails magnetic trace
+compatibility: a curl-free fine trace can create a coarse curl. The published
+trace fails the selected aggregate electric-charge test. A new `circulation`
+trace averages fine E only along the coincident coarse edge and preserves both
+planar charge and magnetic face flux to roundoff. Its 8/16/32 GPU mode sequence
+gives orders 1.966 and 2.078. These planar results are **not sufficient** to
+qualify this trace: the original standing wave has tangential H=0 at the
+interface, which masks a consistency error.
+
+`block_operator` now consumes the actual hierarchy and evolves all components
+on a **closed 3D refined patch**, with PEC exterior walls and shared ownership
+at faces, edges and corners. It uses the same pure-Warp sparse stepping kernels;
+host sparse assembly and pre-inverted mass blocks remain a correctness backend.
+The first prototype requires block-cell counts divisible by the refinement ratio
+so patches align with coarse cell boundaries. It stores block-local H copies
+with matching-flux constraints; it does not yet minimize these allocations.
+
+This stronger test exposes the circulation trace's problem: fine tangential
+edges between coarse edge lines receive no coarse-side coupling. A uniform
+magnetic field produces a nonzero electric update there. Energy conservation
+and normal-flux conservation both pass, but full-field convergence is only
+about half order. The failed results are retained in `closed_patch_cpu`.
+
+A second `--trace linear` construction couples **every** fine trace using
+constant interpolation along its edge and linear interpolation across the
+other tangential coordinate. Shared corner relations are checked for equality.
+Its electric mass groups grow around the patch boundary (12/24/48 unknowns in
+this study); they are pre-inverted, with no runtime host/global solve. It passes
+the constant-H consistency test and improves accuracy substantially:
+
+| Cells per block edge | Active cells | Uniform finest cells | Circulation E error | Linear E error |
+|---|---:|---:|---:|---:|
+| 3 | 1,431 | 19,683 | 6.796% | 2.077% |
+| 6 | 11,448 | 157,464 | 4.695% | 0.695% |
+| 12 | 91,584 | 1,259,712 | 3.296% | 0.215% |
+
+The linear trace's observed orders are about 1.58 and 1.69: **it still fails the
+>=1.8 gate**. The 13.75× cell-count ratio is not a runtime or memory claim;
+sparse operators, double precision, duplicated magnetic faces and interface
+mass inverses all cost resources. Closed-patch composite electric charge,
+oblique scattering, material accuracy, production float32 arithmetic and driven
+waveguide boundaries remain unqualified. Main README stays flagship-only.
+
+Fifteen focused tests pass, including single-region recovery from a partitioned
+uniform domain, constant-H consistency, negative controls, material energy/flux
+checks and the independent composite quadratures. Commands returning nonzero
+retain the deliberately detected acceptance failures:
+
+```bash
+python -m unittest tests.test_block_operator tests.test_block_mesh \
+  tests.test_planar_constraints tests.test_planar_interface -v
+python -m warp_fdtd.planar_constraints
+python -m warp_fdtd.block_validation --trace linear \
+  --output results/warp/closed_patch_linear_cpu
+python -m warp_fdtd.block_validation --trace linear --device cuda:0 \
+  --output results/warp/closed_patch_linear_gpu
+```
+
+The next implementation priority is higher-accuracy compatible trace treatment
+on this closed-patch test, including non-node planar waves and an explicit
+constant-field gate. #37 tracks it; #15 retains patch/source/boundary integration
+and #35 the actual accuracy-matched waveguide cost comparison. The old planar
+mode is retained as a regression case, not used alone for promotion.

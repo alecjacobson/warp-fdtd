@@ -62,6 +62,30 @@ class BlockOperatorTests(unittest.TestCase):
         self.assertLess(abs(op.energy(en, hn, s.dt) / initial - 1), 1e-12)
         np.testing.assert_allclose(op.normal_flux @ hn, flux, atol=1e-12)
 
+    def test_linear_trace_couples_constant_magnetic_fields(self):
+        for trace in ("circulation", "linear"):
+            op = BlockOperator(make_mesh(3), trace=trace)
+            errors = []
+            for component in range(3):
+                constant = (op.h_components == component).astype(float)
+                errors.append(np.max(np.abs(op.e_update @ constant)))
+            if trace == "linear":
+                self.assertLess(max(errors), 1e-12)
+                self.assertEqual(op.audit()["largest_mass_block"], 12)
+                rng = np.random.default_rng(91)
+                solver = PlanarStepper(op, cfl=0.99)
+                e = rng.normal(size=op.me.shape[0])
+                h = rng.normal(size=len(op.mh))
+                solver.set_fields(e, h)
+                energy = op.energy(e, h, solver.dt)
+                solver.run(1000)
+                en, hn = solver.fields()
+                self.assertLess(abs(op.energy(en, hn, solver.dt) / energy - 1), 1e-12)
+                np.testing.assert_allclose(op.normal_flux @ (hn - h), 0, atol=1e-12)
+            else:
+                # Circulation alone leaves off-edge fine traces uncoupled.
+                self.assertGreater(max(errors), 1.0)
+
 
 if __name__ == "__main__":
     unittest.main()

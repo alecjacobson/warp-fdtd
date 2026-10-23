@@ -90,7 +90,10 @@ def closed_region(block, mesh, epsilon):
 
 
 class BlockOperator:
-    def __init__(self, mesh, epsilon=1.0):
+    def __init__(self, mesh, epsilon=1.0, trace="circulation"):
+        if trace not in ("circulation", "linear"):
+            raise ValueError("trace must be circulation or linear")
+        self.trace = trace
         mesh.audit()
         if mesh.cells_per_block % mesh.ratio:
             raise ValueError(
@@ -119,29 +122,88 @@ class BlockOperator:
             return any(a != c and rest[a] in (0, extent[a]) for a in range(3))
 
         maps = {}
-        # Short segments first, so any coarse edge resolves recursively.
-        for key in sorted(unique, key=lambda k: (k[-1], k)):
-            if pec(key):
-                maps[key] = {}
-                continue
-            c, x, y, z, size = key
-            children = []
-            if size % mesh.ratio == 0:
-                for j in range(mesh.ratio):
-                    pos = [x, y, z]
-                    pos[c] += j * (size // mesh.ratio)
-                    children.append((c, *pos, size // mesh.ratio))
-            found = [child in unique for child in children]
-            if any(found) and not all(found):
-                raise ValueError("Partially subdivided coarse edge")
-            if children and all(found):
-                terms = {}
-                for child in children:
-                    for target, value in maps[child].items():
-                        terms[target] = terms.get(target, 0) + value / mesh.ratio
-                maps[key] = terms
-            else:
-                maps[key] = {key: 1.0}
+        if trace == "linear":
+            # Compatible lowest-order edge interpolation: constant along the
+            # edge and linear in the other tangential coordinate. Every fine
+            # trace is coupled, including those between coarse edge lines.
+            relations = {}
+            blocks = sorted(mesh.leaves)
+            for ia, ib, axis, _ in mesh.face_connections():
+                if blocks[ia].level == blocks[ib].level:
+                    continue
+                ci, fi = (ia, ib) if blocks[ia].level < blocks[ib].level else (ib, ia)
+                coarse, fine = blocks[ci], blocks[fi]
+                coarse_lo = (
+                    np.array(mesh.integer_bounds(coarse)[0]) * mesh.cells_per_block
+                )
+                coarse_hi = (
+                    np.array(mesh.integer_bounds(coarse)[1]) * mesh.cells_per_block
+                )
+                fine_lo = np.array(mesh.integer_bounds(fine)[0]) * mesh.cells_per_block
+                plane = (
+                    coarse_hi[axis]
+                    if coarse_hi[axis] == fine_lo[axis]
+                    else coarse_lo[axis]
+                )
+                step = mesh.ratio ** (mesh.max_level - coarse.level)
+                for key in self.regions[fi].ekeys:
+                    component, x, y, z, _ = key
+                    pos = np.array([x, y, z])
+                    if component == axis or pos[axis] != plane:
+                        continue
+                    tangent = next(a for a in range(3) if a not in (component, axis))
+                    base = coarse_lo + ((pos - coarse_lo) // step) * step
+                    base[axis] = plane
+                    fraction = (pos[tangent] - base[tangent]) / step
+                    terms = {}
+                    for shift, weight in ((0, 1 - fraction), (1, fraction)):
+                        if weight == 0:
+                            continue
+                        target = base.copy()
+                        target[tangent] += shift * step
+                        target_key = (component, *target.tolist(), step)
+                        if target_key not in unique:
+                            raise ValueError("Missing coarse tangential edge")
+                        terms[target_key] = weight
+                    if key in relations and relations[key] != terms:
+                        raise ValueError("Inconsistent face/edge/corner interpolation")
+                    relations[key] = terms
+            # Long edges first; fine-to-coarse constraints recurse upward.
+            for key in sorted(unique, key=lambda k: (-k[-1], k)):
+                if pec(key):
+                    maps[key] = {}
+                elif key in relations:
+                    terms = {}
+                    for parent, weight in relations[key].items():
+                        for target, value in maps[parent].items():
+                            terms[target] = terms.get(target, 0) + weight * value
+                    maps[key] = terms
+                else:
+                    maps[key] = {key: 1.0}
+        else:
+            # Short segments first, so any coarse edge resolves recursively.
+            for key in sorted(unique, key=lambda k: (k[-1], k)):
+                if pec(key):
+                    maps[key] = {}
+                    continue
+                c, x, y, z, size = key
+                children = []
+                if size % mesh.ratio == 0:
+                    for j in range(mesh.ratio):
+                        pos = [x, y, z]
+                        pos[c] += j * (size // mesh.ratio)
+                        children.append((c, *pos, size // mesh.ratio))
+                found = [child in unique for child in children]
+                if any(found) and not all(found):
+                    raise ValueError("Partially subdivided coarse edge")
+                if children and all(found):
+                    terms = {}
+                    for child in children:
+                        for target, value in maps[child].items():
+                            terms[target] = terms.get(target, 0) + value / mesh.ratio
+                    maps[key] = terms
+                else:
+                    maps[key] = {key: 1.0}
         masters = sorted({target for terms in maps.values() for target in terms})
         master_ids = {key: i for i, key in enumerate(masters)}
         rows, cols, vals = [], [], []
@@ -164,7 +226,7 @@ class BlockOperator:
         inverse = sp.diags(1 / self.me.diagonal(), format="lil")
         for label in np.flatnonzero(sizes > 1):
             group = np.flatnonzero(labels == label)
-            if len(group) > mesh.ratio**2:
+            if len(group) > (mesh.ratio**2 if trace == "circulation" else 256):
                 raise ValueError("Unexpected nonlocal electric mass coupling")
             inv = np.linalg.inv(self.me[group, :][:, group].toarray())
             for i, a in enumerate(group):

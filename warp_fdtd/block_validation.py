@@ -47,9 +47,9 @@ def make_mesh(block_cells):
     return mesh
 
 
-def convergence(block_cells, device):
+def convergence(block_cells, device, trace="circulation"):
     mesh = make_mesh(block_cells)
-    op = BlockOperator(mesh)
+    op = BlockOperator(mesh, trace=trace)
     s = PlanarStepper(op, device=device)
     e0 = mode(op.ecoords, op.e_components, op.lengths, 0, True)
     h0 = mode(op.hcoords, op.h_components, op.lengths, -s.dt / 2, False)
@@ -82,12 +82,13 @@ def convergence(block_cells, device):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--device", default="cpu")
+    p.add_argument("--trace", choices=("circulation", "linear"), default="circulation")
     p.add_argument("--output", type=Path, default=Path("results/warp/closed_patch_cpu"))
     a = p.parse_args()
     a.output.mkdir(parents=True, exist_ok=True)
     rows = []
     for n in (3, 6, 12):
-        row = convergence(n, a.device)
+        row = convergence(n, a.device, a.trace)
         rows.append(row)
         print(json.dumps(row), flush=True)
     for prev, row in zip(rows, rows[1:]):
@@ -97,6 +98,7 @@ def main():
         )
     result = {
         "status": "complete",
+        "trace": a.trace,
         "device": a.device,
         "precision": "float64",
         "scope": "Closed 3D refined cavity patch, all components, PEC walls; not a driven guide",
