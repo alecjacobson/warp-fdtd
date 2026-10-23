@@ -101,6 +101,11 @@ def relative_l2(delta, reference, weight=1.0):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--root", type=Path, default=Path("results/physical_reference"))
+    p.add_argument(
+        "--output",
+        type=Path,
+        help="Separate report directory; defaults to ROOT/comparison",
+    )
     p.add_argument("--mesh-cases", nargs=3, default=["mesh20", "mesh10", "mesh6p67"])
     p.add_argument(
         "--controls",
@@ -200,8 +205,8 @@ def main():
                 ),
             )
         )
-    out = args.root / "comparison"
-    out.mkdir(exist_ok=True)
+    out = args.output or args.root / "comparison"
+    out.mkdir(parents=True, exist_ok=True)
     record = dict(
         status="complete",
         reference=finest,
@@ -250,27 +255,38 @@ def main():
     )
     axes[1].legend()
     controls = rows[3:]
-    axes[2].bar(
-        np.arange(len(controls)),
-        [100 * r["modal_transmission_absolute_difference"] for r in controls],
-    )
-    axes[2].set_xticks(
-        np.arange(len(controls)),
-        [
-            {
-                "time20_450": "450 fs",
-                "cfl20_half": "Half dt",
-                "pml20_400": "400 nm PML",
-                "domain20_4p4": "4.4 µm domain",
-            }.get(r["case"], r["case"])
-            for r in controls
-        ],
-        rotation=20,
-    )
-    axes[2].set(
-        ylabel="Transmission change (percentage points)",
-        title="20 nm controls; not fine-grid bounds",
-    )
+    if controls:
+        axes[2].bar(
+            np.arange(len(controls)),
+            [100 * r["modal_transmission_absolute_difference"] for r in controls],
+        )
+        axes[2].set_xticks(
+            np.arange(len(controls)),
+            [
+                {
+                    "time20_450": "450 fs",
+                    "cfl20_half": "Half dt",
+                    "pml20_400": "400 nm PML",
+                    "domain20_4p4": "4.4 µm domain",
+                }.get(r["case"], r["case"])
+                for r in controls
+            ],
+            rotation=20,
+        )
+        axes[2].set(
+            ylabel="Transmission change (percentage points)",
+            title="20 nm controls; not fine-grid bounds",
+        )
+    else:
+        axes[2].axis("off")
+        axes[2].text(
+            0.5,
+            0.5,
+            "Fine-grid time, PML and domain\ncontrols remain pending.\n\nMesh differences are not\ncontinuum error bounds.",
+            ha="center",
+            va="center",
+            transform=axes[2].transAxes,
+        )
     for ax in axes:
         ax.grid(alpha=0.2)
     fig.savefig(out / "convergence.png", dpi=180)

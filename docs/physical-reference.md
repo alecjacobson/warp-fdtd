@@ -122,16 +122,32 @@ XLA_PYTHON_CLIENT_ALLOCATOR=cuda_async OPENBLAS_NUM_THREADS=1 \
   --cases mesh5 --jax-memory-fraction 0.9
 # After completion, compare the three finest levels:
 OPENBLAS_NUM_THREADS=1 .venv/bin/python -m warp_fdtd.reference_report \
-  --mesh-cases mesh10 mesh6p67 mesh5 --controls
+  --mesh-cases mesh10 mesh6p67 mesh5 --controls \
+  --output results/physical_reference/comparison_fine
 ```
 
-The existing 20/10/6.67 nm report remains the published result until the finer
-run completes and is reviewed. A three-fine-level report still requires the
+The completed 10/6.67/5 nm report is saved separately in `comparison_fine`,
+preserving the earlier report and coarse-grid controls. It still requires the
 uncertainty and observation-quadrature checks in #30.
 
 The first 192M-cell attempt with the default BFC allocator and fraction 0.9
 failed while allocating a 6.46 GiB temporary buffer. Its record is preserved in
 `results/physical_reference/rejected_mesh5_bfc90/result.json`. The supported
 `cuda_async` allocator above is a controlled retry; it does not change numerical
-settings. Finer-reference success and peak memory remain unconfirmed until the
-trajectory completes.
+settings. The retry completed: **4899.288 s (81 min 39 s)** for the FDTDX trajectory,
+with 19,832,875,428 peak live allocator bytes. Setup and compilation took
+4.785 s and 1.957 s. The Warp full-volume observer replay took **2322.833 s
+(38 min 43 s)**; its modal transmission differs by 6.82e-8 absolute.
+These single reference/observer trajectories have different timing scopes and
+are excluded from warmed throughput comparisons. The failed attempt is excluded
+from these successful-run durations.
+
+
+The 5 nm modal transmission is **0.9326616525650024**, reflection
+**3.168449256918393e-5**. The preceding 6.67 nm result differs by 2.23279e-4
+in transmission, 0.6845% in complex E, 0.7070% in H and 0.8093% in Poynting.
+The 10 nm differences are 2.1262%, 2.2126% and 2.4262% for E/H/Poynting.
+All field norms use the existing physical-coordinate/incident-mode normalization.
+A small last transmission difference does not certify the field uncertainty;
+fine-grid nuisance controls, observation quadrature and an asymptotic error
+assessment remain open. The README now shows these latest flagship meshes.

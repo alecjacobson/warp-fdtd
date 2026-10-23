@@ -1,0 +1,88 @@
+{
+  "status": "complete",
+  "reference": "mesh5",
+  "certified_reference": false,
+  "uncertainty_status": "Mesh differences and coarse-grid nuisance controls only. These are not a continuum error bound; fine-grid controls and asymptotic verification remain required.",
+  "parameter_sha256": "034c4aa0e3b933dd617dcc09824c11d535e7cc6d349cd7e1d3349108ec420ade",
+  "beta": 50.0,
+  "region_nm": [
+    [
+      200,
+      3800
+    ],
+    [
+      200,
+      3800
+    ],
+    [
+      200,
+      1300
+    ]
+  ],
+  "sample_nm": 20,
+  "sample_shape": [
+    181,
+    181,
+    55
+  ],
+  "normalization": "Unit area-weighted incident mode power and input eigenmode phase; no fit to propagated fields.",
+  "electric_norm": "Fine-grid scalar epsilon, piecewise constant in the cell containing each common physical sample.",
+  "timing_scope": "Reference generation and passive volume diagnostics are excluded from performance claims.",
+  "code_sha256": {
+    "reference_report.py": "39789bd19ba02f73a5270a1a1b10c4a66b41ea983fd879d79c45a52c748b9382",
+    "reference_fields.py": "27bee19c29fc5ba699415184eb047bbcb6b080a83a3be1cdb4a31117e4ce4244"
+  },
+  "rows": [
+    {
+      "case": "mesh10",
+      "compared_with": "mesh5",
+      "spacing_nm": 10.0,
+      "cells": 24000000,
+      "steps": 15735,
+      "dt_s": 1.906553897207441e-17,
+      "modal_transmission": 0.9318522214889526,
+      "modal_reflection": 2.6556681405054405e-05,
+      "modal_reflection_absolute_difference": 5.127811164129525e-06,
+      "modal_transmission_absolute_difference": 0.0008094310760498047,
+      "electric_energy_weighted_relative_l2": 0.02126245407884274,
+      "magnetic_relative_l2": 0.022126327639141772,
+      "poynting_relative_l2": 0.024262275668397004,
+      "volume_record_sha256": "4aa03a409464e3dd0ae754e586b8d03c13b97b577749b1d8ef1da68c7208536e",
+      "bundle_manifest_sha256": "027a2ae4616b1dddd9604b13759ab16d6fb9e982627fdc86fea18483e4dcf0e5"
+    },
+    {
+      "case": "mesh6p67",
+      "compared_with": "mesh5",
+      "spacing_nm": 6.666666666666667,
+      "cells": 81000000,
+      "steps": 23603,
+      "dt_s": 1.2710372025215402e-17,
+      "modal_transmission": 0.9324383735656738,
+      "modal_reflection": 3.03465985780349e-05,
+      "modal_reflection_absolute_difference": 1.3378939911490306e-06,
+      "modal_transmission_absolute_difference": 0.00022327899932861328,
+      "electric_energy_weighted_relative_l2": 0.006845247523401229,
+      "magnetic_relative_l2": 0.007069887809289755,
+      "poynting_relative_l2": 0.008092503907501457,
+      "volume_record_sha256": "c15c59920e084dafaaafe5fbec8561ef5aabc639667dd5ff9180551933482c22",
+      "bundle_manifest_sha256": "323cfa0549e4b045f2f705a26d4d6b53a9bd487ba2f809398a5c677fa91e7471"
+    },
+    {
+      "case": "mesh5",
+      "compared_with": "mesh5",
+      "spacing_nm": 5.0,
+      "cells": 192000000,
+      "steps": 31470,
+      "dt_s": 9.53277901891155e-18,
+      "modal_transmission": 0.9326616525650024,
+      "modal_reflection": 3.168449256918393e-05,
+      "modal_reflection_absolute_difference": 0.0,
+      "modal_transmission_absolute_difference": 0.0,
+      "electric_energy_weighted_relative_l2": 0.0,
+      "magnetic_relative_l2": 0.0,
+      "poynting_relative_l2": 0.0,
+      "volume_record_sha256": "241bb6185455cebec5d2b46c2dcfd461d0d591cb0c2ab97c793e0af26f7d5e47",
+      "bundle_manifest_sha256": "882ad47661fe44b7de8cfd17280c4a1ac2b4a06630041b8b87cbcacb4ef13ca7"
+    }
+  ]
+}
