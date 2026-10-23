@@ -144,14 +144,21 @@ def main():
     p.add_argument("--device", default="cpu")
     p.add_argument("--precision", choices=("float32", "float64"), default="float64")
     p.add_argument("--steps", type=int, default=10000)
-    p.add_argument("--trace", choices=("published", "area"), default="published")
+    p.add_argument("--resolutions", nargs=3, type=int, default=[4, 8, 16])
+    p.add_argument(
+        "--trace", choices=("published", "area", "circulation"), default="published"
+    )
     a = p.parse_args()
+    if any(n < 4 or n % 2 for n in a.resolutions) or any(
+        b != 2 * a for a, b in zip(a.resolutions, a.resolutions[1:])
+    ):
+        p.error("Three even resolutions >=4 with successive doubling required")
     a.output.mkdir(parents=True, exist_ok=True)
     start = time.perf_counter()
     waves = []
     for ratio in (1, 3):
         rows = []
-        for n in (4, 8, 16):
+        for n in a.resolutions:
             row = convergence(n, ratio, a.device, a.precision, a.trace)
             rows.append(row)
             print(json.dumps(row), flush=True)

@@ -1,0 +1,333 @@
+{
+  "status": "complete",
+  "scope": "Planar 3D interface prototype; no local patch edges/corners, ports or CPML",
+  "trace": "area",
+  "device": "cuda:0",
+  "precision": "float64",
+  "wave_convergence": [
+    {
+      "coarse_n": 4,
+      "ratio": 1,
+      "time": 0.40414518843273806,
+      "steps": 4,
+      "dt": 0.10103629710818451,
+      "electric_relative_l2": 0.13192348376313412,
+      "electric_error_against_projected_exact": 0.13192348376313412,
+      "initial_projection_relative_l2": 6.123233995736766e-17,
+      "interface_layer_error_over_global_norm": 0.13192348376313412,
+      "magnetic_error_over_initial_electric_norm": 0.22736075575224574,
+      "energy_relative_change": 2.220446049250313e-16,
+      "normal_B_jump_rms_over_initial_E_rms": 0.0,
+      "operator_audit": {
+        "weighted_transpose_maxabs": 0.0,
+        "mass_inverse_maxabs": 0.0,
+        "largest_electric_mass_block": 1,
+        "electric_dofs": 160,
+        "magnetic_dofs": 224,
+        "interface_groups": 32
+      }
+    },
+    {
+      "coarse_n": 8,
+      "ratio": 1,
+      "time": 0.40414518843273806,
+      "steps": 8,
+      "dt": 0.05051814855409226,
+      "electric_relative_l2": 0.03458997549807244,
+      "electric_error_against_projected_exact": 0.03458997549807244,
+      "initial_projection_relative_l2": 4.329780281177467e-17,
+      "interface_layer_error_over_global_norm": 0.028455941024334762,
+      "magnetic_error_over_initial_electric_norm": 0.050274116585442376,
+      "energy_relative_change": -2.220446049250313e-16,
+      "normal_B_jump_rms_over_initial_E_rms": 0.0,
+      "operator_audit": {
+        "weighted_transpose_maxabs": 0.0,
+        "mass_inverse_maxabs": 0.0,
+        "largest_electric_mass_block": 1,
+        "electric_dofs": 1408,
+        "magnetic_dofs": 1664,
+        "interface_groups": 128
+      },
+      "observed_order": 1.9312755054059885
+    },
+    {
+      "coarse_n": 16,
+      "ratio": 1,
+      "time": 0.40414518843273806,
+      "steps": 16,
+      "dt": 0.02525907427704613,
+      "electric_relative_l2": 0.008537566215914009,
+      "electric_error_against_projected_exact": 0.008537566215914009,
+      "initial_projection_relative_l2": 3.0616169978683824e-17,
+      "interface_layer_error_over_global_norm": 0.00516141558816388,
+      "magnetic_error_over_initial_electric_norm": 0.011579436980242011,
+      "energy_relative_change": 6.661338147750939e-16,
+      "normal_B_jump_rms_over_initial_E_rms": 0.0,
+      "operator_audit": {
+        "weighted_transpose_maxabs": 0.0,
+        "mass_inverse_maxabs": 0.0,
+        "largest_electric_mass_block": 1,
+        "electric_dofs": 11776,
+        "magnetic_dofs": 12800,
+        "interface_groups": 512
+      },
+      "observed_order": 2.018457223916687
+    },
+    {
+      "coarse_n": 4,
+      "ratio": 3,
+      "time": 0.404145188432738,
+      "steps": 12,
+      "dt": 0.03367876570272817,
+      "electric_relative_l2": 0.1298156999798561,
+      "electric_error_against_projected_exact": 0.1254160949083454,
+      "initial_projection_relative_l2": 0.04266384402395125,
+      "interface_layer_error_over_global_norm": 0.1295911649076065,
+      "magnetic_error_over_initial_electric_norm": 0.18258318879504717,
+      "energy_relative_change": -2.220446049250313e-16,
+      "normal_B_jump_rms_over_initial_E_rms": 0.34332148239557136,
+      "operator_audit": {
+        "weighted_transpose_maxabs": 6.071532165918825e-18,
+        "mass_inverse_maxabs": 6.661338147750939e-16,
+        "largest_electric_mass_block": 9,
+        "electric_dofs": 2656,
+        "magnetic_dofs": 2848,
+        "interface_groups": 32
+      }
+    },
+    {
+      "coarse_n": 8,
+      "ratio": 3,
+      "time": 0.404145188432738,
+      "steps": 24,
+      "dt": 0.016839382851364083,
+      "electric_relative_l2": 0.03493323769328739,
+      "electric_error_against_projected_exact": 0.034372036690180095,
+      "initial_projection_relative_l2": 0.007940139115522776,
+      "interface_layer_error_over_global_norm": 0.02636995370185111,
+      "magnetic_error_over_initial_electric_norm": 0.04383724641915074,
+      "energy_relative_change": -7.771561172376096e-16,
+      "normal_B_jump_rms_over_initial_E_rms": 0.0708741147107835,
+      "operator_audit": {
+        "weighted_transpose_maxabs": 1.5178830414797062e-18,
+        "mass_inverse_maxabs": 6.661338147750939e-16,
+        "largest_electric_mass_block": 9,
+        "electric_dofs": 21376,
+        "magnetic_dofs": 22144,
+        "interface_groups": 128
+      },
+      "observed_order": 1.8937926078387173
+    },
+    {
+      "coarse_n": 16,
+      "ratio": 3,
+      "time": 0.404145188432738,
+      "steps": 48,
+      "dt": 0.008419691425682042,
+      "electric_relative_l2": 0.008733281652539353,
+      "electric_error_against_projected_exact": 0.008661588378932075,
+      "initial_projection_relative_l2": 0.0014217903045364222,
+      "interface_layer_error_over_global_norm": 0.004855844883058845,
+      "magnetic_error_over_initial_electric_norm": 0.010482854448627172,
+      "energy_relative_change": 1.3322676295501878e-15,
+      "normal_B_jump_rms_over_initial_E_rms": 0.013393013837868492,
+      "operator_audit": {
+        "weighted_transpose_maxabs": 3.7947076036992655e-19,
+        "mass_inverse_maxabs": 6.661338147750939e-16,
+        "largest_electric_mass_block": 9,
+        "electric_dofs": 171520,
+        "magnetic_dofs": 174592,
+        "interface_groups": 512
+      },
+      "observed_order": 2.0000045875889594
+    }
+  ],
+  "stability": [
+    {
+      "cfl": 0.3,
+      "contrast": 1.0,
+      "steps": 10000,
+      "checkpoints": [
+        {
+          "step": 1000,
+          "modified_energy_relative_drift": 4.440892098500626e-16,
+          "local_magnetic_divergence_change": 1.4756984967905505e-14
+        },
+        {
+          "step": 2000,
+          "modified_energy_relative_drift": 2.220446049250313e-16,
+          "local_magnetic_divergence_change": 2.4101722620527848e-14
+        },
+        {
+          "step": 3000,
+          "modified_energy_relative_drift": 0.0,
+          "local_magnetic_divergence_change": 2.7480967378645055e-14
+        },
+        {
+          "step": 4000,
+          "modified_energy_relative_drift": 2.220446049250313e-16,
+          "local_magnetic_divergence_change": 3.151927761756337e-14
+        },
+        {
+          "step": 5000,
+          "modified_energy_relative_drift": 4.440892098500626e-16,
+          "local_magnetic_divergence_change": 3.641358909240463e-14
+        },
+        {
+          "step": 6000,
+          "modified_energy_relative_drift": 2.220446049250313e-16,
+          "local_magnetic_divergence_change": 3.961171331131998e-14
+        },
+        {
+          "step": 7000,
+          "modified_energy_relative_drift": 8.881784197001252e-16,
+          "local_magnetic_divergence_change": 4.447671877124256e-14
+        },
+        {
+          "step": 8000,
+          "modified_energy_relative_drift": 2.220446049250313e-16,
+          "local_magnetic_divergence_change": 4.830241776758743e-14
+        },
+        {
+          "step": 9000,
+          "modified_energy_relative_drift": 8.881784197001252e-16,
+          "local_magnetic_divergence_change": 5.0445585548202353e-14
+        },
+        {
+          "step": 10000,
+          "modified_energy_relative_drift": 4.440892098500626e-16,
+          "local_magnetic_divergence_change": 5.086834045640513e-14
+        }
+      ],
+      "scope": "Local block div B only; composite interface div D/normal flux not yet certified",
+      "pass_restricted_energy_and_local_B": true
+    },
+    {
+      "cfl": 0.9,
+      "contrast": 12.25,
+      "steps": 10000,
+      "checkpoints": [
+        {
+          "step": 1000,
+          "modified_energy_relative_drift": 1.1102230246251565e-16,
+          "local_magnetic_divergence_change": 3.997491352110927e-14
+        },
+        {
+          "step": 2000,
+          "modified_energy_relative_drift": 9.992007221626409e-16,
+          "local_magnetic_divergence_change": 5.4701934875437905e-14
+        },
+        {
+          "step": 3000,
+          "modified_energy_relative_drift": 1.2212453270876722e-15,
+          "local_magnetic_divergence_change": 6.536199132687589e-14
+        },
+        {
+          "step": 4000,
+          "modified_energy_relative_drift": 1.5543122344752192e-15,
+          "local_magnetic_divergence_change": 7.493894946402475e-14
+        },
+        {
+          "step": 5000,
+          "modified_energy_relative_drift": 2.55351295663786e-15,
+          "local_magnetic_divergence_change": 8.831803044886885e-14
+        },
+        {
+          "step": 6000,
+          "modified_energy_relative_drift": 3.552713678800501e-15,
+          "local_magnetic_divergence_change": 9.789168351258856e-14
+        },
+        {
+          "step": 7000,
+          "modified_energy_relative_drift": 5.218048215738236e-15,
+          "local_magnetic_divergence_change": 1.0196312874546296e-13
+        },
+        {
+          "step": 8000,
+          "modified_energy_relative_drift": 5.995204332975845e-15,
+          "local_magnetic_divergence_change": 1.0883451086356067e-13
+        },
+        {
+          "step": 9000,
+          "modified_energy_relative_drift": 6.661338147750939e-15,
+          "local_magnetic_divergence_change": 1.1268003053731796e-13
+        },
+        {
+          "step": 10000,
+          "modified_energy_relative_drift": 5.10702591327572e-15,
+          "local_magnetic_divergence_change": 1.2602778398596841e-13
+        }
+      ],
+      "scope": "Local block div B only; composite interface div D/normal flux not yet certified",
+      "pass_restricted_energy_and_local_B": true
+    },
+    {
+      "cfl": 0.99,
+      "contrast": 100.0,
+      "steps": 10000,
+      "checkpoints": [
+        {
+          "step": 1000,
+          "modified_energy_relative_drift": 2.220446049250313e-16,
+          "local_magnetic_divergence_change": 7.022568152365038e-14
+        },
+        {
+          "step": 2000,
+          "modified_energy_relative_drift": 4.440892098500626e-16,
+          "local_magnetic_divergence_change": 1.181745752470938e-13
+        },
+        {
+          "step": 3000,
+          "modified_energy_relative_drift": 2.4424906541753444e-15,
+          "local_magnetic_divergence_change": 1.3814937356136044e-13
+        },
+        {
+          "step": 4000,
+          "modified_energy_relative_drift": 3.3306690738754696e-15,
+          "local_magnetic_divergence_change": 1.557053655603779e-13
+        },
+        {
+          "step": 5000,
+          "modified_energy_relative_drift": 3.9968028886505635e-15,
+          "local_magnetic_divergence_change": 1.7213904826920395e-13
+        },
+        {
+          "step": 6000,
+          "modified_energy_relative_drift": 3.3306690738754696e-15,
+          "local_magnetic_divergence_change": 1.7525061610544445e-13
+        },
+        {
+          "step": 7000,
+          "modified_energy_relative_drift": 5.10702591327572e-15,
+          "local_magnetic_divergence_change": 1.9569361697237007e-13
+        },
+        {
+          "step": 8000,
+          "modified_energy_relative_drift": 5.995204332975845e-15,
+          "local_magnetic_divergence_change": 2.1573807328641003e-13
+        },
+        {
+          "step": 9000,
+          "modified_energy_relative_drift": 6.217248937900877e-15,
+          "local_magnetic_divergence_change": 2.291758221661517e-13
+        },
+        {
+          "step": 10000,
+          "modified_energy_relative_drift": 6.217248937900877e-15,
+          "local_magnetic_divergence_change": 2.3823840674714705e-13
+        }
+      ],
+      "scope": "Local block div B only; composite interface div D/normal flux not yet certified",
+      "pass_restricted_energy_and_local_B": true
+    }
+  ],
+  "source_sha256": {
+    "warp_fdtd/planar_interface.py": "004603fa3d1a01ecab4b229916dc4c28bf0eb1d914ebecf901d395c2fde523c7",
+    "warp_fdtd/planar_validation.py": "8b2ad8fad2dfd9ec03a50a38d22a77cbca18b76ed8a086a1fe5deef368a57d9e"
+  },
+  "elapsed_seconds": 2.492425418458879,
+  "convergence_gate_passed": true,
+  "restricted_stability_gate_passed": true,
+  "composite_gauss_certified": false,
+  "production_ready": false
+}

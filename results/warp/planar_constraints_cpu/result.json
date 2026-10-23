@@ -1,0 +1,380 @@
+{
+  "status": "complete",
+  "scope": "Independent physical pillbox and commuting-trace diagnostics",
+  "operator_audits": [
+    {
+      "trace": "published",
+      "ratio": 1,
+      "contrast": 1.0,
+      "integrated_charge_rate_coefficient_maxabs": 0.0,
+      "integrated_charge_rate_frobenius": 0.0,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 0.0,
+      "normal_B_flux_gate_passed": true
+    },
+    {
+      "trace": "published",
+      "ratio": 1,
+      "contrast": 12.25,
+      "integrated_charge_rate_coefficient_maxabs": 2.7755575615628914e-17,
+      "integrated_charge_rate_frobenius": 1.9229626863835638e-16,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 0.0,
+      "normal_B_flux_gate_passed": true
+    },
+    {
+      "trace": "published",
+      "ratio": 1,
+      "contrast": 100.0,
+      "integrated_charge_rate_coefficient_maxabs": 0.0,
+      "integrated_charge_rate_frobenius": 0.0,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 0.0,
+      "normal_B_flux_gate_passed": true
+    },
+    {
+      "trace": "area",
+      "ratio": 1,
+      "contrast": 1.0,
+      "integrated_charge_rate_coefficient_maxabs": 0.0,
+      "integrated_charge_rate_frobenius": 0.0,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 0.0,
+      "normal_B_flux_gate_passed": true,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 3.552713678800501e-15,
+        "coarse_curl_maxabs": 3.552713678800501e-15,
+        "commuting_trace_gate_passed": true
+      }
+    },
+    {
+      "trace": "area",
+      "ratio": 1,
+      "contrast": 12.25,
+      "integrated_charge_rate_coefficient_maxabs": 2.7755575615628914e-17,
+      "integrated_charge_rate_frobenius": 1.9229626863835638e-16,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 0.0,
+      "normal_B_flux_gate_passed": true,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 3.552713678800501e-15,
+        "coarse_curl_maxabs": 3.552713678800501e-15,
+        "commuting_trace_gate_passed": true
+      }
+    },
+    {
+      "trace": "area",
+      "ratio": 1,
+      "contrast": 100.0,
+      "integrated_charge_rate_coefficient_maxabs": 0.0,
+      "integrated_charge_rate_frobenius": 0.0,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 0.0,
+      "normal_B_flux_gate_passed": true,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 3.552713678800501e-15,
+        "coarse_curl_maxabs": 3.552713678800501e-15,
+        "commuting_trace_gate_passed": true
+      }
+    },
+    {
+      "trace": "circulation",
+      "ratio": 1,
+      "contrast": 1.0,
+      "integrated_charge_rate_coefficient_maxabs": 0.0,
+      "integrated_charge_rate_frobenius": 0.0,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 0.0,
+      "normal_B_flux_gate_passed": true,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 3.552713678800501e-15,
+        "coarse_curl_maxabs": 3.552713678800501e-15,
+        "commuting_trace_gate_passed": true
+      }
+    },
+    {
+      "trace": "circulation",
+      "ratio": 1,
+      "contrast": 12.25,
+      "integrated_charge_rate_coefficient_maxabs": 2.7755575615628914e-17,
+      "integrated_charge_rate_frobenius": 1.9229626863835638e-16,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 0.0,
+      "normal_B_flux_gate_passed": true,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 3.552713678800501e-15,
+        "coarse_curl_maxabs": 3.552713678800501e-15,
+        "commuting_trace_gate_passed": true
+      }
+    },
+    {
+      "trace": "circulation",
+      "ratio": 1,
+      "contrast": 100.0,
+      "integrated_charge_rate_coefficient_maxabs": 0.0,
+      "integrated_charge_rate_frobenius": 0.0,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 0.0,
+      "normal_B_flux_gate_passed": true,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 3.552713678800501e-15,
+        "coarse_curl_maxabs": 3.552713678800501e-15,
+        "commuting_trace_gate_passed": true
+      }
+    },
+    {
+      "trace": "published",
+      "ratio": 3,
+      "contrast": 1.0,
+      "integrated_charge_rate_coefficient_maxabs": 0.05555555555555558,
+      "integrated_charge_rate_frobenius": 0.9686442096757054,
+      "electric_pillbox_gate_passed": false,
+      "normal_B_flux_rate_coefficient_maxabs": 0.16666666666666669,
+      "normal_B_flux_gate_passed": false
+    },
+    {
+      "trace": "published",
+      "ratio": 3,
+      "contrast": 12.25,
+      "integrated_charge_rate_coefficient_maxabs": 0.05555555555555569,
+      "integrated_charge_rate_frobenius": 0.9686442096757053,
+      "electric_pillbox_gate_passed": false,
+      "normal_B_flux_rate_coefficient_maxabs": 0.16666666666666669,
+      "normal_B_flux_gate_passed": false
+    },
+    {
+      "trace": "published",
+      "ratio": 3,
+      "contrast": 100.0,
+      "integrated_charge_rate_coefficient_maxabs": 0.055555555555556246,
+      "integrated_charge_rate_frobenius": 0.9686442096757054,
+      "electric_pillbox_gate_passed": false,
+      "normal_B_flux_rate_coefficient_maxabs": 0.16666666666666669,
+      "normal_B_flux_gate_passed": false
+    },
+    {
+      "trace": "area",
+      "ratio": 3,
+      "contrast": 1.0,
+      "integrated_charge_rate_coefficient_maxabs": 1.6653345369377348e-16,
+      "integrated_charge_rate_frobenius": 1.657987685520766e-15,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 0.055555555555555566,
+      "normal_B_flux_gate_passed": false,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 2.842170943040401e-14,
+        "coarse_curl_maxabs": 7.808541947401368,
+        "commuting_trace_gate_passed": false
+      }
+    },
+    {
+      "trace": "area",
+      "ratio": 3,
+      "contrast": 12.25,
+      "integrated_charge_rate_coefficient_maxabs": 4.163336342344337e-16,
+      "integrated_charge_rate_frobenius": 2.915282725949023e-15,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 0.055555555555555566,
+      "normal_B_flux_gate_passed": false,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 2.842170943040401e-14,
+        "coarse_curl_maxabs": 7.808541947401368,
+        "commuting_trace_gate_passed": false
+      }
+    },
+    {
+      "trace": "area",
+      "ratio": 3,
+      "contrast": 100.0,
+      "integrated_charge_rate_coefficient_maxabs": 2.6645352591003757e-15,
+      "integrated_charge_rate_frobenius": 1.9030896977547736e-14,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 0.055555555555555566,
+      "normal_B_flux_gate_passed": false,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 2.842170943040401e-14,
+        "coarse_curl_maxabs": 7.808541947401368,
+        "commuting_trace_gate_passed": false
+      }
+    },
+    {
+      "trace": "circulation",
+      "ratio": 3,
+      "contrast": 1.0,
+      "integrated_charge_rate_coefficient_maxabs": 9.71445146547012e-17,
+      "integrated_charge_rate_frobenius": 7.80124260888204e-16,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 1.3877787807814457e-17,
+      "normal_B_flux_gate_passed": true,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 2.842170943040401e-14,
+        "coarse_curl_maxabs": 4.779836400494208e-15,
+        "commuting_trace_gate_passed": true
+      }
+    },
+    {
+      "trace": "circulation",
+      "ratio": 3,
+      "contrast": 12.25,
+      "integrated_charge_rate_coefficient_maxabs": 9.298117831235686e-16,
+      "integrated_charge_rate_frobenius": 6.28300654592163e-15,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 1.3877787807814457e-17,
+      "normal_B_flux_gate_passed": true,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 2.842170943040401e-14,
+        "coarse_curl_maxabs": 4.779836400494208e-15,
+        "commuting_trace_gate_passed": true
+      }
+    },
+    {
+      "trace": "circulation",
+      "ratio": 3,
+      "contrast": 100.0,
+      "integrated_charge_rate_coefficient_maxabs": 6.5780714209040525e-15,
+      "integrated_charge_rate_frobenius": 5.335861247969737e-14,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 1.3877787807814457e-17,
+      "normal_B_flux_gate_passed": true,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 2.842170943040401e-14,
+        "coarse_curl_maxabs": 4.779836400494208e-15,
+        "commuting_trace_gate_passed": true
+      }
+    },
+    {
+      "trace": "published",
+      "ratio": 5,
+      "contrast": 1.0,
+      "integrated_charge_rate_coefficient_maxabs": 0.04000000000000001,
+      "integrated_charge_rate_frobenius": 0.8079603950689662,
+      "electric_pillbox_gate_passed": false,
+      "normal_B_flux_rate_coefficient_maxabs": 0.20000000000000007,
+      "normal_B_flux_gate_passed": false
+    },
+    {
+      "trace": "published",
+      "ratio": 5,
+      "contrast": 12.25,
+      "integrated_charge_rate_coefficient_maxabs": 0.04000000000000006,
+      "integrated_charge_rate_frobenius": 0.8079603950689662,
+      "electric_pillbox_gate_passed": false,
+      "normal_B_flux_rate_coefficient_maxabs": 0.20000000000000007,
+      "normal_B_flux_gate_passed": false
+    },
+    {
+      "trace": "published",
+      "ratio": 5,
+      "contrast": 100.0,
+      "integrated_charge_rate_coefficient_maxabs": 0.040000000000000924,
+      "integrated_charge_rate_frobenius": 0.8079603950689653,
+      "electric_pillbox_gate_passed": false,
+      "normal_B_flux_rate_coefficient_maxabs": 0.20000000000000007,
+      "normal_B_flux_gate_passed": false
+    },
+    {
+      "trace": "area",
+      "ratio": 5,
+      "contrast": 1.0,
+      "integrated_charge_rate_coefficient_maxabs": 4.85722573273506e-17,
+      "integrated_charge_rate_frobenius": 8.23276378419851e-16,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 0.04000000000000001,
+      "normal_B_flux_gate_passed": false,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 5.684341886080802e-14,
+        "coarse_curl_maxabs": 8.218105880578651,
+        "commuting_trace_gate_passed": false
+      }
+    },
+    {
+      "trace": "area",
+      "ratio": 5,
+      "contrast": 12.25,
+      "integrated_charge_rate_coefficient_maxabs": 2.7755575615628914e-16,
+      "integrated_charge_rate_frobenius": 3.874306854990964e-15,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 0.04000000000000001,
+      "normal_B_flux_gate_passed": false,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 5.684341886080802e-14,
+        "coarse_curl_maxabs": 8.218105880578651,
+        "commuting_trace_gate_passed": false
+      }
+    },
+    {
+      "trace": "area",
+      "ratio": 5,
+      "contrast": 100.0,
+      "integrated_charge_rate_coefficient_maxabs": 8.784639682346551e-15,
+      "integrated_charge_rate_frobenius": 5.5569796179579284e-14,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 0.04000000000000001,
+      "normal_B_flux_gate_passed": false,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 5.684341886080802e-14,
+        "coarse_curl_maxabs": 8.218105880578651,
+        "commuting_trace_gate_passed": false
+      }
+    },
+    {
+      "trace": "circulation",
+      "ratio": 5,
+      "contrast": 1.0,
+      "integrated_charge_rate_coefficient_maxabs": 7.771561172376096e-16,
+      "integrated_charge_rate_frobenius": 6.2254215485293225e-15,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 6.938893903907228e-18,
+      "normal_B_flux_gate_passed": true,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 5.684341886080802e-14,
+        "coarse_curl_maxabs": 7.654661475307545e-15,
+        "commuting_trace_gate_passed": true
+      }
+    },
+    {
+      "trace": "circulation",
+      "ratio": 5,
+      "contrast": 12.25,
+      "integrated_charge_rate_coefficient_maxabs": 1.915134717478395e-15,
+      "integrated_charge_rate_frobenius": 1.194654272042123e-14,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 6.938893903907228e-18,
+      "normal_B_flux_gate_passed": true,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 5.684341886080802e-14,
+        "coarse_curl_maxabs": 7.654661475307545e-15,
+        "commuting_trace_gate_passed": true
+      }
+    },
+    {
+      "trace": "circulation",
+      "ratio": 5,
+      "contrast": 100.0,
+      "integrated_charge_rate_coefficient_maxabs": 2.5923707624997405e-14,
+      "integrated_charge_rate_frobenius": 1.5978764110717861e-13,
+      "electric_pillbox_gate_passed": true,
+      "normal_B_flux_rate_coefficient_maxabs": 6.938893903907228e-18,
+      "normal_B_flux_gate_passed": true,
+      "magnetic_gradient_probe": {
+        "fine_curl_maxabs": 5.684341886080802e-14,
+        "coarse_curl_maxabs": 7.654661475307545e-15,
+        "commuting_trace_gate_passed": true
+      }
+    }
+  ],
+  "evolution": {
+    "trace": "circulation",
+    "steps": 10000,
+    "device": "cpu",
+    "precision": "float64",
+    "electric_pillbox_divergence_change_rms_L1": 3.226768126002023e-13,
+    "normal_B_flux_change_rms_over_H_rms": 1.4527764490707932e-14,
+    "scope": "Planar composite charge and matching normal B flux; no closed patch certification"
+  },
+  "source_sha256": {
+    "warp_fdtd/planar_constraints.py": "9a0ff12d7ba3eb208e32cfba4eb9fd59136ac78ac48684d2c026460d26480788",
+    "warp_fdtd/planar_interface.py": "88871ec57beb7ab12f8e63e4713694543a9fdb21e5be20c6be58a1881bd7ade7"
+  },
+  "composite_constraints_certified": false
+}

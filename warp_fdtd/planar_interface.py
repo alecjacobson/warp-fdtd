@@ -5,6 +5,8 @@ Zhang & Triverio, https://arxiv.org/abs/1705.02274, equations (38)-(54).
 The optional area trace is an experimental Galerkin constraint: coarse E is
 the average of unconstrained fine E over its trace tile. It is NOT the cited
 published rule and has no established composite Gauss or scattering guarantee.
+The circulation variant averages only along each coincident coarse edge,
+so restriction respects the discrete Stokes circulation. It remains experimental.
 No octree edge/corner closure, CPML, source or waveguide integration yet.
 SciPy constructs a reference operator; all time stepping is in pure Warp.
 The sparse kernels are a correctness prototype, not the intended dense-block
@@ -105,8 +107,8 @@ class PlanarOperator:
     ):
         if ratio not in (1, 3, 5) or min(nx, ny_coarse, nz) < 1 or h <= 0:
             raise ValueError("Positive dimensions and ratio 1,3,5 required")
-        if trace not in ("published", "area"):
-            raise ValueError("trace must be published or area")
+        if trace not in ("published", "area", "circulation"):
+            raise ValueError("trace must be published, area or circulation")
         self.trace = trace
         self.ratio = r = ratio
         self.coarse = c = region((nx, ny_coarse, nz), h, 0.0, epsilon_coarse)
@@ -143,7 +145,12 @@ class PlanarOperator:
                 count += group_size
                 groups.append(group)
                 crow = int(c.eids[component][i, ny_coarse, k])
-                constraints[crow] = [(col, 1.0 / group_size) for col in group]
+                if trace == "circulation":
+                    constraints[crow] = [
+                        (group[(r // 2) * r + j], 1.0 / r) for j in range(r)
+                    ]
+                else:
+                    constraints[crow] = [(col, 1.0 / group_size) for col in group]
                 # Tangential E constant along its own edge direction; varying
                 # across the odd-ratio dual-width group around coarse vertex.
                 for q in range(r):

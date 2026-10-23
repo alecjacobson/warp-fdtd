@@ -1,0 +1,132 @@
+{
+  "status": "complete",
+  "trace": "linear",
+  "device": "cpu",
+  "precision": "float64",
+  "scope": "Closed 3D refined cavity patch, all components, PEC walls; not a driven guide",
+  "cases": [
+    {
+      "block_cells": 3,
+      "mesh": {
+        "leaf_blocks": 53,
+        "blocks_by_level": {
+          "0": 26,
+          "1": 27
+        },
+        "volume_fraction_by_level": {
+          "0": 0.9629629629629629,
+          "1": 0.037037037037037035
+        },
+        "active_cells": 1431,
+        "uniform_finest_cells": 19683,
+        "ideal_cell_ratio": 13.754716981132075,
+        "halo_width_cells": 1,
+        "padded_cell_slots": 6625,
+        "padded_cell_ratio": 2.971018867924528,
+        "geometry_leaf_count": 53,
+        "balance_split_count": 0,
+        "balance_added_leaf_count": 0,
+        "covered_parent_field_cells": 0,
+        "scope": "Topology cell counts; no solver allocation, runtime, accuracy, or peak-memory claim"
+      },
+      "audit": {
+        "electric_dofs": 3420,
+        "magnetic_dofs": 5724,
+        "largest_mass_block": 12,
+        "shared_or_refined_normal_faces": 972,
+        "weighted_transpose_maxabs": 2.7755575615628914e-17,
+        "normal_flux_rate_maxabs": 5.551115123125783e-17
+      },
+      "steps": 9,
+      "time": 0.404145188432738,
+      "electric_relative_l2": 0.020766291416688253,
+      "modified_energy_relative_change": -4.440892098500626e-16,
+      "normal_flux_change_maxabs": 1.566672139241554e-17
+    },
+    {
+      "block_cells": 6,
+      "mesh": {
+        "leaf_blocks": 53,
+        "blocks_by_level": {
+          "0": 26,
+          "1": 27
+        },
+        "volume_fraction_by_level": {
+          "0": 0.9629629629629629,
+          "1": 0.037037037037037035
+        },
+        "active_cells": 11448,
+        "uniform_finest_cells": 157464,
+        "ideal_cell_ratio": 13.754716981132075,
+        "halo_width_cells": 1,
+        "padded_cell_slots": 27136,
+        "padded_cell_ratio": 5.802771226415095,
+        "geometry_leaf_count": 53,
+        "balance_split_count": 0,
+        "balance_added_leaf_count": 0,
+        "covered_parent_field_cells": 0,
+        "scope": "Topology cell counts; no solver allocation, runtime, accuracy, or peak-memory claim"
+      },
+      "audit": {
+        "electric_dofs": 30762,
+        "magnetic_dofs": 40068,
+        "largest_mass_block": 24,
+        "shared_or_refined_normal_faces": 3888,
+        "weighted_transpose_maxabs": 1.0408340855860843e-17,
+        "normal_flux_rate_maxabs": 2.7755575615628914e-17
+      },
+      "steps": 18,
+      "time": 0.404145188432738,
+      "electric_relative_l2": 0.006946333602989061,
+      "modified_energy_relative_change": -8.881784197001252e-16,
+      "normal_flux_change_maxabs": 6.511989298491061e-18,
+      "observed_order": 1.5799199890191635
+    },
+    {
+      "block_cells": 12,
+      "mesh": {
+        "leaf_blocks": 53,
+        "blocks_by_level": {
+          "0": 26,
+          "1": 27
+        },
+        "volume_fraction_by_level": {
+          "0": 0.9629629629629629,
+          "1": 0.037037037037037035
+        },
+        "active_cells": 91584,
+        "uniform_finest_cells": 1259712,
+        "ideal_cell_ratio": 13.754716981132075,
+        "halo_width_cells": 1,
+        "padded_cell_slots": 145432,
+        "padded_cell_ratio": 8.661862588701249,
+        "geometry_leaf_count": 53,
+        "balance_split_count": 0,
+        "balance_added_leaf_count": 0,
+        "covered_parent_field_cells": 0,
+        "scope": "Topology cell counts; no solver allocation, runtime, accuracy, or peak-memory claim"
+      },
+      "audit": {
+        "electric_dofs": 260244,
+        "magnetic_dofs": 297648,
+        "largest_mass_block": 48,
+        "shared_or_refined_normal_faces": 15552,
+        "weighted_transpose_maxabs": 2.6020852139652106e-18,
+        "normal_flux_rate_maxabs": 1.3877787807814457e-17
+      },
+      "steps": 36,
+      "time": 0.404145188432738,
+      "electric_relative_l2": 0.0021465272973351657,
+      "modified_energy_relative_change": -1.5543122344752192e-15,
+      "normal_flux_change_maxabs": 2.997649600332969e-18,
+      "observed_order": 1.6942471792976619
+    }
+  ],
+  "second_order_gate_passed": false,
+  "source_sha256": {
+    "warp_fdtd/block_operator.py": "3e124c7714cb2561a5ca4f844a8b1a1d56c974db0d0c4d2fe28d5de34b67d95c",
+    "warp_fdtd/block_validation.py": "796239a48963c8bcd4bb8549fd4bdc5ee383668b92acb44cd58057f100732fdb",
+    "warp_fdtd/block_mesh.py": "15fcb6c793e9091379099531d58718b7f184fd63035f0814e7e26348393749cf",
+    "warp_fdtd/planar_interface.py": "88871ec57beb7ab12f8e63e4713694543a9fdb21e5be20c6be58a1881bd7ade7"
+  }
+}
