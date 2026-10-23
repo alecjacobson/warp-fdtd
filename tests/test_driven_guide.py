@@ -76,6 +76,25 @@ class DrivenGuideTests(unittest.TestCase):
         b.run(64)
         np.testing.assert_array_equal(a.e.numpy(), en)
 
+    def test_uniform_layouts_and_observer_passivity(self):
+        from warp_fdtd.guide_observer import GuideObserver
+
+        problem = GuideProblem()
+        a = DrivenUniform(problem, 0.2, 64, device="cpu", layout="flat")
+        b = DrivenUniform(problem, 0.2, 64, device="cpu", layout="xyz")
+        a.run(32)
+        b.run(32)
+        np.testing.assert_allclose(a.e.numpy(), b.e.numpy(), rtol=1e-5, atol=1e-8)
+        np.testing.assert_allclose(a.h.numpy(), b.h.numpy(), rtol=1e-5, atol=1e-8)
+        old_e, old_h = b.e.numpy().copy(), b.h.numpy().copy()
+        observer = GuideObserver(b, problem)
+        first = observer.sample()
+        second = observer.sample()
+        np.testing.assert_array_equal(first, second)
+        np.testing.assert_array_equal(old_e, b.e.numpy())
+        np.testing.assert_array_equal(old_h, b.h.numpy())
+        self.assertEqual(int(b.counter.numpy()[0]), 32)
+
     def test_sampler_affine_exact_even_at_block_boundary(self):
         shape = (4, 5, 5)
         h = 0.1

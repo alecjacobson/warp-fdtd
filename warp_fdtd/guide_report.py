@@ -50,6 +50,15 @@ def main():
             ref["fields"][:, :, ~core],
             weights[:, ~core],
         )
+        downstream = xyz[:, 0] >= 1.5
+        c["downstream_field_l2"] = relative(
+            data[k]["fields"][:, :, downstream],
+            ref["fields"][:, :, downstream],
+            weights[:, downstream],
+        )
+        c["field_l2_by_time"] = [
+            relative(a, b, weights) for a, b in zip(data[k]["fields"], ref["fields"])
+        ]
         c["reference_case"] = args.reference
     for k, c in cases.items():
         if c["kind"] != "octree":

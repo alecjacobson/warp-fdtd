@@ -26,15 +26,23 @@ def main():
     ap.add_argument("--coupling", choices=["factorized", "fused"], default="factorized")
     ap.add_argument("--buffer", type=float, default=0.1)
     ap.add_argument("--width", type=float, default=3.2)
+    ap.add_argument("--cfl", type=float, default=0.7)
     ap.add_argument("--duration", type=float, default=14.0)
     ap.add_argument("--uniform-layout", choices=["xyz", "flat"], default="xyz")
     ap.add_argument("--reference-only", action="store_true")
     ap.add_argument("--repeats", type=int, default=5)
     ap.add_argument("--output", type=Path, required=True)
     args = ap.parse_args()
+    if (
+        not (0 < args.cfl <= 0.7)
+        or args.duration <= 0
+        or args.spacing <= 0
+        or args.repeats < 1
+    ):
+        ap.error("Require 0 < cfl <= .7 and positive duration, spacing, repeats")
     args.output.mkdir(parents=True, exist_ok=True)
     p = GuideProblem(width=args.width, height=args.width, duration=args.duration)
-    max_dt = 0.7 * args.spacing * np.sqrt(p.clad_epsilon / 3)
+    max_dt = args.cfl * args.spacing * np.sqrt(p.clad_epsilon / 3)
     steps = 7 * math.ceil(p.duration / max_dt / 7)
     cfl = (p.duration / steps) / (args.spacing * np.sqrt(p.clad_epsilon / 3))
     source_files = [
