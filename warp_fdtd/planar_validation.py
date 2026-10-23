@@ -144,7 +144,9 @@ def main():
     p.add_argument("--device", default="cpu")
     p.add_argument("--precision", choices=("float32", "float64"), default="float64")
     p.add_argument("--steps", type=int, default=10000)
-    p.add_argument("--trace", choices=("published", "area"), default="published")
+    p.add_argument(
+        "--trace", choices=("published", "area", "circulation"), default="published"
+    )
     a = p.parse_args()
     a.output.mkdir(parents=True, exist_ok=True)
     start = time.perf_counter()
