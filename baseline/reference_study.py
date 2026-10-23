@@ -8,6 +8,7 @@ failed setup/evaluations are rerun without touching archived legacy results.
 import argparse
 import hashlib
 import json
+import math
 import os
 import subprocess
 import sys
@@ -23,6 +24,10 @@ CASES = {
     "pml20_400": (20.0, 20, 300.0, 0.99, 4.0, True),
     "domain20_4p4": (20.0, 10, 300.0, 0.99, 4.4, False),
 }
+
+# Expensive additional level is opt-in, so reproducing the initial study stays bounded.
+DEFAULT_CASES = tuple(CASES)
+CASES["mesh5"] = (5.0, 40, 300.0, 0.99, 4.0, False)
 
 
 def digest(path):
@@ -70,10 +75,20 @@ def run(command, log, env):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--cases", nargs="+", choices=CASES, default=list(CASES))
+    p.add_argument("--cases", nargs="+", choices=CASES, default=list(DEFAULT_CASES))
     p.add_argument("--root", type=Path, default=Path("results/physical_reference"))
     p.add_argument("--without-volumes", action="store_true")
+    p.add_argument(
+        "--jax-memory-fraction",
+        type=float,
+        help="Explicit JAX GPU allocator fraction for a capacity study",
+    )
     args = p.parse_args()
+    if args.jax_memory_fraction is not None and (
+        not math.isfinite(args.jax_memory_fraction)
+        or not 0 < args.jax_memory_fraction <= 1
+    ):
+        p.error("--jax-memory-fraction must be finite and in (0, 1]")
     args.root.mkdir(parents=True, exist_ok=True)
     env = os.environ.copy()
     env.update(
@@ -83,6 +98,9 @@ def main():
         OPENBLAS_NUM_THREADS="1",
         OMP_NUM_THREADS="4",
     )
+    if args.jax_memory_fraction is not None:
+        env.pop("XLA_PYTHON_CLIENT_MEM_FRACTION", None)
+        env["XLA_CLIENT_MEM_FRACTION"] = str(args.jax_memory_fraction)
     candidate_hash = hashlib.sha256(CANDIDATE.read_bytes()).hexdigest()
     for name in args.cases:
         dx, pml, duration, cfl, domain, padding = CASES[name]

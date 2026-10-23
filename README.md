@@ -14,15 +14,15 @@ flagship gains and continuum reference uncertainty remain unresolved.
 
 ![Flagship performance and same-input numerical agreement](results/warp/performance.png)
 
-The new fixed-geometry convergence study reaches **93.2438% transmission at
-6.67 nm / 81M cells**. Compared with that mesh, the 10 nm complex electric-field
-L2 difference is **1.47%**, and Poynting-vector L2 difference **1.62%**. These are
+The new fixed-geometry convergence study reaches **93.2662% transmission at
+5 nm / 192M cells**. Compared with that mesh, the 6.67 nm complex electric-field
+L2 difference is **0.685%**, and Poynting-vector L2 difference **0.809%**. These are
 mesh differences, not continuum error bounds; [#30](https://github.com/alecjacobson/warp-fdtd/issues/30)
 tracks the remaining reference-accuracy budget.
 
-![Controlled flagship mesh trends and boundary/time controls](results/physical_reference/comparison/convergence.png)
+![Latest controlled flagship mesh trends](results/physical_reference/comparison_fine/convergence.png)
 
-![Common-scale time-averaged power flow across three 3D meshes](results/physical_reference/comparison/power_flow.png)
+![Common-scale time-averaged power flow across three 3D meshes](results/physical_reference/comparison_fine/power_flow.png)
 
 Power-flow images show a common z=790 nm slice, normalized by incident power.
 Timing fixtures retain their archived source/port positions; the separate
