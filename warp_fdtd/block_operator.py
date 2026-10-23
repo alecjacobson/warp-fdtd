@@ -68,7 +68,14 @@ def closed_region(block, mesh, epsilon):
             select = [slice(None)] * 3
             select[c] = boundary
             hv[hi[c][tuple(select)].ravel()] *= 0.5
-    eps = np.broadcast_to(epsilon(ec) if callable(epsilon) else epsilon, ev.shape)
+    eps = np.broadcast_to(
+        epsilon.sample(ec, h)
+        if hasattr(epsilon, "sample")
+        else epsilon(ec)
+        if callable(epsilon)
+        else epsilon,
+        ev.shape,
+    )
     if not np.isfinite(eps).all() or np.any(eps <= 0):
         raise ValueError("Positive finite epsilon required")
     rows, cols, vals = [], [], []
@@ -205,6 +212,16 @@ class BlockOperator:
                 else:
                     maps[key] = {key: 1.0}
         masters = sorted({target for terms in maps.values() for target in terms})
+        self.master_keys = masters
+        unit = mesh.root_width / (mesh.cells_per_block * mesh.scale)
+        self.master_components = np.array([key[0] for key in masters])
+        self.master_coords = np.array(
+            [
+                np.array(mesh.origin)
+                + (np.array(key[1:4]) + np.eye(3)[key[0]] * 0.5 * key[-1]) * unit
+                for key in masters
+            ]
+        )
         master_ids = {key: i for i, key in enumerate(masters)}
         rows, cols, vals = [], [], []
         for i, key in enumerate(all_keys):
@@ -233,6 +250,7 @@ class BlockOperator:
                 for j, b in enumerate(group):
                     inverse[a, b] = inv[i, j]
         self.me_inverse = inverse.tocsr()
+        self.gather_e = (self.me_inverse @ self.p.T).tocsr()
         self.h_update = (-sp.diags(1 / self.mh) @ self.k).tocsr()
         self.e_update = (self.me_inverse @ self.k.T).tocsr()
         self.normal_flux = self._normal_flux_constraints()

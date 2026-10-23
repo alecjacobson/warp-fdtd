@@ -1,40 +1,43 @@
 # Warp FDTD
 
-Pure NVIDIA Warp 3D electromagnetics, compared with pinned, unmodified FDTDX
-on an optimized silicon 90° waveguide bend. The flagship uses explicit Yee
-updates, a uniform grid, CPML, injected modes and Hann-window modal detectors.
+Pure NVIDIA Warp 3D electromagnetics, with uniform FDTDX comparisons and a new
+binary-octree waveguide prototype.
 
-**Measured status:** **2.96–3.24× faster** matched forward runs. Adaptive
-flagship gains and continuum reference uncertainty remain unresolved.
+**3D octree result: 22.2× faster and 12.0× less solver GPU memory** than the best
+tested uniform grid at comparable sampled accuracy. The 4.8 × 12.8 × 12.8 µm
+straight-guide problem uses 25 nm cells near the guide and up to 200 nm in cladding.
 
-| Same-input flagship workload | FDTDX | Warp | Speedup |
-|---|---:|---:|---:|
-| 20 nm · 3M cells · 200 fs | 14.683 s | 4.534 s | 3.24× |
-| 10 nm · 24M cells · 300 fs | 316.138 s | 106.709 s | 2.96× |
+| Solver | Active cells | Full warm simulation | Solver GPU memory | Field difference¹ |
+|---|---:|---:|---:|---:|
+| Uniform Warp, 25 nm | 50.33M | 11.774 s | 1,157 MiB | 5.07% |
+| Octree Warp, 25–200 nm | 399,360 | 0.530 s | 96.6 MiB | 5.17% |
 
-![Flagship performance and same-input numerical agreement](results/warp/performance.png)
+¹ Sampled transient E/H difference from a 12.5 nm, 402.7M-cell reference; not a
+continuum error bound. Source and sponge updates are timed. **Prototype limits:**
+sponge/interface flux consistency fails, and 33.3 s host assembly makes a fresh
+one-shot solve slower. These are warm simulation and GPU-memory gains.
 
-The new fixed-geometry convergence study reaches **93.2662% transmission at
-5 nm / 192M cells**. Compared with that mesh, the 6.67 nm complex electric-field
-L2 difference is **0.685%**, and Poynting-vector L2 difference **0.809%**. These are
-mesh differences, not continuum error bounds; [#30](https://github.com/alecjacobson/warp-fdtd/issues/30)
-tracks the remaining reference-accuracy budget.
+![Latest octree accuracy, runtime and memory trends](results/octree_guide_large/trends.png)
 
-![Latest controlled flagship mesh trends](results/physical_reference/comparison_fine/convergence.png)
+![3D guide fields and instantaneous power-flow comparison](results/octree_guide_large/fields.png)
 
-![Common-scale time-averaged power flow across three 3D meshes](results/physical_reference/comparison_fine/power_flow.png)
+[Octree mesh, raw measurements and reproduction](docs/octree-guide.md) ·
+[Flux fix #42](https://github.com/alecjacobson/warp-fdtd/issues/42) ·
+[Setup cost #43](https://github.com/alecjacobson/warp-fdtd/issues/43)
 
-Power-flow images show a common z=790 nm slice, normalized by incident power.
-Timing fixtures retain their archived source/port positions; the separate
-convergence study fixes physical geometry and observation windows. Reference
-generation and volume-observer timings are excluded from speedup claims.
-The archived 3M-cell material gradient is **1.98× faster**, with **1.85e-6**
-relative agreement with FDTDX's fast adjoint.
+**Optimized 3D bend versus pinned FDTDX:** matched forward runs remain
+**2.96–3.24× faster**, with uniform Yee grids, CPML and modal sources/detectors.
+The fixed-geometry reference reaches 93.2662% transmission at 5 nm / 192M cells;
+the 6.67 nm electric-field difference is 0.685% and power-flow difference 0.809%.
 
-Measurements use an RTX PRO 6000 Blackwell **MIG 1g.24gb**, float32 and
-synchronized warm runs; throughput timings exclude compilation, setup and host
-postprocessing.
+![Bend performance and numerical agreement](results/warp/performance.png)
 
-[Reproduction](docs/warp.md) · [Controlled references](docs/physical-reference.md) ·
-[Adaptivity progress](docs/adaptivity-progress.md) ·
-[Prioritized issues](https://github.com/alecjacobson/warp-fdtd/issues)
+![Latest controlled bend mesh trends](results/physical_reference/comparison_fine/convergence.png)
+
+![Bend time-averaged power flow](results/physical_reference/comparison_fine/power_flow.png)
+
+Measurements use an RTX PRO 6000 Blackwell **MIG 1g.24gb**, float32 and serial
+synchronized GPU runs. Warm timings exclude setup, compilation and diagnostics.
+
+[Bend reproduction](docs/warp.md) · [Reference accuracy](docs/physical-reference.md) ·
+[Prioritized work](https://github.com/alecjacobson/warp-fdtd/issues)

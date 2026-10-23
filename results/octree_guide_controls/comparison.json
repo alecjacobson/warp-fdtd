@@ -1,0 +1,10 @@
+{
+  "uniform": {
+    "timestep_halving_field_difference": 0.0034968605537823456,
+    "half_dt_reference_difference": 0.054121618973966314
+  },
+  "octree": {
+    "timestep_halving_field_difference": 0.0034970547333665883,
+    "half_dt_reference_difference": 0.05506764544053884
+  }
+}

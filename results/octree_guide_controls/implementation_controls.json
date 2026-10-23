@@ -1,0 +1,16 @@
+{
+  "flat_vs_xyz": {
+    "field_l2": 2.79332630270801e-06,
+    "speedup": 3.324696321310487
+  },
+  "fused_vs_factorized": {
+    "field_l2": 4.377288007617608e-07,
+    "speedup": 1.6719960468982025,
+    "owned_memory_ratio": 1.4377851700178401
+  },
+  "small_domain_negative_memory_control": {
+    "uniform_owned_bytes": 9636796,
+    "octree_factorized_owned_bytes": 10865448,
+    "same_finest_speedup": 0.9884440401637028
+  }
+}
