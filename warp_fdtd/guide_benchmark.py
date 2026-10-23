@@ -15,6 +15,7 @@ from .driven_uniform import DrivenUniform
 from .driven_blocks import DrivenBlocks
 from .block_operator import BlockOperator
 from .guide_observer import GuideObserver
+from .guide_validation import assert_finite
 
 
 def main():
@@ -28,6 +29,7 @@ def main():
     ap.add_argument("--width", type=float, default=3.2)
     ap.add_argument("--cfl", type=float, default=0.7)
     ap.add_argument("--duration", type=float, default=14.0)
+    ap.add_argument("--normal-average", action="store_true")
     ap.add_argument("--uniform-layout", choices=["xyz", "flat"], default="xyz")
     ap.add_argument("--reference-only", action="store_true")
     ap.add_argument("--repeats", type=int, default=5)
@@ -53,6 +55,7 @@ def main():
         "guide_problem.py",
         "guide_observer.py",
         "guide_benchmark.py",
+        "guide_validation.py",
     ]
     hashes = {
         f: hashlib.sha256(Path(__file__).with_name(f).read_bytes()).hexdigest()
@@ -63,16 +66,31 @@ def main():
     start = time.perf_counter()
     metadata = {}
     if args.kind == "uniform":
-        s = DrivenUniform(p, args.spacing, steps, cfl, layout=args.uniform_layout)
-        metadata = {"uniform_layout": args.uniform_layout}
+        s = DrivenUniform(
+            p,
+            args.spacing,
+            steps,
+            cfl,
+            layout=args.uniform_layout,
+            normal_average=args.normal_average,
+        )
+        metadata = {
+            "uniform_layout": args.uniform_layout,
+            "normal_average": args.normal_average,
+        }
         cells = int(np.prod(s.shape))
     else:
         mesh = p.mesh(args.spacing, args.levels, args.block_cells, args.buffer)
         op = BlockOperator(mesh, epsilon=p, trace="linear")
         s = DrivenBlocks(op, p, steps, cfl, coupling=args.coupling)
         cells = len(mesh.leaves) * mesh.cells_per_block**3
+        payload = mesh.payload()
+        leaves = payload.pop("leaves")
         (args.output / "mesh.json").write_text(
-            json.dumps(mesh.payload(), indent=2) + "\n"
+            json.dumps(payload, indent=2)[:-2]
+            + ',\n  "leaves": [\n'
+            + ",\n".join("    " + json.dumps(v) for v in leaves)
+            + "\n  ]\n}\n"
         )
         metadata = {
             "mesh": mesh.accounting(),
@@ -114,6 +132,10 @@ def main():
         snapshots.append(observer.sample())
         previous = checkpoint
     diagnostic_time = time.perf_counter() - start
+    validation_start = time.perf_counter()
+    assert_finite(s)
+    metadata["full_field_finite"] = True
+    metadata["full_field_validation_s"] = time.perf_counter() - validation_start
     if args.kind == "octree":
         final_h = s.h.numpy().astype(np.float64)
         residual = op.normal_flux @ final_h

@@ -409,3 +409,23 @@ on this closed-patch test, including non-node planar waves and an explicit
 constant-field gate. #37 tracks it; #15 retains patch/source/boundary integration
 and #35 the actual accuracy-matched waveguide cost comparison. The old planar
 mode is retained as a regression case, not used alone for promotion.
+
+
+## First actual 3D octree guide comparison
+
+The [driven-guide report](octree-guide.md) now contains actual full-trajectory
+measurements, field plots and uniform resolution sweeps. At 25 nm minimum spacing
+in a 4.8 × 12.8 × 12.8 µm box, the 399,360-cell binary octree is **22.2× faster**
+and owns **12.0× less GPU memory** than the best tested uniform grid at comparable
+sampled error (5.17% versus 5.07% against a 12.5 nm reference). Small-domain negative
+controls, stronger direct uniform kernels, interface-averaging controls and
+half-timestep runs are retained. A 9,240-step driven run finishes with every
+field value finite.
+
+This is a prototype milestone. Sponge/interface normal-flux consistency **fails**
+[#42](https://github.com/alecjacobson/warp-fdtd/issues/42); 33.3 s host assembly
+prevents a one-shot speedup [#43](https://github.com/alecjacobson/warp-fdtd/issues/43).
+Interface averaging and stronger uniform accuracy controls remain in
+[#44](https://github.com/alecjacobson/warp-fdtd/issues/44). The earlier closed-patch
+accuracy/Gauss gates remain open. None of these measurements establish a
+sub-percent, pure-mode/CPML adaptive bend result.

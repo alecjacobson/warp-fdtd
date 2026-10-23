@@ -1,12 +1,27 @@
 import unittest
 import numpy as np
+import warp as wp
 from warp_fdtd.guide_problem import GuideProblem
 from warp_fdtd.block_mesh import BlockMesh
 from warp_fdtd.block_operator import BlockOperator
 from warp_fdtd.planar_interface import PlanarStepper
 from warp_fdtd.driven_blocks import DrivenBlocks
-from warp_fdtd.driven_uniform import DrivenUniform
+from warp_fdtd.driven_uniform import DrivenUniform, epsilon_normal
 from warp_fdtd.guide_observer import stencil
+
+
+@wp.kernel
+def sample_normal_epsilon(out: wp.array(dtype=float)):
+    c = wp.tid()
+    out[c] = epsilon_normal(
+        wp.vec3(2.4, 1.4, 1.6),
+        0.05,
+        wp.vec3(4.8, 3.2, 3.2),
+        wp.vec2(0.4, 0.4),
+        12.25,
+        2.25,
+        c,
+    )
 
 
 class DrivenGuideTests(unittest.TestCase):
@@ -94,6 +109,38 @@ class DrivenGuideTests(unittest.TestCase):
         np.testing.assert_array_equal(old_e, b.e.numpy())
         np.testing.assert_array_equal(old_h, b.h.numpy())
         self.assertEqual(int(b.counter.numpy()[0]), 32)
+
+    def test_full_field_finiteness_counter(self):
+        from warp_fdtd.guide_validation import count_nonfinite
+
+        values = wp.array(
+            np.array([1.0, np.nan, np.inf, -2.0], np.float32), device="cpu"
+        )
+        count = wp.zeros(1, dtype=int, device="cpu")
+        wp.launch(count_nonfinite, 4, inputs=[values, count], device="cpu")
+        self.assertEqual(int(count.numpy()[0]), 2)
+
+    def test_normal_material_average(self):
+        values = wp.zeros(3, device="cpu")
+        wp.launch(sample_normal_epsilon, 3, inputs=[values], device="cpu")
+        np.testing.assert_allclose(
+            values.numpy(), [7.25, 2 / (1 / 12.25 + 1 / 2.25), 7.25], rtol=2e-5
+        )
+        p = GuideProblem(
+            length=0.8,
+            width=0.8,
+            height=0.8,
+            source_x=0.4,
+            pulse_center=0.3,
+            pulse_sigma=0.1,
+            sponge_width=0.1,
+        )
+        a = DrivenUniform(p, 0.1, 128, device="cpu")
+        b = DrivenUniform(p, 0.1, 128, device="cpu", normal_average=True)
+        a.run(128)
+        b.run(128)
+        np.testing.assert_allclose(a.e.numpy(), b.e.numpy(), rtol=1e-4, atol=2e-7)
+        np.testing.assert_allclose(a.h.numpy(), b.h.numpy(), rtol=1e-4, atol=2e-7)
 
     def test_sampler_affine_exact_even_at_block_boundary(self):
         shape = (4, 5, 5)

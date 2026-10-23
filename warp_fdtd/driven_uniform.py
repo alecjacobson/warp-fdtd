@@ -59,6 +59,34 @@ def epsilon(
     return eps_clad + (eps_core - eps_clad) * f
 
 
+@wp.func
+def epsilon_normal(
+    p: wp.vec3,
+    h: float,
+    lengths: wp.vec3,
+    core: wp.vec2,
+    eps_core: float,
+    eps_clad: float,
+    component: int,
+):
+    # Harmonic normal / arithmetic tangential averaging for aligned interfaces.
+    # Sequential mixing at rectangular corners is a control, not full-tensor
+    # perturbative subpixel smoothing for arbitrary geometry.
+    fraction = wp.vec2(0.0, 0.0)
+    for a in range(1, 3):
+        lo = lengths[a] * 0.5 - core[a - 1] * 0.5
+        hi = lengths[a] * 0.5 + core[a - 1] * 0.5
+        fraction[a - 1] = wp.clamp(
+            (wp.min(p[a] + h * 0.5, hi) - wp.max(p[a] - h * 0.5, lo)) / h, 0.0, 1.0
+        )
+    if component == 0:
+        return eps_clad + (eps_core - eps_clad) * fraction[0] * fraction[1]
+    normal = component - 1
+    other = 1 - normal
+    inside = eps_clad + (eps_core - eps_clad) * fraction[other]
+    return 1.0 / ((1.0 - fraction[normal]) / eps_clad + fraction[normal] / inside)
+
+
 @wp.kernel
 def magnetic(
     e: wp.array(dtype=float),
@@ -119,6 +147,7 @@ def electric(
     src_sigma: wp.vec3,
     wave: wp.array(dtype=float),
     counter: wp.array(dtype=int),
+    normal_average: int,
 ):
     i = wp.tid()
     first = n[0] * (n[1] + 1) * (n[2] + 1)
@@ -150,6 +179,8 @@ def electric(
         xyz = wp.vec3(float(p[0]), float(p[1]), float(p[2])) * h
         xyz[c] += 0.5 * h
         ep = epsilon(xyz, h, lengths, core, eps_core, eps_clad)
+        if normal_average == 1:
+            ep = epsilon_normal(xyz, h, lengths, core, eps_core, eps_clad, c)
         current = float(0.0)
         if c == 1:
             d = wp.cw_div(xyz - src, src_sigma)
@@ -211,6 +242,7 @@ def electric_xyz(
     src_sigma: wp.vec3,
     wave: wp.array(dtype=float),
     counter: wp.array(dtype=int),
+    normal_average: int,
 ):
     ix, iy, iz = wp.tid()
     p = wp.vec3i(ix, iy, iz)
@@ -232,6 +264,8 @@ def electric_xyz(
             xyz = wp.vec3(float(p[0]), float(p[1]), float(p[2])) * h
             xyz[c] += 0.5 * h
             ep = epsilon(xyz, h, lengths, core, eps_core, eps_clad)
+            if normal_average == 1:
+                ep = epsilon_normal(xyz, h, lengths, core, eps_core, eps_clad, c)
             current = float(0.0)
             if c == 1:
                 d = wp.cw_div(xyz - src, src_sigma)
@@ -241,10 +275,20 @@ def electric_xyz(
 
 
 class DrivenUniform:
-    def __init__(self, problem, spacing, steps, cfl=0.7, device="cuda:0", layout="xyz"):
+    def __init__(
+        self,
+        problem,
+        spacing,
+        steps,
+        cfl=0.7,
+        device="cuda:0",
+        layout="xyz",
+        normal_average=False,
+    ):
         if layout not in ("xyz", "flat"):
             raise ValueError("layout must be xyz or flat")
         self.layout = layout
+        self.normal_average = int(normal_average)
         self.problem = problem
         self.hspacing = spacing
         self.shape = tuple(int(round(x / spacing)) for x in problem.lengths)
@@ -333,6 +377,7 @@ class DrivenUniform:
                 ),
                 self.wave,
                 self.counter,
+                self.normal_average,
             ],
             device=self.device,
         )

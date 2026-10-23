@@ -19,6 +19,7 @@ def relative(a, b, weights):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("directory", type=Path)
+    ap.add_argument("--controls", type=Path)
     ap.add_argument("--reference", default="u0125")
     args = ap.parse_args()
     root = args.directory
@@ -60,6 +61,23 @@ def main():
             relative(a, b, weights) for a, b in zip(data[k]["fields"], ref["fields"])
         ]
         c["reference_case"] = args.reference
+    if args.controls:
+        controls = {}
+        for kind, base in [("uniform", "u025"), ("octree", "o025")]:
+            control = np.load(args.controls / f"{base}_halfdt" / "fields.npz")
+            np.testing.assert_allclose(control["xyz"], xyz, atol=1e-12)
+            np.testing.assert_allclose(control["times"], ref["times"], atol=1e-12)
+            controls[kind] = {
+                "timestep_halving_field_difference": relative(
+                    data[base]["fields"], control["fields"], weights
+                ),
+                "half_dt_reference_difference": relative(
+                    control["fields"], ref["fields"], weights
+                ),
+            }
+        (args.controls / "comparison.json").write_text(
+            json.dumps(controls, indent=2) + "\n"
+        )
     for k, c in cases.items():
         if c["kind"] != "octree":
             continue
@@ -76,8 +94,11 @@ def main():
             and v["sampled_field_l2"] <= c["sampled_field_l2"]
         ]
         if same:
-            c["same_finest_speedup"] = same[0]["median_s"] / c["median_s"]
-            c["same_finest_memory_ratio"] = same[0]["owned_bytes"] / c["owned_bytes"]
+            fastest_same = min(same, key=lambda v: v["median_s"])
+            c["same_finest_speedup"] = fastest_same["median_s"] / c["median_s"]
+            c["same_finest_memory_ratio"] = (
+                fastest_same["owned_bytes"] / c["owned_bytes"]
+            )
         if eligible:
             best = min(eligible, key=lambda v: v["median_s"])
             c["sampled_accuracy_matched_uniform_spacing"] = best["spacing"]
@@ -87,9 +108,19 @@ def main():
             )
     (root / "comparison.json").write_text(json.dumps(cases, indent=2) + "\n")
     fig, axes = plt.subplots(1, 3, figsize=(13, 3.8), constrained_layout=True)
-    for kind, marker, color in [("uniform", "o", "C0"), ("octree", "s", "C1")]:
+    for kind, normal, label, marker, color in [
+        ("uniform", False, "uniform: arithmetic", "o", "C0"),
+        ("uniform", True, "uniform: normal average", "^", "C2"),
+        ("octree", False, "octree", "s", "C1"),
+    ]:
         values = sorted(
-            [v for k, v in cases.items() if v["kind"] == kind and k != args.reference],
+            [
+                v
+                for k, v in cases.items()
+                if v["kind"] == kind
+                and bool(v.get("normal_average", False)) == normal
+                and k != args.reference
+            ],
             key=lambda v: v["spacing"],
         )
         if not values:
@@ -105,16 +136,29 @@ def main():
             ],
         ):
             y = [v[metric] / (2**20 if metric == "owned_bytes" else 1) for v in values]
-            ax.loglog(error, y, marker=marker, color=color, label=kind)
-            for e, yy, v in zip(error, y, values):
+            xx, yy = (
+                ([v["spacing"] * 1000 for v in values], error)
+                if metric == "spacing"
+                else (error, y)
+            )
+            ax.loglog(xx, yy, marker=marker, color=color, label=label)
+            for xvalue, yvalue, v in zip(xx, yy, values):
+                offset = (3, -12) if kind == "octree" else (3, 5)
                 ax.annotate(
-                    f"{1000 * v['spacing']:g} nm",
-                    (e, yy),
-                    xytext=(3, 5),
+                    f"{1000 * v['spacing']:.3g} nm",
+                    (xvalue, yvalue),
+                    xytext=offset,
                     textcoords="offset points",
                     fontsize=8,
                 )
-            ax.set(xlabel="Sampled transient E/H difference (%)", ylabel=ylabel)
+            if metric == "spacing":
+                ax.set(
+                    xlabel="Cell size (nm; octree minimum)",
+                    ylabel="Sampled transient E/H difference (%)",
+                )
+            else:
+                ax.set(xlabel="Sampled transient E/H difference (%)", ylabel=ylabel)
+            ax.margins(0.15)
             ax.grid(True, alpha=0.25)
     axes[0].legend()
     fig.suptitle(
@@ -184,26 +228,41 @@ def main():
         lines = []
         for b in sorted(mesh.leaves):
             lo, hi = mesh.bounds(b)
-            if lo[2] <= problem.height / 2 < hi[2]:
-                for xx in np.linspace(lo[0], hi[0], mesh.cells_per_block + 1):
-                    lines.append([(xx, lo[1]), (xx, hi[1])])
+            if lo[0] <= problem.length / 2 < hi[0]:
                 for yy in np.linspace(lo[1], hi[1], mesh.cells_per_block + 1):
-                    lines.append([(lo[0], yy), (hi[0], yy)])
-        fig, ax = plt.subplots(figsize=(9, 5), constrained_layout=True)
-        ax.add_collection(LineCollection(lines, lw=0.25, color="C0"))
-        ax.set(
-            xlim=(0, problem.length),
-            ylim=(0, problem.width),
-            aspect="equal",
-            xlabel="x (µm)",
-            ylabel="y (µm)",
-            title=f"Actual binary octree slice: {c['cells']:,} active cells; {c['spacing'] * 1000:g} nm minimum",
+                    lines.append([(yy, lo[2]), (yy, hi[2])])
+                for zz in np.linspace(lo[2], hi[2], mesh.cells_per_block + 1):
+                    lines.append([(lo[1], zz), (hi[1], zz)])
+        fig, axs = plt.subplots(1, 2, figsize=(11, 5), constrained_layout=True)
+        for ax, span in zip(axs, [problem.width / 2, 0.8]):
+            ax.add_collection(LineCollection(lines, lw=0.3, color="C0"))
+            ax.set(
+                xlim=(problem.width / 2 - span, problem.width / 2 + span),
+                ylim=(problem.height / 2 - span, problem.height / 2 + span),
+                aspect="equal",
+                xlabel="y (µm)",
+                ylabel="z (µm)",
+            )
+            from matplotlib.patches import Rectangle
+
+            ax.add_patch(
+                Rectangle(
+                    (
+                        problem.width / 2 - problem.core_width / 2,
+                        problem.height / 2 - problem.core_height / 2,
+                    ),
+                    problem.core_width,
+                    problem.core_height,
+                    fill=False,
+                    edgecolor="C3",
+                    lw=1.2,
+                )
+            )
+        axs[0].set_title("Full cladding cross-section")
+        axs[1].set_title("Zoom around dielectric core")
+        fig.suptitle(
+            f"Actual binary octree slice at x={problem.length / 2:g} µm: {c['cells']:,} active 3D cells; {c['spacing'] * 1000:g} nm minimum"
         )
-        for yy in (
-            problem.width / 2 - problem.core_width / 2,
-            problem.width / 2 + problem.core_width / 2,
-        ):
-            ax.axhline(yy, color="C3")
         fig.savefig(root / "mesh.png", dpi=170)
         plt.close(fig)
     for k, c in cases.items():
