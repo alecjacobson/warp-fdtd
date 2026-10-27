@@ -1,27 +1,33 @@
 # Warp FDTD
 
-Pure NVIDIA Warp 3D electromagnetics, with uniform FDTDX comparisons and a new
+Pure NVIDIA Warp 3D electromagnetics, with uniform FDTDX comparisons and a
 binary-octree waveguide prototype.
 
-**3D octree result: 22.2× faster and 12.0× less solver GPU memory** than the best
-tested uniform grid at comparable sampled accuracy. The 4.8 × 12.8 × 12.8 µm
-straight-guide problem uses 25 nm cells near the guide and up to 200 nm in cladding.
+**Latest 3D guide sweep: 20.3–22.3× faster at the same minimum cell size, with
+11.7–12.3× less solver GPU memory.** All four octrees use the same physical guide
+and 780 identical leaf blocks; the field resolution inside those blocks increases.
 
-| Solver | Active cells | Full warm simulation | Solver GPU memory | Field difference¹ |
+| Minimum cell | Uniform field Δ | Octree field Δ | Uniform time | Octree time |
 |---|---:|---:|---:|---:|
-| Uniform Warp, 25 nm | 50.33M | 11.774 s | 1,157 MiB | 5.07% |
-| Octree Warp, 25–200 nm | 399,360 | 0.530 s | 96.6 MiB | 5.17% |
+| 33.3 nm | 10.63% | 10.87% | 3.739 s | 0.185 s |
+| 25 nm | 5.41% | 5.51% | 11.791 s | 0.530 s |
+| 20 nm | 3.00% | 3.03% | 28.424 s | 1.301 s |
+| 16.7 nm | 1.68% | 1.74% | 58.816 s | 2.673 s |
 
-¹ Sampled transient E/H difference from a 12.5 nm, 402.7M-cell reference; not a
-continuum error bound. Source and sponge updates are timed. **Prototype limits:**
-sponge/interface flux consistency fails, and 33.3 s host assembly makes a fresh
-one-shot solve slower. These are warm simulation and GPU-memory gains.
+Field Δ is the sampled E/H difference from an **11.11 nm / 573.3M-cell reference**.
+The previous 12.5 nm reference differs by 0.38%; continuum accuracy remains
+unqualified. At a strict measured error budget, the 16.7 nm octree is **more
+accurate than the 20 nm uniform case and 10.6× faster**, using 7.1× less GPU memory.
 
-![Latest octree accuracy, runtime and memory trends](results/octree_guide_large/trends.png)
+**Prototype limits:** sponge/interface flux consistency still fails. CPU setup
+costs 14.6–123.7 s across this sweep, so a fresh one-shot solve remains slower.
+Warm timings include source and sponge updates and exclude setup and diagnostics.
 
-![3D guide fields and instantaneous power-flow comparison](results/octree_guide_large/fields.png)
+![Latest paired resolution, accuracy, runtime and memory trends](results/octree_guide_refinement/resolution_trends.png)
 
-[Octree mesh, raw measurements and reproduction](docs/octree-guide.md) ·
+![Latest 3D guide field and instantaneous power-flow comparison](results/octree_guide_refinement/fields.png)
+
+[Full trends, meshes, raw data and reproduction](docs/octree-refinement.md) ·
 [Flux fix #42](https://github.com/alecjacobson/warp-fdtd/issues/42) ·
 [Setup cost #43](https://github.com/alecjacobson/warp-fdtd/issues/43)
 

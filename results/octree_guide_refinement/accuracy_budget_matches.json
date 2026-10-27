@@ -1,0 +1,23 @@
+{
+  "u020": {
+    "uniform_field_difference": 0.029950447368401432,
+    "octree_case": "o0167",
+    "octree_field_difference": 0.017398131392480806,
+    "speedup": 10.631948601637804,
+    "owned_memory_ratio": 7.12298263506196
+  },
+  "u025": {
+    "uniform_field_difference": 0.054120183643187804,
+    "octree_case": "o020",
+    "octree_field_difference": 0.030314030605165656,
+    "speedup": 9.062105712232778,
+    "owned_memory_ratio": 6.237008240309327
+  },
+  "u0333": {
+    "uniform_field_difference": 0.10628950948372988,
+    "octree_case": "o025",
+    "octree_field_difference": 0.05507194430239307,
+    "speedup": 7.057922087283403,
+    "owned_memory_ratio": 5.060265409124236
+  }
+}

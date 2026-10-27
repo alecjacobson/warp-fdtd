@@ -1,5 +1,8 @@
 # Driven 3D octree waveguide comparison
 
+The newer [paired refinement study](octree-refinement.md) extends both methods to
+16.67 nm and adds an 11.11 nm reference. This page preserves the initial comparison.
+
 This is the first actual octree/uniform propagation comparison, rather than a
 cell-count estimate. It is a diagnostic prototype: the sponge breaks normal-flux
 consistency at coarse–fine interfaces ([#42](https://github.com/alecjacobson/warp-fdtd/issues/42)),

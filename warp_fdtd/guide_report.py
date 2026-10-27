@@ -9,11 +9,139 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
+from matplotlib.ticker import FuncFormatter, LogLocator
 from .guide_problem import GuideProblem
 
 
 def relative(a, b, weights):
     return float(np.sqrt(np.sum(weights * (a - b) ** 2) / np.sum(weights * b**2)))
+
+
+def paired_comparisons(cases, data, weights):
+    """Use measured configurations only; no interpolation to equal accuracy."""
+    budget_matches = {}
+    for key, case in cases.items():
+        if case["kind"] == "octree":
+            candidates = [
+                name
+                for name, other in cases.items()
+                if other["kind"] == "uniform"
+                and other["median_s"] is not None
+                and np.isclose(other["spacing"], case["spacing"], rtol=1e-10, atol=0)
+            ]
+            if candidates:
+                other = min(candidates, key=lambda name: cases[name]["median_s"])
+                case["same_finest_uniform_case"] = other
+                case["same_finest_field_difference"] = relative(
+                    data[key]["fields"], data[other]["fields"], weights
+                )
+                case["same_finest_field_difference_by_time"] = [
+                    relative(a, b, weights)
+                    for a, b in zip(data[key]["fields"], data[other]["fields"])
+                ]
+        elif case["median_s"] is not None:
+            candidates = [
+                name
+                for name, other in cases.items()
+                if other["kind"] == "octree"
+                and other["median_s"] is not None
+                and other["sampled_field_l2"] <= case["sampled_field_l2"]
+            ]
+            if candidates:
+                best = min(candidates, key=lambda name: cases[name]["median_s"])
+                budget_matches[key] = {
+                    "uniform_field_difference": case["sampled_field_l2"],
+                    "octree_case": best,
+                    "octree_field_difference": cases[best]["sampled_field_l2"],
+                    "speedup": case["median_s"] / cases[best]["median_s"],
+                    "owned_memory_ratio": case["owned_bytes"]
+                    / cases[best]["owned_bytes"],
+                }
+    return budget_matches
+
+
+def resolution_plots(cases, root, reference):
+    fig, axes = plt.subplots(1, 3, figsize=(13, 3.8), constrained_layout=True)
+    timed = {k: v for k, v in cases.items() if v["median_s"] is not None}
+    for kind, normal, label, marker, color in [
+        ("uniform", False, "uniform", "o", "C0"),
+        ("uniform", True, "uniform: normal average", "^", "C2"),
+        ("octree", False, "octree", "s", "C1"),
+    ]:
+        values = sorted(
+            [
+                v
+                for v in timed.values()
+                if v["kind"] == kind and bool(v.get("normal_average", False)) == normal
+            ],
+            key=lambda v: v["spacing"],
+        )
+        if not values:
+            continue
+        x = [v["spacing"] * 1000 for v in values]
+        metrics = [
+            (
+                [100 * v["sampled_field_l2"] for v in values],
+                "Sampled E/H difference (%)",
+            ),
+            ([v["median_s"] for v in values], "Full warm trajectory (s)"),
+            (
+                [v["owned_bytes"] / 2**20 for v in values],
+                "Owned solver GPU memory (MiB)",
+            ),
+        ]
+        for ax, (y, ylabel) in zip(axes, metrics):
+            ax.loglog(x, y, marker=marker, color=color, label=label)
+            ax.set(ylabel=ylabel, xlabel="Cell size (nm; octree minimum)")
+            ax.set_xticks(sorted(set(v["spacing"] * 1000 for v in timed.values())))
+            ax.set_xticklabels(
+                [
+                    f"{h:.3g}"
+                    for h in sorted(set(v["spacing"] * 1000 for v in timed.values()))
+                ]
+            )
+            ax.minorticks_off()
+            ax.yaxis.set_major_locator(LogLocator(base=10, subs=(1, 2, 5)))
+            ax.yaxis.set_major_formatter(FuncFormatter(lambda value, _: f"{value:g}"))
+            ax.grid(True, alpha=0.25)
+    axes[0].legend()
+    fig.suptitle(
+        f"3D guide refinement • reference {1000 * cases[reference]['spacing']:.3g} nm uniform\nFinite-reference differences; warm times exclude setup",
+        fontsize=11,
+    )
+    fig.savefig(root / "resolution_trends.png", dpi=170)
+    plt.close(fig)
+    values = sorted(
+        [v for v in timed.values() if "same_finest_field_difference" in v],
+        key=lambda v: v["spacing"],
+    )
+    if not values:
+        return
+    fig, axes = plt.subplots(1, 3, figsize=(13, 3.5), constrained_layout=True)
+    x = [1000 * v["spacing"] for v in values]
+    for ax, metric, label, scale in zip(
+        axes,
+        [
+            "same_finest_field_difference",
+            "same_finest_speedup",
+            "same_finest_memory_ratio",
+        ],
+        [
+            "Octree vs same-spacing uniform E/H (%)",
+            "Same-spacing warm speedup",
+            "Same-spacing GPU memory ratio",
+        ],
+        [100, 1, 1],
+    ):
+        ax.plot(x, [scale * v[metric] for v in values], "o-")
+        ax.set(xlabel="Minimum cell size (nm)", ylabel=label)
+        ax.set_xticks(x, labels=[f"{h:.3g}" for h in x])
+        ax.grid(True, alpha=0.25)
+    fig.suptitle(
+        "Paired meshes: direct field differences and measured cost ratios", fontsize=11
+    )
+    fig.savefig(root / "paired_trends.png", dpi=170)
+    plt.close(fig)
 
 
 def main():
@@ -84,7 +212,9 @@ def main():
         same = [
             v
             for v in cases.values()
-            if v["kind"] == "uniform" and v["spacing"] == c["spacing"]
+            if v["kind"] == "uniform"
+            and np.isclose(v["spacing"], c["spacing"], rtol=1e-10, atol=0)
+            and v["median_s"] is not None
         ]
         eligible = [
             v
@@ -106,7 +236,37 @@ def main():
             c["sampled_accuracy_matched_memory_ratio"] = (
                 best["owned_bytes"] / c["owned_bytes"]
             )
+    budget_matches = paired_comparisons(cases, data, weights)
+    (root / "accuracy_budget_matches.json").write_text(
+        json.dumps(budget_matches, indent=2) + "\n"
+    )
+    reference_checks = {
+        k: {
+            "spacing": v["spacing"],
+            "field_difference": v["sampled_field_l2"],
+            "field_difference_by_time": v["field_l2_by_time"],
+        }
+        for k, v in cases.items()
+        if k != args.reference and v["median_s"] is None
+    }
+    (root / "reference_checks.json").write_text(
+        json.dumps(reference_checks, indent=2) + "\n"
+    )
+    reference_sensitivity = {
+        ref_key: {
+            key: relative(data[key]["fields"], data[ref_key]["fields"], weights)
+            for key, case in cases.items()
+            if case["median_s"] is not None
+        }
+        for ref_key, case in cases.items()
+        if ref_key == args.reference
+        or (case["kind"] == "uniform" and case["median_s"] is None)
+    }
+    (root / "reference_sensitivity.json").write_text(
+        json.dumps(reference_sensitivity, indent=2) + "\n"
+    )
     (root / "comparison.json").write_text(json.dumps(cases, indent=2) + "\n")
+    resolution_plots(cases, root, args.reference)
     fig, axes = plt.subplots(1, 3, figsize=(13, 3.8), constrained_layout=True)
     for kind, normal, label, marker, color in [
         ("uniform", False, "uniform: arithmetic", "o", "C0"),
@@ -120,6 +280,7 @@ def main():
                 if v["kind"] == kind
                 and bool(v.get("normal_average", False)) == normal
                 and k != args.reference
+                and v["median_s"] is not None
             ],
             key=lambda v: v["spacing"],
         )
@@ -156,13 +317,28 @@ def main():
                     xlabel="Cell size (nm; octree minimum)",
                     ylabel="Sampled transient E/H difference (%)",
                 )
+                ticks = sorted(
+                    {
+                        1000 * v["spacing"]
+                        for v in cases.values()
+                        if v["median_s"] is not None
+                    }
+                )
+                ax.set_xticks(ticks, labels=[f"{h:.3g}" for h in ticks])
             else:
                 ax.set(xlabel="Sampled transient E/H difference (%)", ylabel=ylabel)
+                ax.xaxis.set_major_locator(LogLocator(base=10, subs=(1, 2, 5)))
+                ax.xaxis.set_major_formatter(
+                    FuncFormatter(lambda value, _: f"{value:g}")
+                )
+            ax.minorticks_off()
+            ax.yaxis.set_major_locator(LogLocator(base=10, subs=(1, 2, 5)))
+            ax.yaxis.set_major_formatter(FuncFormatter(lambda value, _: f"{value:g}"))
             ax.margins(0.15)
             ax.grid(True, alpha=0.25)
     axes[0].legend()
     fig.suptitle(
-        f"3D dielectric channel • reference {1000 * cases[args.reference]['spacing']:g} nm uniform • same source and sponge\nMesh differences, not continuum bounds; setup excluded from warm timings",
+        f"3D dielectric channel • reference {1000 * cases[args.reference]['spacing']:.3g} nm uniform • same source and sponge\nMesh differences, not continuum bounds; setup excluded from warm timings",
         fontsize=11,
     )
     fig.savefig(root / "trends.png", dpi=170)
