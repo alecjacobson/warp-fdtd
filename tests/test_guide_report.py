@@ -6,6 +6,7 @@ from pathlib import Path
 import tempfile
 from unittest.mock import patch
 import numpy as np
+from matplotlib.figure import Figure
 from warp_fdtd.guide_report import paired_comparisons, main
 from warp_fdtd.guide_problem import GuideProblem
 
@@ -93,8 +94,18 @@ class GuideReportTests(unittest.TestCase):
                     xyz=np.array([[1.0, 1.6, 1.6], [2.0, 2.1, 1.6]]),
                     times=np.array([6.0, 10.0, 14.0]),
                 )
+            legends = []
+            savefig = Figure.savefig
+
+            def inspect_legend(figure, filename, *args, **kwargs):
+                if Path(filename).name == "resolution_trends.png":
+                    legends.extend(figure.axes[0].get_legend_handles_labels()[1])
+                return savefig(figure, filename, *args, **kwargs)
+
             with patch("sys.argv", ["guide_report", str(root), "--reference", "u0111"]):
-                main()
+                with patch.object(Figure, "savefig", inspect_legend):
+                    main()
+            self.assertEqual(legends, ["uniform"])
             check = json.loads((root / "reference_checks.json").read_text())
             self.assertEqual(set(check), {"u0125"})
             self.assertAlmostEqual(check["u0125"]["field_difference"], 0.1)

@@ -1,0 +1,44 @@
+{
+  "case_count": 10,
+  "all_field_checksums_valid": true,
+  "all_sampled_fields_finite": true,
+  "new_cases_all_full_field_finite": true,
+  "identical_780_leaf_geometry": true,
+  "common_times": [
+    6,
+    10,
+    14
+  ],
+  "anchor_repeats": {
+    "u025": {
+      "relative_field_difference": 0.0,
+      "new_over_old_median_time": 1.0014412520108735
+    },
+    "o025": {
+      "relative_field_difference": 0.0,
+      "new_over_old_median_time": 0.9996405132228002
+    }
+  },
+  "mesh_family": {
+    "o0333": {
+      "spacing_nm": 33.333333333333336,
+      "block_cells": 6,
+      "active_cells": 168480
+    },
+    "o025": {
+      "spacing_nm": 25.0,
+      "block_cells": 8,
+      "active_cells": 399360
+    },
+    "o020": {
+      "spacing_nm": 20.0,
+      "block_cells": 10,
+      "active_cells": 780000
+    },
+    "o0167": {
+      "spacing_nm": 16.666666666666668,
+      "block_cells": 12,
+      "active_cells": 1347840
+    }
+  }
+}

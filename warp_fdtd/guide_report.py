@@ -9,6 +9,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
+from matplotlib.ticker import FuncFormatter, LogLocator
 from .guide_problem import GuideProblem
 
 
@@ -89,9 +90,9 @@ def resolution_plots(cases, root, reference):
                 "Owned solver GPU memory (MiB)",
             ),
         ]
-        for ax, (y, label) in zip(axes, metrics):
+        for ax, (y, ylabel) in zip(axes, metrics):
             ax.loglog(x, y, marker=marker, color=color, label=label)
-            ax.set(ylabel=label, xlabel="Cell size (nm; octree minimum)")
+            ax.set(ylabel=ylabel, xlabel="Cell size (nm; octree minimum)")
             ax.set_xticks(sorted(set(v["spacing"] * 1000 for v in timed.values())))
             ax.set_xticklabels(
                 [
@@ -100,6 +101,8 @@ def resolution_plots(cases, root, reference):
                 ]
             )
             ax.minorticks_off()
+            ax.yaxis.set_major_locator(LogLocator(base=10, subs=(1, 2, 5)))
+            ax.yaxis.set_major_formatter(FuncFormatter(lambda value, _: f"{value:g}"))
             ax.grid(True, alpha=0.25)
     axes[0].legend()
     fig.suptitle(
@@ -314,13 +317,28 @@ def main():
                     xlabel="Cell size (nm; octree minimum)",
                     ylabel="Sampled transient E/H difference (%)",
                 )
+                ticks = sorted(
+                    {
+                        1000 * v["spacing"]
+                        for v in cases.values()
+                        if v["median_s"] is not None
+                    }
+                )
+                ax.set_xticks(ticks, labels=[f"{h:.3g}" for h in ticks])
             else:
                 ax.set(xlabel="Sampled transient E/H difference (%)", ylabel=ylabel)
+                ax.xaxis.set_major_locator(LogLocator(base=10, subs=(1, 2, 5)))
+                ax.xaxis.set_major_formatter(
+                    FuncFormatter(lambda value, _: f"{value:g}")
+                )
+            ax.minorticks_off()
+            ax.yaxis.set_major_locator(LogLocator(base=10, subs=(1, 2, 5)))
+            ax.yaxis.set_major_formatter(FuncFormatter(lambda value, _: f"{value:g}"))
             ax.margins(0.15)
             ax.grid(True, alpha=0.25)
     axes[0].legend()
     fig.suptitle(
-        f"3D dielectric channel • reference {1000 * cases[args.reference]['spacing']:g} nm uniform • same source and sponge\nMesh differences, not continuum bounds; setup excluded from warm timings",
+        f"3D dielectric channel • reference {1000 * cases[args.reference]['spacing']:.3g} nm uniform • same source and sponge\nMesh differences, not continuum bounds; setup excluded from warm timings",
         fontsize=11,
     )
     fig.savefig(root / "trends.png", dpi=170)
